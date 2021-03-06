@@ -42,23 +42,23 @@ public class WorldGrid {
         }
     }
 
-    public int getWidth() {
+    public int GetWidth() {
         return width;
     }
 
-    public int getHeight() {
+    public int GetHeight() {
         return height;
     }
 
-    public List<Cell> getWalkableAdjacentCells(Cell cell, bool isAIAgent) {
-        return getWalkableAdjacentCells(cell.getXCoordinate(), cell.getYCoordinate(), isAIAgent);
+    public List<Cell> GetWalkableAdjacentCells(Cell cell, bool isAIAgent) {
+        return GetWalkableAdjacentCells(cell.GetXCoordinate(), cell.GetYCoordinate(), isAIAgent);
     }
 
-    public List<Cell> getWalkableAdjacentCells(int xCoordinate, int yCoordinate, bool isAIAgent) {
-        List<Cell> adjacentCells = getAllAdjacentCells(xCoordinate, yCoordinate);
+    public List<Cell> GetWalkableAdjacentCells(int xCoordinate, int yCoordinate, bool isAIAgent) {
+        List<Cell> adjacentCells = GetAllAdjacentCells(xCoordinate, yCoordinate);
 
         foreach (Cell adjacentCell in adjacentCells) {
-            if (!isCellWalkable(worldGridMatrix[adjacentCell.getXCoordinate(), adjacentCell.getYCoordinate()], isAIAgent)) {
+            if (!IsCellWalkable(worldGridMatrix[adjacentCell.GetXCoordinate(), adjacentCell.GetYCoordinate()], isAIAgent)) {
                 adjacentCells.Remove(adjacentCell);
             }
         }
@@ -66,7 +66,7 @@ public class WorldGrid {
         return adjacentCells;
     }
 
-    public static bool isCellWalkable(CellType cellType, bool isAIAgent = false) {
+    public static bool IsCellWalkable(CellType cellType, bool isAIAgent = false) {
         if (isAIAgent) {
             return cellType == CellType.Road;
         }
@@ -74,11 +74,11 @@ public class WorldGrid {
         return cellType == CellType.Empty || cellType == CellType.Road;
     }
 
-    public List<Cell> getAdjacentCellsOfType(int xCoordinate, int yCoordinate, CellType cellType) {
-        List<Cell> adjacentCells = getAllAdjacentCells(xCoordinate, yCoordinate);
+    public List<Cell> GetAdjacentCellsOfType(int xCoordinate, int yCoordinate, CellType cellType) {
+        List<Cell> adjacentCells = GetAllAdjacentCells(xCoordinate, yCoordinate);
 
         foreach (Cell adjacentCell in adjacentCells) {
-            if (worldGridMatrix[adjacentCell.getXCoordinate(), adjacentCell.getYCoordinate()] != cellType) {
+            if (worldGridMatrix[adjacentCell.GetXCoordinate(), adjacentCell.GetYCoordinate()] != cellType) {
                 adjacentCells.Remove(adjacentCell);
             }
         }
@@ -86,7 +86,7 @@ public class WorldGrid {
         return adjacentCells;
     }
 
-    public List<Cell> getAllAdjacentCells(int xCoordinate, int yCoordinate) {
+    public List<Cell> GetAllAdjacentCells(int xCoordinate, int yCoordinate) {
         List<Cell> adjacentCells = new List<Cell>();
 
         if (xCoordinate > 0) {
@@ -108,7 +108,7 @@ public class WorldGrid {
         return adjacentCells;
     }
 
-    public CellType[] getAllAdjacentCellTypes(int xCoordinate, int yCoordinate) {
+    public CellType[] GetAllAdjacentCellTypes(int xCoordinate, int yCoordinate) {
         CellType[] adjacentCellTypes = { CellType.None, CellType.None, CellType.None, CellType.None };
         
         if (xCoordinate > 0) {
@@ -130,17 +130,17 @@ public class WorldGrid {
         return adjacentCellTypes;
     }
 
-    public Cell getRandomSpecialStructureCell() {
+    public Cell GetRandomSpecialStructureCell() {
         System.Random rand = new System.Random();
         return specialStructureList[rand.Next(0, specialStructureList.Count - 1)];
     }
 
-    public Cell getRandomRoadCell() {
+    public Cell GetRandomRoadCell() {
         System.Random random = new System.Random();
         return roadList[random.Next(0, roadList.Count - 1)];
     }
 
-    public float getCostOfEnteringCell(Cell cell) {
+    public float GetCostOfEnteringCell(Cell cell) {
         return 1;
     }
 }

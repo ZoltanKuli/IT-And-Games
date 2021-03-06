@@ -12,11 +12,11 @@ public class Cell {
         this.yCoordinate = yCoordinate;
     }
 
-    public int getXCoordinate() {
+    public int GetXCoordinate() {
         return xCoordinate;
     }
 
-    public int getYCoordinate() {
+    public int GetYCoordinate() {
         return yCoordinate;
     }
 

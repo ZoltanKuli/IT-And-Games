@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class WorldGridSearch {
 
-    public static List<Cell> aStarSearch(WorldGrid worldGrid, Cell startCell, Cell destinationCell, bool isAIAgent = false) {
+    public static List<Cell> AStarSearch(WorldGrid worldGrid, Cell startCell, Cell destinationCell, bool isAIAgent = false) {
         List<Cell> path = new List<Cell>();
 
         List<Cell> cellsTocheck = new List<Cell>();
@@ -20,20 +20,20 @@ public class WorldGridSearch {
         parentsDictionary.Add(startCell, null);
 
         while (cellsTocheck.Count > 0) {
-            Cell currentCell = getClosestVertex(cellsTocheck, priorityDictionary);
+            Cell currentCell = GetClosestVertex(cellsTocheck, priorityDictionary);
             cellsTocheck.Remove(currentCell);
             if (currentCell.Equals(destinationCell)) {
-                path = generatePath(parentsDictionary, currentCell);
+                path = GeneratePath(parentsDictionary, currentCell);
                 return path;
             }
 
-            foreach (Cell adjacentCell in worldGrid.getWalkableAdjacentCells(currentCell, isAIAgent)) {
-                float newCost = costDictionary[currentCell] + worldGrid.getCostOfEnteringCell(adjacentCell);
+            foreach (Cell adjacentCell in worldGrid.GetWalkableAdjacentCells(currentCell, isAIAgent)) {
+                float newCost = costDictionary[currentCell] + worldGrid.GetCostOfEnteringCell(adjacentCell);
 
                 if (!costDictionary.ContainsKey(adjacentCell) || newCost < costDictionary[adjacentCell]) {
                     costDictionary[adjacentCell] = newCost;
 
-                    float priority = newCost + manhattanDiscance(destinationCell, adjacentCell);
+                    float priority = newCost + ManhattanDistance(destinationCell, adjacentCell);
                     cellsTocheck.Add(adjacentCell);
                     priorityDictionary[adjacentCell] = priority;
 
@@ -45,7 +45,7 @@ public class WorldGridSearch {
         return path;
     }
 
-    private static Cell getClosestVertex(List<Cell> list, Dictionary<Cell, float> distanceMap) {
+    private static Cell GetClosestVertex(List<Cell> list, Dictionary<Cell, float> distanceMap) {
         Cell candidate = list[0];
         foreach (Cell vertex in list) {
             if (distanceMap[vertex] < distanceMap[candidate]) {
@@ -56,11 +56,11 @@ public class WorldGridSearch {
         return candidate;
     }
 
-    private static float manhattanDiscance(Cell endPos, Cell cell) {
-        return Math.Abs(endPos.getXCoordinate() - cell.getXCoordinate()) + Math.Abs(endPos.getYCoordinate() - cell.getYCoordinate());
+    private static float ManhattanDistance(Cell endPos, Cell cell) {
+        return Math.Abs(endPos.GetXCoordinate() - cell.GetXCoordinate()) + Math.Abs(endPos.GetYCoordinate() - cell.GetYCoordinate());
     }
 
-    public static List<Cell> generatePath(Dictionary<Cell, Cell> parentMap, Cell endState) {
+    public static List<Cell> GeneratePath(Dictionary<Cell, Cell> parentMap, Cell endState) {
         List<Cell> path = new List<Cell>();
 
         Cell parent = endState;
