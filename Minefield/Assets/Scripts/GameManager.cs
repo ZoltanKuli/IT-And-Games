@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 public class GameManager : MonoBehaviour {
-    
+
     [SerializeField]
     private MainCamera mainCamera;
 
