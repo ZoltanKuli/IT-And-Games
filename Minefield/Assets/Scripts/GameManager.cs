@@ -3,7 +3,7 @@
 public class GameManager : MonoBehaviour {
     
     [SerializeField]
-    private CameraMovement cameraMovement;
+    private MainCamera mainCamera;
 
     [SerializeField]
     private InputManager inputManager;
@@ -12,7 +12,8 @@ public class GameManager : MonoBehaviour {
     private WorldManager worldManager;
 
     private void Update() {
-        cameraMovement.MoveCamera(inputManager.GetCameraMovementVector());
+        mainCamera.MoveCamera(inputManager.GetCameraMovementOffset());
+        mainCamera.ChaneCameraZoom(inputManager.GetCameraZoomOffset(), inputManager.GetCameraRotationOffset());
     }
 
     private void Start() {

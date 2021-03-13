@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public abstract class Structure : PopulatedField {
+public class Structure : PopulatedField {
 
     protected int width;
     protected int length;

@@ -6,9 +6,9 @@ public class WorldManager : MonoBehaviour {
 
     private Field[,] worldMatrix;
     [SerializeField]
-    private int width;
+    private int worldMatrixWidth;
     [SerializeField]
-    private int length;
+    private int worldMatrixLength;
 
     [SerializeField]
     private GameObject straightRoadPrefab;
@@ -20,6 +20,10 @@ public class WorldManager : MonoBehaviour {
     private GameObject fourWayRoadPrefab;
 
     [SerializeField]
+    private GameObject structurePrefab;
+
+
+    [SerializeField]
     private LayerMask natureMask;
 
     public void Start() {
@@ -28,17 +32,18 @@ public class WorldManager : MonoBehaviour {
     }
 
     private void InitializeFieldWorldMatrix() {
-        worldMatrix = new Field[width, length];
+        worldMatrix = new Field[worldMatrixWidth, worldMatrixLength];
 
-        for (int i = 0; i < width; i++) {
-            for (int j = 0; j < length; j++) {
+        for (int i = 0; i < worldMatrixWidth; i++) {
+            for (int j = 0; j < worldMatrixLength; j++) {
                 worldMatrix[i, j] = new EmptyField(new Vector3Int(i, 0, j));
             }
         }
     }
 
     public void PlaceDownNewRoad(Vector3Int origoPosition) {
-        if (isOrigoPositionInBounds(origoPosition) && worldMatrix[origoPosition.x, origoPosition.z] is EmptyField) {
+        if (isFieldInBounds(origoPosition) 
+            && worldMatrix[origoPosition.x, origoPosition.z] is EmptyField) {
             List<Field> adjacentFields = GetAdjecentFields(origoPosition);
 
             List<Field> adjacentNonRoadFields = adjacentFields.FindAll(field => !(field is Road));
@@ -46,7 +51,7 @@ public class WorldManager : MonoBehaviour {
 
             int numberOfAdjacentNonRoadFields = adjacentNonRoadFields.Count;
 
-            setNatureGameObjectsVisibility(origoPosition, false);
+            SetNatureGameObjectsVisibility(origoPosition, false);
 
             PlaceDownNewRoadIfNumberOfAdjacentNonRoadFieldsIsFour(origoPosition, numberOfAdjacentNonRoadFields);
             PlaceDownNewRoadIfNumberOfAdjacentNonRoadFieldsIsThree(origoPosition, numberOfAdjacentNonRoadFields,
@@ -61,10 +66,7 @@ public class WorldManager : MonoBehaviour {
         }
     }
 
-    private bool isOrigoPositionInBounds(Vector3Int origoPosition) {
-        return 0 <= origoPosition.x && origoPosition.x < width
-            && 0 <= origoPosition.z && origoPosition.z < length;
-    }
+    
 
     private void adjustAdjacentRoads(Vector3Int origoPosition) {
         adjustRoad(new Vector3Int(origoPosition.x - 1, origoPosition.y, origoPosition.z));
@@ -74,7 +76,8 @@ public class WorldManager : MonoBehaviour {
     }
 
     private void adjustRoad(Vector3Int origoPosition) {
-        if (isOrigoPositionInBounds(origoPosition) && worldMatrix[origoPosition.x, origoPosition.z] is Road) {
+        if (isFieldInBounds(origoPosition) 
+            && worldMatrix[origoPosition.x, origoPosition.z] is Road) {
             List<Field> adjacentFields = GetAdjecentFields(origoPosition);
 
             List<Field> adjacentNonRoadFields = adjacentFields.FindAll(field => !(field is Road));
@@ -165,13 +168,13 @@ public class WorldManager : MonoBehaviour {
             adjacentFields.Add(null);
         }
 
-        if (origoPosition.z < length - 1) {
+        if (origoPosition.z < worldMatrixLength - 1) {
             adjacentFields.Add(worldMatrix[origoPosition.x, origoPosition.z + 1]);
         } else {
             adjacentFields.Add(null);
         }
 
-        if (origoPosition.x < width - 1) {
+        if (origoPosition.x < worldMatrixWidth - 1) {
             adjacentFields.Add(worldMatrix[origoPosition.x + 1, origoPosition.z]);
         } else {
             adjacentFields.Add(null);
@@ -187,20 +190,81 @@ public class WorldManager : MonoBehaviour {
     }
 
     public void DestroyRoad(Vector3Int origoPosition) {
-        if (isOrigoPositionInBounds(origoPosition) && worldMatrix[origoPosition.x, origoPosition.z] is Road) {
+        if (isFieldInBounds(origoPosition) 
+            && worldMatrix[origoPosition.x, origoPosition.z] is Road) {
             Road currentRoad = (Road)worldMatrix[origoPosition.x, origoPosition.z];
             currentRoad.DestroyGameObject();
 
             worldMatrix[origoPosition.x, origoPosition.z] = 
                 new EmptyField(new Vector3Int(origoPosition.x, origoPosition.y, origoPosition.z));
 
-            setNatureGameObjectsVisibility(origoPosition, true);
+            SetNatureGameObjectsVisibility(origoPosition, true);
 
             adjustAdjacentRoads(origoPosition);
         }
     }
 
-    private void setNatureGameObjectsVisibility(Vector3Int origoPosition, bool isVisible) {
+    public void BuildNewStructure(Vector3Int origoPosition) {
+
+    }
+
+    private bool CanAreaBePopulated(Vector3Int origoPosition, int areaWidth, int areaLength) {
+        return isAreaInBounds(origoPosition, areaWidth, areaLength)
+            && DoesAreaConsistOfOnlyEmptyField(origoPosition, areaWidth, areaLength);
+    }
+
+    private bool DoesAreaHaveRoadNextToIt(Vector3Int origoPosition, int areaWidth, int areaLength) {
+        /*if ((0 < origoPosition.x) && (origoPosition.z + length < this.length - 1)) {
+            for (int i = origoPosition.z; ) {
+
+            }
+            adjacentFields.Add(worldMatrix[origoPosition.x - 1, origoPosition.z]);
+        } else {
+            adjacentFields.Add(null);
+        }
+
+        if (origoPosition.z + length < this.length - 1) {
+            adjacentFields.Add(worldMatrix[origoPosition.x, origoPosition.z + 1]);
+        } else {
+            adjacentFields.Add(null);
+        }
+
+        if (origoPosition.x + width < this.width - 1) {
+            adjacentFields.Add(worldMatrix[origoPosition.x + 1, origoPosition.z]);
+        } else {
+            adjacentFields.Add(null);
+        }
+
+        if (0 < origoPosition.z) {
+            adjacentFields.Add(worldMatrix[origoPosition.x, origoPosition.z - 1]);
+        } else {
+            adjacentFields.Add(null);
+        }*/
+        return true;
+    }
+
+    private bool DoesAreaConsistOfOnlyEmptyField(Vector3Int origoPosition, int areaWidth, int areaLength) {
+        for (int i = origoPosition.x; i < areaWidth; i++) {
+            for (int j = origoPosition.z; j < areaLength; j++) {
+                if (!(worldMatrix[i, j] is EmptyField)) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
+    private bool isFieldInBounds(Vector3Int origoPosition) {
+        return isAreaInBounds(origoPosition, 1, 1);
+    }
+
+    private bool isAreaInBounds(Vector3Int origoPosition, int areaWidth, int areaLength) {
+        return 0 <= origoPosition.x && origoPosition.x + areaWidth < worldMatrixWidth
+            && 0 <= origoPosition.z && origoPosition.z + areaLength < worldMatrixLength;
+    }
+
+    private void SetNatureGameObjectsVisibility(Vector3Int origoPosition, bool isVisible) {
         RaycastHit[] raycastHits = Physics.BoxCastAll(origoPosition + new Vector3(0, 0.5f, 0), new Vector3(0.5f, 0.5f, 0.5f), 
             transform.up, Quaternion.identity, 1f, natureMask);
 
