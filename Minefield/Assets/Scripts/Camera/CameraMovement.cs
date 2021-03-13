@@ -1,13 +1,14 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class CameraMovement : MonoBehaviour {
+   
+    [SerializeField]
+    private Camera gameCamera;
 
-    public Camera gameCamera;
-    public float cameraMovementSpeed = 5;
+    [SerializeField]
+    private float cameraMovementSpeed;
 
-    private void Start() {
+    public void Start() {
         gameCamera = GetComponent<Camera>();
     }
 

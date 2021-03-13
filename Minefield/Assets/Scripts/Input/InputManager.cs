@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -15,13 +13,13 @@ public class InputManager : MonoBehaviour {
     private Action<Vector3Int> onMouseHold;
     private Action onMouseUp;
 
-    private Vector2 cameraMovementVector;
+    private Vector3 cameraMovementVector;
 
     private void Update() {
-        CheckClickDownEvent();
-        CheckClickUpEvent();
-        CheckClickHoldEvent();
-        CheckArrowInput();
+        InvokeClickDownEventIfApplicable();
+        InvokeClickUpEventIfApplicable();
+        InvokeClickHoldEventIfApplicable();
+        UpdateCameraMovementVector();
     }
 
     private Vector3Int? RaycastGround() {
@@ -36,7 +34,7 @@ public class InputManager : MonoBehaviour {
         return null;
     }
 
-    private void CheckClickDownEvent() {
+    private void InvokeClickDownEventIfApplicable() {
         if (Input.GetMouseButtonDown(0) && EventSystem.current.IsPointerOverGameObject() == false) {
             var position = RaycastGround();
             if (position != null)
@@ -44,18 +42,22 @@ public class InputManager : MonoBehaviour {
         }
     }
 
-    private void CheckClickUpEvent() {
+    private void InvokeClickUpEventIfApplicable() {
         if (Input.GetMouseButtonUp(0) && EventSystem.current.IsPointerOverGameObject() == false) {
             onMouseUp?.Invoke();
         }
     }
 
-    private void CheckClickHoldEvent() {
+    private void InvokeClickHoldEventIfApplicable() {
         if (Input.GetMouseButton(0) && EventSystem.current.IsPointerOverGameObject() == false) {
             var position = RaycastGround();
             if (position != null)
                 onMouseHold?.Invoke(position.Value);
         }
+    }
+
+    private void UpdateCameraMovementVector() {
+        cameraMovementVector = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
     }
 
     public void AssignMethodToOnMouseClick(Action<Vector3Int> action) {
@@ -66,15 +68,11 @@ public class InputManager : MonoBehaviour {
         onMouseHold += action;
     }
 
-    public void AssignMethodToOnMouseHold(Action action) {
+    public void AssignMethodToOnMouseUp(Action action) {
         onMouseUp += action;
     }
 
-    private void CheckArrowInput() {
-        cameraMovementVector = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
-    }
-
-    public Vector2 GetCameraMovementVector() {
+    public Vector3 GetCameraMovementVector() {
         return cameraMovementVector;
     }
 }
