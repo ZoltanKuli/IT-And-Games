@@ -9,50 +9,50 @@ public class InputManager : MonoBehaviour {
     [SerializeField]
     private LayerMask groundMask;
 
-    private Action<Vector3Int> onMouseClick;
-    private Action<Vector3Int> onMouseHold;
-    private Action onMouseUp;
+    private Action<Vector3Int> onMouseClickAction;
+    private Action<Vector3Int> onMouseHoldAction;
+    private Action onMouseUpAction;
 
     private Vector3 cameraMovementVector;
 
     private void Update() {
-        InvokeClickDownEventIfApplicable();
-        InvokeClickUpEventIfApplicable();
-        InvokeClickHoldEventIfApplicable();
+        InvokeMouseClickActionIfApplicable();
+        InvokeMouseUpActionIfApplicable();
+        InvokeMouseHoldActionIfApplicable();
         UpdateCameraMovementVector();
     }
 
     private Vector3Int? RaycastGround() {
-        RaycastHit hit;
+        RaycastHit raycastHit;
         Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
 
-        if (Physics.Raycast(ray, out hit, Mathf.Infinity, groundMask)) {
-            Vector3Int positionInt = Vector3Int.RoundToInt(hit.point);
+        if (Physics.Raycast(ray, out raycastHit, Mathf.Infinity, groundMask)) {
+            Vector3Int positionInt = Vector3Int.RoundToInt(raycastHit.point);
             return positionInt;
         }
 
         return null;
     }
 
-    private void InvokeClickDownEventIfApplicable() {
+    private void InvokeMouseClickActionIfApplicable() {
         if (Input.GetMouseButtonDown(0) && EventSystem.current.IsPointerOverGameObject() == false) {
             var position = RaycastGround();
             if (position != null)
-                onMouseClick?.Invoke(position.Value);
+                onMouseClickAction?.Invoke(position.Value);
         }
     }
 
-    private void InvokeClickUpEventIfApplicable() {
-        if (Input.GetMouseButtonUp(0) && EventSystem.current.IsPointerOverGameObject() == false) {
-            onMouseUp?.Invoke();
-        }
-    }
-
-    private void InvokeClickHoldEventIfApplicable() {
+    private void InvokeMouseHoldActionIfApplicable() {
         if (Input.GetMouseButton(0) && EventSystem.current.IsPointerOverGameObject() == false) {
             var position = RaycastGround();
             if (position != null)
-                onMouseHold?.Invoke(position.Value);
+                onMouseHoldAction?.Invoke(position.Value);
+        }
+    }
+
+    private void InvokeMouseUpActionIfApplicable() {
+        if (Input.GetMouseButtonUp(0) && EventSystem.current.IsPointerOverGameObject() == false) {
+            onMouseUpAction?.Invoke();
         }
     }
 
@@ -60,16 +60,22 @@ public class InputManager : MonoBehaviour {
         cameraMovementVector = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
     }
 
-    public void AssignMethodToOnMouseClick(Action<Vector3Int> action) {
-        onMouseClick += action;
+    public void AssignMethodToOnMouseClickAction(Action<Vector3Int> action) {
+        onMouseClickAction += action;
     }
 
-    public void AssignMethodToOnMouseHold(Action<Vector3Int> action) {
-        onMouseHold += action;
+    public void AssignMethodToOnMouseHoldAction(Action<Vector3Int> action) {
+        onMouseHoldAction += action;
     }
 
-    public void AssignMethodToOnMouseUp(Action action) {
-        onMouseUp += action;
+    public void AssignMethodToOnMouseUpAction(Action action) {
+        onMouseUpAction += action;
+    }
+
+    public void ResetMousActions() {
+        onMouseClickAction = null;
+        onMouseHoldAction = null;
+        onMouseUpAction = null;
     }
 
     public Vector3 GetCameraMovementVector() {

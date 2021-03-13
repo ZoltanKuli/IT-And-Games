@@ -16,6 +16,6 @@ public class GameManager : MonoBehaviour {
     }
 
     private void Start() {
-        inputManager.AssignMethodToOnMouseClick(worldManager.PlaceDownARoad);
+        inputManager.AssignMethodToOnMouseClickAction(worldManager.PlaceDownNewRoad);
     }
 }

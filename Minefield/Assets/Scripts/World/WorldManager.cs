@@ -19,8 +19,12 @@ public class WorldManager : MonoBehaviour {
     [SerializeField]
     private GameObject fourWayRoadPrefab;
 
+    [SerializeField]
+    private LayerMask natureMask;
+
     public void Start() {
         InitializeFieldWorldMatrix();
+
     }
 
     private void InitializeFieldWorldMatrix() {
@@ -33,7 +37,7 @@ public class WorldManager : MonoBehaviour {
         }
     }
 
-    public void PlaceDownARoad(Vector3Int origoPosition) {
+    public void PlaceDownNewRoad(Vector3Int origoPosition) {
         if (isOrigoPositionInBounds(origoPosition) && worldMatrix[origoPosition.x, origoPosition.z] is EmptyField) {
             List<Field> adjacentFields = GetAdjecentFields(origoPosition);
 
@@ -42,14 +46,16 @@ public class WorldManager : MonoBehaviour {
 
             int numberOfAdjacentNonRoadFields = adjacentNonRoadFields.Count;
 
-            PlaceDownARoadIfNumberOfAdjacentNonRoadFieldsIsFour(origoPosition, numberOfAdjacentNonRoadFields);
-            PlaceDownARoadIfNumberOfAdjacentNonRoadFieldsIsThree(origoPosition, numberOfAdjacentNonRoadFields,
+            setNatureGameObjectsVisibility(origoPosition, false);
+
+            PlaceDownNewRoadIfNumberOfAdjacentNonRoadFieldsIsFour(origoPosition, numberOfAdjacentNonRoadFields);
+            PlaceDownNewRoadIfNumberOfAdjacentNonRoadFieldsIsThree(origoPosition, numberOfAdjacentNonRoadFields,
                 adjacentFields, adjacentRoads);
-            PlaceDownARoadIfNumberOfAdjacentNonRoadFieldsIsTwo(origoPosition, numberOfAdjacentNonRoadFields,
+            PlaceDownNewRoadIfNumberOfAdjacentNonRoadFieldsIsTwo(origoPosition, numberOfAdjacentNonRoadFields,
                adjacentFields, adjacentRoads);
-            PlaceDownARoadIfNumberOfAdjacentNonRoadFieldsIsOne(origoPosition, numberOfAdjacentNonRoadFields,
+            PlaceDownNewRoadIfNumberOfAdjacentNonRoadFieldsIsOne(origoPosition, numberOfAdjacentNonRoadFields,
                adjacentFields, adjacentNonRoadFields);
-            PlaceDownARoadIfNumberOfAdjacentNonRoadFieldsIsZero(origoPosition, numberOfAdjacentNonRoadFields);
+            PlaceDownNewRoadIfNumberOfAdjacentNonRoadFieldsIsZero(origoPosition, numberOfAdjacentNonRoadFields);
 
             adjustAdjacentRoads(origoPosition);
         }
@@ -79,25 +85,25 @@ public class WorldManager : MonoBehaviour {
             Road currentRoad = (Road)worldMatrix[origoPosition.x, origoPosition.z];
             currentRoad.DestroyGameObject();
 
-            PlaceDownARoadIfNumberOfAdjacentNonRoadFieldsIsFour(origoPosition, numberOfAdjacentNonRoadFields);
-            PlaceDownARoadIfNumberOfAdjacentNonRoadFieldsIsThree(origoPosition, numberOfAdjacentNonRoadFields,
+            PlaceDownNewRoadIfNumberOfAdjacentNonRoadFieldsIsFour(origoPosition, numberOfAdjacentNonRoadFields);
+            PlaceDownNewRoadIfNumberOfAdjacentNonRoadFieldsIsThree(origoPosition, numberOfAdjacentNonRoadFields,
                 adjacentFields, adjacentRoads);
-            PlaceDownARoadIfNumberOfAdjacentNonRoadFieldsIsTwo(origoPosition, numberOfAdjacentNonRoadFields,
+            PlaceDownNewRoadIfNumberOfAdjacentNonRoadFieldsIsTwo(origoPosition, numberOfAdjacentNonRoadFields,
                adjacentFields, adjacentRoads);
-            PlaceDownARoadIfNumberOfAdjacentNonRoadFieldsIsOne(origoPosition, numberOfAdjacentNonRoadFields,
+            PlaceDownNewRoadIfNumberOfAdjacentNonRoadFieldsIsOne(origoPosition, numberOfAdjacentNonRoadFields,
                adjacentFields, adjacentNonRoadFields);
-            PlaceDownARoadIfNumberOfAdjacentNonRoadFieldsIsZero(origoPosition, numberOfAdjacentNonRoadFields);
+            PlaceDownNewRoadIfNumberOfAdjacentNonRoadFieldsIsZero(origoPosition, numberOfAdjacentNonRoadFields);
         }
     }
 
-    private void PlaceDownARoadIfNumberOfAdjacentNonRoadFieldsIsFour(Vector3Int origoPosition, int numberOfAdjacentNonRoadFields) {
+    private void PlaceDownNewRoadIfNumberOfAdjacentNonRoadFieldsIsFour(Vector3Int origoPosition, int numberOfAdjacentNonRoadFields) {
         if (numberOfAdjacentNonRoadFields == 4) {
             worldMatrix[origoPosition.x, origoPosition.z] =
                 new StraightRoad(straightRoadPrefab, origoPosition, 0);
         }
     }
 
-    private void PlaceDownARoadIfNumberOfAdjacentNonRoadFieldsIsThree(Vector3Int origoPosition, int numberOfAdjacentNonRoadFields,
+    private void PlaceDownNewRoadIfNumberOfAdjacentNonRoadFieldsIsThree(Vector3Int origoPosition, int numberOfAdjacentNonRoadFields,
         List<Field> adjacentFields, List<Road> adjacentRoads) {
         if (numberOfAdjacentNonRoadFields == 3) {
             int yAngleMultiplier = adjacentFields.IndexOf(adjacentRoads[0]);
@@ -107,7 +113,7 @@ public class WorldManager : MonoBehaviour {
         }
     }
 
-    private void PlaceDownARoadIfNumberOfAdjacentNonRoadFieldsIsTwo(Vector3Int origoPosition, int numberOfAdjacentNonRoadFields,
+    private void PlaceDownNewRoadIfNumberOfAdjacentNonRoadFieldsIsTwo(Vector3Int origoPosition, int numberOfAdjacentNonRoadFields,
         List<Field> adjacentFields, List<Road> adjacentRoads) {
         if (numberOfAdjacentNonRoadFields == 2) {
             int indexOfFirstAdjacentRoad = adjacentFields.IndexOf(adjacentRoads[0]);
@@ -133,7 +139,7 @@ public class WorldManager : MonoBehaviour {
         }
     }
 
-    private void PlaceDownARoadIfNumberOfAdjacentNonRoadFieldsIsOne(Vector3Int origoPosition, int numberOfAdjacentNonRoadFields,
+    private void PlaceDownNewRoadIfNumberOfAdjacentNonRoadFieldsIsOne(Vector3Int origoPosition, int numberOfAdjacentNonRoadFields,
         List<Field> adjacentFields, List<Field> adjacentNonRoadFields) {
         if (numberOfAdjacentNonRoadFields == 1) {
             int yAngleMultiplier = adjacentFields.IndexOf(adjacentNonRoadFields[0]);
@@ -143,7 +149,7 @@ public class WorldManager : MonoBehaviour {
         }
     }
 
-    private void PlaceDownARoadIfNumberOfAdjacentNonRoadFieldsIsZero(Vector3Int origoPosition, int numberOfAdjacentNonRoadFields) {
+    private void PlaceDownNewRoadIfNumberOfAdjacentNonRoadFieldsIsZero(Vector3Int origoPosition, int numberOfAdjacentNonRoadFields) {
         if (numberOfAdjacentNonRoadFields == 0) {
             worldMatrix[origoPosition.x, origoPosition.z] =
                 new FourWayRoad(fourWayRoadPrefab, origoPosition, 0);
@@ -178,6 +184,29 @@ public class WorldManager : MonoBehaviour {
         }
 
         return adjacentFields;
+    }
+
+    public void DestroyRoad(Vector3Int origoPosition) {
+        if (isOrigoPositionInBounds(origoPosition) && worldMatrix[origoPosition.x, origoPosition.z] is Road) {
+            Road currentRoad = (Road)worldMatrix[origoPosition.x, origoPosition.z];
+            currentRoad.DestroyGameObject();
+
+            worldMatrix[origoPosition.x, origoPosition.z] = 
+                new EmptyField(new Vector3Int(origoPosition.x, origoPosition.y, origoPosition.z));
+
+            setNatureGameObjectsVisibility(origoPosition, true);
+
+            adjustAdjacentRoads(origoPosition);
+        }
+    }
+
+    private void setNatureGameObjectsVisibility(Vector3Int origoPosition, bool isVisible) {
+        RaycastHit[] raycastHits = Physics.BoxCastAll(origoPosition + new Vector3(0, 0.5f, 0), new Vector3(0.5f, 0.5f, 0.5f), 
+            transform.up, Quaternion.identity, 1f, natureMask);
+
+        foreach (var raycastHit in raycastHits) {
+            raycastHit.collider.gameObject.GetComponent<MeshRenderer>().enabled = isVisible;
+        }
     }
 
     internal IEnumerable<Field> GetWalkableAdjacentFields(Field currentField, bool isAIAgent) {
