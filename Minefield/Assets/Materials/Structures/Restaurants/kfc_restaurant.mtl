@@ -1,0 +1,121 @@
+Wavefront OBJ material file
+# Contains 9 materials
+
+newmtl Oak_Planks
+Ns 127.5
+Ka 0.2 0.2 0.2
+Kd 1 1 1
+Ks 0.1 0.1 0.1
+map_Ka kfc_restaurant-RGB.png
+# for G3D, to make textures look blocky:
+interpolateMode NEAREST_MAGNIFICATION_TRILINEAR_MIPMAP_MINIFICATION
+map_Kd kfc_restaurant-RGB.png
+illum 2
+# d 1
+# Tr 0
+
+newmtl Stone_Slab
+Ns 0
+Ka 0.2 0.2 0.2
+Kd 1 1 1
+Ks 0 0 0
+map_Ka kfc_restaurant-RGB.png
+# for G3D, to make textures look blocky:
+interpolateMode NEAREST_MAGNIFICATION_TRILINEAR_MIPMAP_MINIFICATION
+map_Kd kfc_restaurant-RGB.png
+illum 2
+# d 1
+# Tr 0
+
+newmtl Wall_Sign
+Ns 0
+Ka 0.2 0.2 0.2
+Kd 1 1 1
+Ks 0 0 0
+map_Ka kfc_restaurant-RGB.png
+# for G3D, to make textures look blocky:
+interpolateMode NEAREST_MAGNIFICATION_TRILINEAR_MIPMAP_MINIFICATION
+map_Kd kfc_restaurant-RGB.png
+illum 2
+# d 1
+# Tr 0
+
+newmtl Stained_Glass
+Ns 0
+Ka 0.2 0.2 0.2
+Kd 1 1 1
+Ks 0.03 0.03 0.03
+map_Ka kfc_restaurant-RGBA.png
+# for G3D, to make textures look blocky:
+interpolateMode NEAREST_MAGNIFICATION_TRILINEAR_MIPMAP_MINIFICATION
+map_Kd kfc_restaurant-RGBA.png
+#map_d kfc_restaurant-Alpha.png
+illum 4
+# d 0.5
+# Tr 0.5
+Tf 0.5 0.5 0.5
+
+newmtl Block_of_Quartz
+Ns 209.1
+Ka 0.2 0.2 0.2
+Kd 1 1 1
+Ks 0.164 0.164 0.164
+map_Ka kfc_restaurant-RGB.png
+# for G3D, to make textures look blocky:
+interpolateMode NEAREST_MAGNIFICATION_TRILINEAR_MIPMAP_MINIFICATION
+map_Kd kfc_restaurant-RGB.png
+illum 2
+# d 1
+# Tr 0
+
+newmtl Quartz_Stairs
+Ns 209.1
+Ka 0.2 0.2 0.2
+Kd 1 1 1
+Ks 0.164 0.164 0.164
+map_Ka kfc_restaurant-RGB.png
+# for G3D, to make textures look blocky:
+interpolateMode NEAREST_MAGNIFICATION_TRILINEAR_MIPMAP_MINIFICATION
+map_Kd kfc_restaurant-RGB.png
+illum 2
+# d 1
+# Tr 0
+
+newmtl Block_of_Coal
+Ns 0
+Ka 0.2 0.2 0.2
+Kd 1 1 1
+Ks 0 0 0
+map_Ka kfc_restaurant-RGB.png
+# for G3D, to make textures look blocky:
+interpolateMode NEAREST_MAGNIFICATION_TRILINEAR_MIPMAP_MINIFICATION
+map_Kd kfc_restaurant-RGB.png
+illum 2
+# d 1
+# Tr 0
+
+newmtl Concrete
+Ns 0
+Ka 0.2 0.2 0.2
+Kd 1 1 1
+Ks 0 0 0
+map_Ka kfc_restaurant-RGB.png
+# for G3D, to make textures look blocky:
+interpolateMode NEAREST_MAGNIFICATION_TRILINEAR_MIPMAP_MINIFICATION
+map_Kd kfc_restaurant-RGB.png
+illum 2
+# d 1
+# Tr 0
+
+newmtl Jungle_Button
+Ns 0
+Ka 0.2 0.2 0.2
+Kd 1 1 1
+Ks 0 0 0
+map_Ka kfc_restaurant-RGB.png
+# for G3D, to make textures look blocky:
+interpolateMode NEAREST_MAGNIFICATION_TRILINEAR_MIPMAP_MINIFICATION
+map_Kd kfc_restaurant-RGB.png
+illum 2
+# d 1
+# Tr 0

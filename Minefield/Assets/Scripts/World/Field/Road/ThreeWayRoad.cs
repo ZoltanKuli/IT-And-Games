@@ -2,6 +2,7 @@
 
 public class ThreeWayRoad : Road {
 
-    public ThreeWayRoad(GameObject gameObjectPrefab, Vector3Int origoPosition, float yAngle) : base(gameObjectPrefab, origoPosition, yAngle) {
+    public ThreeWayRoad(GameObject prefab, Vector3Int origoPosition, float yAngle) 
+        : base(prefab, origoPosition, yAngle) {
     }
 }

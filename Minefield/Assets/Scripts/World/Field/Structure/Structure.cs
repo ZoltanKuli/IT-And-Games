@@ -2,19 +2,7 @@
 
 public class Structure : PopulatedField {
 
-    protected int width;
-    protected int length;
-
-    public Structure(GameObject gameObjectPrefab, Vector3Int origoPosition, int width, int length) : base(gameObjectPrefab, origoPosition) {
-        this.width = width;
-        this.length = length;
-    }
-
-    public int getWidth() {
-        return width;
-    }
-
-    public int getLength() {
-        return length;
+    public Structure(GameObject prefab, Vector3Int origoPosition, Vector3 prefabOffset, float yAngle, int areaWidth, int areaLength) 
+        : base(prefab, origoPosition, prefabOffset, yAngle, areaWidth, areaLength) {
     }
 }

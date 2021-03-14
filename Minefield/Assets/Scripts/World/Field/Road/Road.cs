@@ -2,11 +2,7 @@
 
 public abstract class Road : PopulatedField {
 
-    public Road(GameObject gameObjectPrefab, Vector3Int origoPosition, float yAngle) : base(gameObjectPrefab, origoPosition) {
-        SetRotation(yAngle);
-    }
-
-    public void SetRotation(float yAngle) {
-        gameObject.transform.rotation = Quaternion.Euler(0, yAngle, 0);
+    public Road(GameObject prefab, Vector3Int origoPosition, float yAngle) 
+        : base(prefab, origoPosition, new Vector3(0, 0, 0), yAngle, 1, 1) { 
     }
 }
