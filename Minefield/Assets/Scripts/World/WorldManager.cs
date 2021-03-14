@@ -42,31 +42,42 @@ public class WorldManager : MonoBehaviour {
     private float kfcYRotation;
 
     [SerializeField]
+    private GameObject cafeRestaurantPrefab;
+    [SerializeField]
+    private int cafeRestaurantAreaWidth;
+    [SerializeField]
+    private int cafeRestaurantAreaLength;
+    [SerializeField]
+    private Vector3 cafeRestaurantPositionOffset;
+    [SerializeField]
+    private float cafeRestaurantYRotation;
+
+    [SerializeField]
     private LayerMask natureMask;
 
     public void Start() {
         InitializeFieldWorldMatrix();
 
         // Only for testing purposes
-        PlaceDownNewRoad(new Vector3Int(50, 0, 51));
-        PlaceDownNewRoad(new Vector3Int(50, 0, 52));
-        PlaceDownNewRoad(new Vector3Int(50, 0, 53));
-        PlaceDownNewRoad(new Vector3Int(50, 0, 54));
-        PlaceDownNewRoad(new Vector3Int(50, 0, 55));
-        PlaceDownNewRoad(new Vector3Int(50, 0, 56));
+        PlaceDownNewRoad(new Vector3Int(0, 0, 51));
+        PlaceDownNewRoad(new Vector3Int(0, 0, 52));
+        PlaceDownNewRoad(new Vector3Int(0, 0, 53));
+        PlaceDownNewRoad(new Vector3Int(0, 0, 54));
+        PlaceDownNewRoad(new Vector3Int(0, 0, 55));
+        PlaceDownNewRoad(new Vector3Int(0, 0, 56));
 
-        PlaceDownNewRoad(new Vector3Int(54, 0, 51));
-        PlaceDownNewRoad(new Vector3Int(54, 0, 52));
-        PlaceDownNewRoad(new Vector3Int(53, 0, 53));
-        PlaceDownNewRoad(new Vector3Int(53, 0, 54));
-        PlaceDownNewRoad(new Vector3Int(51, 0, 55));
-        PlaceDownNewRoad(new Vector3Int(51, 0, 56));
+        PlaceDownNewRoad(new Vector3Int(4, 0, 51));
+        PlaceDownNewRoad(new Vector3Int(4, 0, 52));
+        PlaceDownNewRoad(new Vector3Int(3, 0, 53));
+        PlaceDownNewRoad(new Vector3Int(3, 0, 54));
+        PlaceDownNewRoad(new Vector3Int(1, 0, 55));
+        PlaceDownNewRoad(new Vector3Int(1, 0, 56));
 
 
-        PlaceDownNewRoad(new Vector3Int(68, 0, 51));
-        PlaceDownNewRoad(new Vector3Int(68, 0, 52));
+        PlaceDownNewRoad(new Vector3Int(8, 0, 51));
+        PlaceDownNewRoad(new Vector3Int(8, 0, 52));
 
-        BuildNewHotdogCar(new Vector3Int(51, 0, 57));
+        BuildNewHotdogCar(new Vector3Int(1, 0, 57));
         // ***
     }
 
@@ -247,7 +258,7 @@ public class WorldManager : MonoBehaviour {
                 hotdogCarPrefabYRotation, hotdogCarPrefabAreaWidth, hotdogCarPrefabAreaLength);
 
             BuildNewStructure(hotdogCar, origoPosition, hotdogCarPrefabAreaWidth, hotdogCarPrefabAreaLength);
-        } 
+        }
     }
 
     public void BuildNewKFC(Vector3Int origoPosition) {
@@ -256,6 +267,15 @@ public class WorldManager : MonoBehaviour {
                 kfcYRotation, kfcAreaWidth, kfcAreaLength);
 
             BuildNewStructure(kfc, origoPosition, kfcAreaWidth, kfcAreaLength);
+        }
+    }
+
+    public void BuildNewCafeRestaurant(Vector3Int origoPosition) {
+        if (CanAreaBePopulatedWithStructure(origoPosition, cafeRestaurantAreaWidth, cafeRestaurantAreaLength)) {
+            Restaurant cafeRestaurant = new Restaurant(cafeRestaurantPrefab, origoPosition, cafeRestaurantPositionOffset,
+                cafeRestaurantYRotation, cafeRestaurantAreaWidth, cafeRestaurantAreaLength);
+
+            BuildNewStructure(cafeRestaurant, origoPosition, cafeRestaurantAreaWidth, cafeRestaurantAreaLength);
         }
     }
 

@@ -17,6 +17,6 @@ public class GameManager : MonoBehaviour {
     }
 
     private void Start() {
-        inputManager.AssignMethodToOnMouseClickAction(worldManager.PlaceDownNewRoad);
+        inputManager.AssignMethodToOnMouseClickAction(worldManager.BuildNewCafeRestaurant);
     }
 }
