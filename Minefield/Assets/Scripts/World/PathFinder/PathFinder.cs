@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 public class PathFinder {
 
-    public static List<Field> FindPath(WorldManager world, Field startField, Field destinationField, bool isAIAgent = false) {
+    public static List<Field> FindPath(WorldManager worldManager, Field startField, Field destinationField, bool isAIAgent = false) {
         List<Field> path = new List<Field>();
 
         List<Field> FieldsTocheck = new List<Field>();
@@ -24,17 +24,17 @@ public class PathFinder {
                 return path;
             }
 
-            foreach (Field adjacentField in world.GetWalkableAdjacentFields(currentField, isAIAgent)) {
-                float newCost = costDictionary[currentField] + world.GetCostOfEnteringField(adjacentField);
+            foreach (Field walkabledjacentField in worldManager.GetWalkableAdjacentFields(currentField, isAIAgent)) {
+                float newCost = costDictionary[currentField] + worldManager.GetCostOfEnteringField(walkabledjacentField);
 
-                if (!costDictionary.ContainsKey(adjacentField) || newCost < costDictionary[adjacentField]) {
-                    costDictionary[adjacentField] = newCost;
+                if (!costDictionary.ContainsKey(walkabledjacentField) || newCost < costDictionary[walkabledjacentField]) {
+                    costDictionary[walkabledjacentField] = newCost;
 
-                    float priority = newCost + ManhattanDistance(destinationField, adjacentField);
-                    FieldsTocheck.Add(adjacentField);
-                    priorityDictionary[adjacentField] = priority;
+                    float priority = newCost + ManhattanDistance(destinationField, walkabledjacentField);
+                    FieldsTocheck.Add(walkabledjacentField);
+                    priorityDictionary[walkabledjacentField] = priority;
 
-                    parentsDictionary[adjacentField] = currentField;
+                    parentsDictionary[walkabledjacentField] = currentField;
                 }
             }
         }
@@ -54,7 +54,7 @@ public class PathFinder {
     }
 
     private static float ManhattanDistance(Field endPos, Field field) {
-        return Math.Abs(endPos.getMainPosition().x - field.getMainPosition().x) + Math.Abs(endPos.getMainPosition().z - field.getMainPosition().z);
+        return Math.Abs(endPos.getOrigoPosition().x - field.getOrigoPosition().x) + Math.Abs(endPos.getOrigoPosition().z - field.getOrigoPosition().z);
     }
 
     public static List<Field> GeneratePath(Dictionary<Field, Field> parentMap, Field endState) {

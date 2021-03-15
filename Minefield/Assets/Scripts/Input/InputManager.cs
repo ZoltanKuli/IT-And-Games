@@ -88,7 +88,7 @@ public class InputManager : MonoBehaviour {
         onMouseUpAction += action;
     }
 
-    public void ResetMousActions() {
+    public void ResetMouseActions() {
         onMouseClickAction = null;
         onMouseHoldAction = null;
         onMouseUpAction = null;

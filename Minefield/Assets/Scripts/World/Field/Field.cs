@@ -8,7 +8,7 @@ public abstract class Field {
         this.origoPosition = origoPosition;
     }
 
-    public Vector3Int getMainPosition() {
+    public Vector3Int getOrigoPosition() {
         return origoPosition;
     }
 }
