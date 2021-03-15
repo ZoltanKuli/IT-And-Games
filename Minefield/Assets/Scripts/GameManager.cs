@@ -30,7 +30,7 @@ public class GameManager : MonoBehaviour {
         System.Random random = new System.Random();
 
         Action<Vector3Int> method = null;
-        switch (random.Next(0, 9)) {
+        switch (random.Next(0, 13)) {
             case 0:
                 method = worldManager.BuildNewHotdogCar;
                 break;
@@ -38,24 +38,36 @@ public class GameManager : MonoBehaviour {
                 method = worldManager.BuildNewKFC;
                 break;
             case 2:
-                method = worldManager.BuildNewCafeRestaurant;
+                method = worldManager.BuildNewOlivegardensRestaurant;
                 break;
             case 3:
-                method = worldManager.BuildNewLondonEye;
+                method = worldManager.BuildNewTaverneRestaurant;
                 break;
             case 4:
-                method = worldManager.BuildNewMerryGoRound;
+                method = worldManager.BuildNewCafeRestaurant;
                 break;
             case 5:
-                method = worldManager.BuildNewRollerCoaster;
+                method = worldManager.BuildNewCafe;
                 break;
             case 6:
-                method = worldManager.BuildNewBasicPark;
+                method = worldManager.BuildNewLondonEye;
                 break;
             case 7:
-                method = worldManager.BuildNewFountainPark;
+                method = worldManager.BuildNewMerryGoRound;
                 break;
             case 8:
+                method = worldManager.BuildNewRollerCoaster;
+                break;
+            case 9:
+                method = worldManager.BuildNewCircusTent;
+                break;
+            case 10:
+                method = worldManager.BuildNewBasicPark;
+                break;
+            case 11:
+                method = worldManager.BuildNewFountainPark;
+                break;
+            case 12:
                 method = worldManager.BuildNewHelicopterPark;
                 break;
         }
