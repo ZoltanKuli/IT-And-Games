@@ -21,6 +21,11 @@ public class GameManager : MonoBehaviour {
 
         uIManager.AssingMethodToOnCafeBuildAction(BuildNewCafe);
         uIManager.AssingMethodToOnCafeRestaurantBuildAction(BuildNewCafeRestaurant);
+
+        uIManager.AssingMethodToOnHotdogCarBuildAction(BuildNewHotdogCar);
+        uIManager.AssingMethodToOnKfcRestaurantBuildAction(BuildNewKfcRestaurant);
+        uIManager.AssingMethodToOnOlivegardenRestaurantBuildAction(BuildNewOlivegardensRestaurant);
+        uIManager.AssingMethodToOnTaverneRestaurantBuildAction(BuildNewTaverneRestaurant);
     }
 
     private void BuildNewCafe()
@@ -31,6 +36,26 @@ public class GameManager : MonoBehaviour {
     private void BuildNewCafeRestaurant()
     {
         ResetMouseActionsAndAssignMethodToOnMouseClickAction(worldManager.BuildNewCafeRestaurant);
+    }
+
+    private void BuildNewHotdogCar()
+    {
+        ResetMouseActionsAndAssignMethodToOnMouseClickAction(worldManager.BuildNewHotdogCar);
+    }
+
+    private void BuildNewKfcRestaurant()
+    {
+        ResetMouseActionsAndAssignMethodToOnMouseClickAction(worldManager.BuildNewKFC);
+    }
+
+    private void BuildNewOlivegardensRestaurant()
+    {
+        ResetMouseActionsAndAssignMethodToOnMouseClickAction(worldManager.BuildNewOlivegardensRestaurant);
+    }
+
+    private void BuildNewTaverneRestaurant()
+    {
+        ResetMouseActionsAndAssignMethodToOnMouseClickAction(worldManager.BuildNewTaverneRestaurant);
     }
 
     private void BuildNewRoad() {
