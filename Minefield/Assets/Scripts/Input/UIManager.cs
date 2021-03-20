@@ -13,6 +13,9 @@ public class UIManager : MonoBehaviour {
     private Button destroyButton;
 
     [SerializeField]
+    private GameObject structurePanel;
+
+    [SerializeField]
     private Color buttonOutlineColor;
     List<Button> buttons;
 
@@ -30,9 +33,7 @@ public class UIManager : MonoBehaviour {
         });
 
         buildStructureButton.onClick.AddListener(() => {
-            ResetButtonColor();
-            ModifyButtonOutline(buildStructureButton);
-            onBuildStructureAction?.Invoke();
+            structurePanel.gameObject.SetActive(true);
         });
 
         destroyButton.onClick.AddListener(() => {
