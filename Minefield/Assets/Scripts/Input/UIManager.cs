@@ -19,6 +19,9 @@ public class UIManager : MonoBehaviour {
 
     [SerializeField]
     private Button restaurantSelectionButton;
+    
+    [SerializeField]
+    private Button attractionSelectionButton;
 
     [SerializeField]
     private GameObject barSelectorPanel;
@@ -45,6 +48,21 @@ public class UIManager : MonoBehaviour {
     private Button taverneRestaurantButton;
 
     [SerializeField]
+    private GameObject attractionSelectorPanel;
+
+    [SerializeField]
+    private Button circustentButton;
+
+    [SerializeField]
+    private Button londoneyeButton;
+
+    [SerializeField]
+    private Button merrygoroundButton;
+
+    [SerializeField]
+    private Button rollercoasterButton;
+
+    [SerializeField]
     private Color buttonOutlineColor;
 
     List<Button> buttons;
@@ -55,16 +73,22 @@ public class UIManager : MonoBehaviour {
 
     private Action onCafeBuildAction;
     private Action onCafeRestaurantBuildAction;
+    
 
     private Action onHotdogCarBuildAction;
     private Action onKfcRestaurantBuildAction;
     private Action onOlivegardensRestaurantBuildAction;
     private Action onTaverneRestaurantBuildAction;
 
+    private Action onCircusTentBuildAction;
+    private Action onLondonEyeBuildAction;
+    private Action onMerryGoRoundBuildAction;
+    private Action onRollerCoasterBuildAction;
+
 
     private void Start() {
         buttons = new List<Button> { buildStructureButton, buildRoadButton, destroyButton };
-        panels = new List<GameObject> { structurePanel, barSelectorPanel, restaurantSelectorPanel };
+        panels = new List<GameObject> { structurePanel, barSelectorPanel, restaurantSelectorPanel, attractionSelectorPanel };
 
         buildRoadButton.onClick.AddListener(() => {
             ResetButtonColor();
@@ -160,6 +184,46 @@ public class UIManager : MonoBehaviour {
             onTaverneRestaurantBuildAction?.Invoke();
             ToggleDisplayPanel(null, false);
         });
+
+
+        attractionSelectionButton.onClick.AddListener(() => {
+            if (attractionSelectorPanel.gameObject.activeSelf) {
+                ToggleDisplayPanel(attractionSelectorPanel, false);
+            } else {
+                ToggleDisplayPanel(attractionSelectorPanel, true);
+            }
+        });
+
+        circustentButton.onClick.AddListener(() => {
+            ResetButtonColor();
+            ModifyButtonOutline(buildStructureButton);
+            onCircusTentBuildAction?.Invoke();
+            ToggleDisplayPanel(null, false);
+        });
+
+        londoneyeButton.onClick.AddListener(() => {
+            ResetButtonColor();
+            ModifyButtonOutline(buildStructureButton);
+            onLondonEyeBuildAction?.Invoke();
+            ToggleDisplayPanel(null, false);
+        });
+
+        merrygoroundButton.onClick.AddListener(() => {
+            ResetButtonColor();
+            ModifyButtonOutline(buildStructureButton);
+            onMerryGoRoundBuildAction?.Invoke();
+            ToggleDisplayPanel(null, false);
+        });
+
+        rollercoasterButton.onClick.AddListener(() => {
+            ResetButtonColor();
+            ModifyButtonOutline(buildStructureButton);
+            onRollerCoasterBuildAction?.Invoke();
+            ToggleDisplayPanel(null, false);
+        });
+
+      
+
     }
 
     private void ModifyButtonOutline(Button button) {
@@ -224,4 +288,18 @@ public class UIManager : MonoBehaviour {
     {
         onTaverneRestaurantBuildAction += action;
     }
+
+    public void AssingMethodToOnCircusTentBuildAction(Action action) {
+        onCircusTentBuildAction += action;
+    }
+    public void AssingMethodToOnLondonEyeBuildAction(Action action) {
+        onLondonEyeBuildAction += action;
+    }
+    public void AssingMethodToOnMerryGoRoundBuildAction(Action action) {
+        onMerryGoRoundBuildAction += action;
+    }
+    public void AssingMethodToOnRollerCoasterBuildAction(Action action) {
+        onRollerCoasterBuildAction += action;
+    }
+
 }

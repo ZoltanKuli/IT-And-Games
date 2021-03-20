@@ -26,6 +26,12 @@ public class GameManager : MonoBehaviour {
         uIManager.AssingMethodToOnKfcRestaurantBuildAction(BuildNewKfcRestaurant);
         uIManager.AssingMethodToOnOlivegardenRestaurantBuildAction(BuildNewOlivegardensRestaurant);
         uIManager.AssingMethodToOnTaverneRestaurantBuildAction(BuildNewTaverneRestaurant);
+
+        uIManager.AssingMethodToOnCircusTentBuildAction(BuildNewCircusTent);
+        uIManager.AssingMethodToOnLondonEyeBuildAction(BuildNewLondonEye);
+        uIManager.AssingMethodToOnMerryGoRoundBuildAction(BuildNewMerryGoRound);
+        uIManager.AssingMethodToOnRollerCoasterBuildAction(BuildNewRollerCoaster);
+
     }
 
     private void BuildNewCafe()
@@ -57,9 +63,20 @@ public class GameManager : MonoBehaviour {
     {
         ResetMouseActionsAndAssignMethodToOnMouseClickAction(worldManager.BuildNewTaverneRestaurant);
     }
-
     private void BuildNewRoad() {
         ResetMouseActionsAndAssignMethodToOnMouseClickAction(worldManager.BuildNewRoad);
+    }
+    private void BuildNewCircusTent() {
+        ResetMouseActionsAndAssignMethodToOnMouseClickAction(worldManager.BuildNewCircusTent);
+    }
+    private void BuildNewLondonEye() {
+        ResetMouseActionsAndAssignMethodToOnMouseClickAction(worldManager.BuildNewLondonEye);
+    }
+    private void BuildNewMerryGoRound() {
+        ResetMouseActionsAndAssignMethodToOnMouseClickAction(worldManager.BuildNewMerryGoRound);
+    }
+    private void BuildNewRollerCoaster() {
+        ResetMouseActionsAndAssignMethodToOnMouseClickAction(worldManager.BuildNewRollerCoaster);
     }
 
     private void BuildNewStructure() {
