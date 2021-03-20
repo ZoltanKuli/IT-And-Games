@@ -4,10 +4,13 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour {
+
     [SerializeField]
     private Button buildRoadButton;
+
     [SerializeField]
     private Button buildStructureButton;
+
     [SerializeField]
     private Button destroyButton;
 
@@ -19,9 +22,12 @@ public class UIManager : MonoBehaviour {
 
     [SerializeField]
     private Button restaurantSelectionButton;
-    
+
     [SerializeField]
     private Button attractionSelectionButton;
+
+    [SerializeField]
+    private Button parkSelectionButton;
 
     [SerializeField]
     private GameObject barSelectorPanel;
@@ -63,6 +69,18 @@ public class UIManager : MonoBehaviour {
     private Button rollercoasterButton;
 
     [SerializeField]
+    private GameObject parkSelectorPanel;
+
+    [SerializeField]
+    private Button parkbasicButton;
+
+    [SerializeField]
+    private Button parkfountainButton;
+
+    [SerializeField]
+    private Button parkhelicopterButton;
+
+    [SerializeField]
     private Color buttonOutlineColor;
 
     List<Button> buttons;
@@ -73,7 +91,7 @@ public class UIManager : MonoBehaviour {
 
     private Action onCafeBuildAction;
     private Action onCafeRestaurantBuildAction;
-    
+
 
     private Action onHotdogCarBuildAction;
     private Action onKfcRestaurantBuildAction;
@@ -85,10 +103,14 @@ public class UIManager : MonoBehaviour {
     private Action onMerryGoRoundBuildAction;
     private Action onRollerCoasterBuildAction;
 
+    private Action onParkBasicBuildAction;
+    private Action onParkFountainBuildAction;
+    private Action onParkHelicopterBuildAction;
+
 
     private void Start() {
         buttons = new List<Button> { buildStructureButton, buildRoadButton, destroyButton };
-        panels = new List<GameObject> { structurePanel, barSelectorPanel, restaurantSelectorPanel, attractionSelectorPanel };
+        panels = new List<GameObject> { structurePanel, barSelectorPanel, restaurantSelectorPanel, attractionSelectorPanel, parkSelectorPanel };
 
         buildRoadButton.onClick.AddListener(() => {
             ResetButtonColor();
@@ -103,88 +125,78 @@ public class UIManager : MonoBehaviour {
         });
 
         buildStructureButton.onClick.AddListener(() => {
-            if (structurePanel.gameObject.activeSelf)
-            {
+            if (structurePanel.gameObject.activeSelf) {
                 ToggleDisplayPanel(structurePanel, false);
-            }
-            else
-            {
+            } else {
                 ToggleDisplayPanel(structurePanel, true);
             }
         });
 
-        barSelectorButton.onClick.AddListener(() =>
-        {
-            if (barSelectorPanel.gameObject.activeSelf)
-            {
+        barSelectorButton.onClick.AddListener(() => {
+            if (barSelectorPanel.gameObject.activeSelf) {
                 ToggleDisplayPanel(barSelectorPanel, false);
-            }
-            else
-            {
+            } else {
                 ToggleDisplayPanel(barSelectorPanel, true);
             }
         });
 
-        restaurantSelectionButton.onClick.AddListener(() =>
-        {
-            if (restaurantSelectorPanel.gameObject.activeSelf)
-            {
+        restaurantSelectionButton.onClick.AddListener(() => {
+            if (restaurantSelectorPanel.gameObject.activeSelf) {
                 ToggleDisplayPanel(restaurantSelectorPanel, false);
-            }
-            else
-            {
+            } else {
                 ToggleDisplayPanel(restaurantSelectorPanel, true);
             }
         });
 
-        cafeButton.onClick.AddListener(() =>
-        {
+        parkSelectionButton.onClick.AddListener(() => {
+            if (parkSelectorPanel.gameObject.activeSelf) {
+                ToggleDisplayPanel(parkSelectorPanel, false);
+            } else {
+                ToggleDisplayPanel(parkSelectorPanel, true);
+            }
+        });
+
+        cafeButton.onClick.AddListener(() => {
             ResetButtonColor();
             ModifyButtonOutline(buildStructureButton);
             onCafeBuildAction?.Invoke();
             ToggleDisplayPanel(null, false);
         });
 
-        cafeRestaurantButton.onClick.AddListener(() =>
-        {
+        cafeRestaurantButton.onClick.AddListener(() => {
             ResetButtonColor();
             ModifyButtonOutline(buildStructureButton);
             onCafeRestaurantBuildAction?.Invoke();
             ToggleDisplayPanel(null, false);
         });
 
-        hotdogCarButton.onClick.AddListener(() =>
-        {
+        hotdogCarButton.onClick.AddListener(() => {
             ResetButtonColor();
             ModifyButtonOutline(buildStructureButton);
             onHotdogCarBuildAction?.Invoke();
             ToggleDisplayPanel(null, false);
         });
 
-        kfcRestaurantButton.onClick.AddListener(() =>
-        {
+        kfcRestaurantButton.onClick.AddListener(() => {
             ResetButtonColor();
             ModifyButtonOutline(buildStructureButton);
             onKfcRestaurantBuildAction?.Invoke();
             ToggleDisplayPanel(null, false);
         });
 
-        olivegardensRestaurantButton.onClick.AddListener(() =>
-        {
+        olivegardensRestaurantButton.onClick.AddListener(() => {
             ResetButtonColor();
             ModifyButtonOutline(buildStructureButton);
             onOlivegardensRestaurantBuildAction?.Invoke();
             ToggleDisplayPanel(null, false);
         });
 
-        taverneRestaurantButton.onClick.AddListener(() =>
-        {
+        taverneRestaurantButton.onClick.AddListener(() => {
             ResetButtonColor();
             ModifyButtonOutline(buildStructureButton);
             onTaverneRestaurantBuildAction?.Invoke();
             ToggleDisplayPanel(null, false);
         });
-
 
         attractionSelectionButton.onClick.AddListener(() => {
             if (attractionSelectorPanel.gameObject.activeSelf) {
@@ -222,8 +234,26 @@ public class UIManager : MonoBehaviour {
             ToggleDisplayPanel(null, false);
         });
 
-      
+        parkbasicButton.onClick.AddListener(() => {
+            ResetButtonColor();
+            ModifyButtonOutline(buildStructureButton);
+            onParkBasicBuildAction?.Invoke();
+            ToggleDisplayPanel(null, false);
+        });
 
+        parkfountainButton.onClick.AddListener(() => {
+            ResetButtonColor();
+            ModifyButtonOutline(buildStructureButton);
+            onParkFountainBuildAction?.Invoke();
+            ToggleDisplayPanel(null, false);
+        });
+
+        parkhelicopterButton.onClick.AddListener(() => {
+            ResetButtonColor();
+            ModifyButtonOutline(buildStructureButton);
+            onParkHelicopterBuildAction?.Invoke();
+            ToggleDisplayPanel(null, false);
+        });
     }
 
     private void ModifyButtonOutline(Button button) {
@@ -238,14 +268,11 @@ public class UIManager : MonoBehaviour {
         }
     }
 
-    private void ToggleDisplayPanel(GameObject currentPanel, bool value)
-    {
-        foreach(GameObject panel in panels) {
-            if (panel == currentPanel)
-            {
+    private void ToggleDisplayPanel(GameObject currentPanel, bool value) {
+        foreach (GameObject panel in panels) {
+            if (panel == currentPanel) {
                 currentPanel.gameObject.SetActive(value);
-            } else
-            {
+            } else {
                 panel.gameObject.SetActive(false);
             }
         }
@@ -259,47 +286,55 @@ public class UIManager : MonoBehaviour {
         onDestroyAction += action;
     }
 
-    public void AssingMethodToOnCafeBuildAction(Action action)
-    {
+    public void AssingMethodToOnCafeBuildAction(Action action) {
         onCafeBuildAction += action;
     }
 
-    public void AssingMethodToOnCafeRestaurantBuildAction(Action action)
-    {
+    public void AssingMethodToOnCafeRestaurantBuildAction(Action action) {
         onCafeRestaurantBuildAction += action;
     }
 
-    public void AssingMethodToOnHotdogCarBuildAction(Action action)
-    {
+    public void AssingMethodToOnHotdogCarBuildAction(Action action) {
         onHotdogCarBuildAction += action;
     }
 
-    public void AssingMethodToOnKfcRestaurantBuildAction(Action action)
-    {
+    public void AssingMethodToOnKfcRestaurantBuildAction(Action action) {
         onKfcRestaurantBuildAction += action;
     }
 
-    public void AssingMethodToOnOlivegardenRestaurantBuildAction(Action action)
-    {
+    public void AssingMethodToOnOlivegardenRestaurantBuildAction(Action action) {
         onOlivegardensRestaurantBuildAction += action;
     }
 
-    public void AssingMethodToOnTaverneRestaurantBuildAction(Action action)
-    {
+    public void AssingMethodToOnTaverneRestaurantBuildAction(Action action) {
         onTaverneRestaurantBuildAction += action;
     }
 
     public void AssingMethodToOnCircusTentBuildAction(Action action) {
         onCircusTentBuildAction += action;
     }
+
     public void AssingMethodToOnLondonEyeBuildAction(Action action) {
         onLondonEyeBuildAction += action;
     }
+
     public void AssingMethodToOnMerryGoRoundBuildAction(Action action) {
         onMerryGoRoundBuildAction += action;
     }
+
     public void AssingMethodToOnRollerCoasterBuildAction(Action action) {
         onRollerCoasterBuildAction += action;
     }
 
+    public void AssingMethodToOnParkBasicBuildAction(Action action) {
+        onParkBasicBuildAction += action;
+    }
+
+    public void AssingMethodToOnParkFountainBuildAction(Action action) {
+        onParkFountainBuildAction += action;
+    }
+
+    public void AssingMethodToOnParkHelicopterBuildAction(Action action) {
+        onParkHelicopterBuildAction += action;
+    }
 }

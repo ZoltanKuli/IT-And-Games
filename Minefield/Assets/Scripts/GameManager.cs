@@ -32,100 +32,65 @@ public class GameManager : MonoBehaviour {
         uIManager.AssingMethodToOnMerryGoRoundBuildAction(BuildNewMerryGoRound);
         uIManager.AssingMethodToOnRollerCoasterBuildAction(BuildNewRollerCoaster);
 
+        uIManager.AssingMethodToOnParkBasicBuildAction(BuildNewParkBasic);
+        uIManager.AssingMethodToOnParkFountainBuildAction(BuildNewParkFountain);
+        uIManager.AssingMethodToOnParkHelicopterBuildAction(BuildNewParkHelicopter);
     }
 
-    private void BuildNewCafe()
-    {
+    private void BuildNewCafe() {
         ResetMouseActionsAndAssignMethodToOnMouseClickAction(worldManager.BuildNewCafe);
     }
 
-    private void BuildNewCafeRestaurant()
-    {
+    private void BuildNewCafeRestaurant() {
         ResetMouseActionsAndAssignMethodToOnMouseClickAction(worldManager.BuildNewCafeRestaurant);
     }
 
-    private void BuildNewHotdogCar()
-    {
+    private void BuildNewHotdogCar() {
         ResetMouseActionsAndAssignMethodToOnMouseClickAction(worldManager.BuildNewHotdogCar);
     }
 
-    private void BuildNewKfcRestaurant()
-    {
+    private void BuildNewKfcRestaurant() {
         ResetMouseActionsAndAssignMethodToOnMouseClickAction(worldManager.BuildNewKFC);
     }
 
-    private void BuildNewOlivegardensRestaurant()
-    {
+    private void BuildNewOlivegardensRestaurant() {
         ResetMouseActionsAndAssignMethodToOnMouseClickAction(worldManager.BuildNewOlivegardensRestaurant);
     }
 
-    private void BuildNewTaverneRestaurant()
-    {
+    private void BuildNewTaverneRestaurant() {
         ResetMouseActionsAndAssignMethodToOnMouseClickAction(worldManager.BuildNewTaverneRestaurant);
     }
+
     private void BuildNewRoad() {
         ResetMouseActionsAndAssignMethodToOnMouseClickAction(worldManager.BuildNewRoad);
     }
+
     private void BuildNewCircusTent() {
         ResetMouseActionsAndAssignMethodToOnMouseClickAction(worldManager.BuildNewCircusTent);
     }
+
     private void BuildNewLondonEye() {
         ResetMouseActionsAndAssignMethodToOnMouseClickAction(worldManager.BuildNewLondonEye);
     }
+
     private void BuildNewMerryGoRound() {
         ResetMouseActionsAndAssignMethodToOnMouseClickAction(worldManager.BuildNewMerryGoRound);
     }
+
     private void BuildNewRollerCoaster() {
         ResetMouseActionsAndAssignMethodToOnMouseClickAction(worldManager.BuildNewRollerCoaster);
     }
 
-    private void BuildNewStructure() {
-        System.Random random = new System.Random();
+    private void BuildNewParkBasic() {
+        ResetMouseActionsAndAssignMethodToOnMouseClickAction(worldManager.BuildNewBasicPark);
+    }
 
-        Action<Vector3Int> method = null;
-        switch (random.Next(0, 13)) {
-            case 0:
-                method = worldManager.BuildNewHotdogCar;
-                break;
-            case 1:
-                method = worldManager.BuildNewKFC;
-                break;
-            case 2:
-                method = worldManager.BuildNewOlivegardensRestaurant;
-                break;
-            case 3:
-                method = worldManager.BuildNewTaverneRestaurant;
-                break;
-            case 4:
-                method = worldManager.BuildNewCafeRestaurant;
-                break;
-            case 5:
-                method = worldManager.BuildNewCafe;
-                break;
-            case 6:
-                method = worldManager.BuildNewLondonEye;
-                break;
-            case 7:
-                method = worldManager.BuildNewMerryGoRound;
-                break;
-            case 8:
-                method = worldManager.BuildNewRollerCoaster;
-                break;
-            case 9:
-                method = worldManager.BuildNewCircusTent;
-                break;
-            case 10:
-                method = worldManager.BuildNewBasicPark;
-                break;
-            case 11:
-                method = worldManager.BuildNewFountainPark;
-                break;
-            case 12:
-                method = worldManager.BuildNewHelicopterPark;
-                break;
-        }
+    private void BuildNewParkFountain() {
+        ResetMouseActionsAndAssignMethodToOnMouseClickAction(worldManager.BuildNewFountainPark);
+    }
 
-        ResetMouseActionsAndAssignMethodToOnMouseClickAction(method);
+    private void BuildNewParkHelicopter() {
+        ResetMouseActionsAndAssignMethodToOnMouseClickAction(worldManager.BuildNewHelicopterPark);
     }
 
     private void Destroy() {
