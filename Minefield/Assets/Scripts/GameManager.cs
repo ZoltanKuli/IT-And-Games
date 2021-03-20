@@ -16,10 +16,21 @@ public class GameManager : MonoBehaviour {
     private WorldManager worldManager;
 
     private void Start() {
-
         uIManager.AssignMethodToOnBuildRoadAction(BuildNewRoad);
-        uIManager.AssignMethodToOnBuildStructureAction(BuildNewStructure);
         uIManager.AssignMethodToOnDestroyAction(Destroy);
+
+        uIManager.AssingMethodToOnCafeBuildAction(BuildNewCafe);
+        uIManager.AssingMethodToOnCafeRestaurantBuildAction(BuildNewCafeRestaurant);
+    }
+
+    private void BuildNewCafe()
+    {
+        ResetMouseActionsAndAssignMethodToOnMouseClickAction(worldManager.BuildNewCafe);
+    }
+
+    private void BuildNewCafeRestaurant()
+    {
+        ResetMouseActionsAndAssignMethodToOnMouseClickAction(worldManager.BuildNewCafeRestaurant);
     }
 
     private void BuildNewRoad() {
