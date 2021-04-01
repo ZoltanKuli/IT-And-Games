@@ -165,6 +165,9 @@ public class WorldManager : MonoBehaviour {
     [SerializeField]
     private float helicopterParkYRotation;
 
+    /// <summary>
+    /// Initialize FieldWorldMatrix.
+    /// </summary>
     public void Start() {
         InitializeFieldWorldMatrix();
 
@@ -189,7 +192,10 @@ public class WorldManager : MonoBehaviour {
         BuildNewCircusTent(new Vector3Int(53, 0, 51));
         BuildNewRollerCoaster(new Vector3Int(67, 0, 51));
     }
-
+    
+    /// <summary>
+    /// Initialize FieldWorldMatrix.
+    /// </summary>
     private void InitializeFieldWorldMatrix() {
         worldMatrix = new Field[worldMatrixWidth, worldMatrixLength];
 
@@ -200,6 +206,9 @@ public class WorldManager : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// Build a new road according to its surroundings. (e.g. Crossroads, Turns)
+    /// </summary>
     public void BuildNewRoad(Vector3Int origoPosition) {
         if (isFieldInBounds(origoPosition)
             && worldMatrix[origoPosition.x, origoPosition.z] is EmptyField) {
@@ -224,14 +233,20 @@ public class WorldManager : MonoBehaviour {
             adjustOrthogonallyAdjacentRoads(origoPosition);
         }
     }
-
+    
+    /// <summary>
+    /// Adjust orthogonally adjacent roads.
+    /// </summary>
     private void adjustOrthogonallyAdjacentRoads(Vector3Int origoPosition) {
         adjustRoad(new Vector3Int(origoPosition.x - 1, origoPosition.y, origoPosition.z));
         adjustRoad(new Vector3Int(origoPosition.x, origoPosition.y, origoPosition.z + 1));
         adjustRoad(new Vector3Int(origoPosition.x + 1, origoPosition.y, origoPosition.z));
         adjustRoad(new Vector3Int(origoPosition.x, origoPosition.y, origoPosition.z - 1));
     }
-
+       
+    /// <summary>
+    /// Adjust road.
+    /// </summary>
     private void adjustRoad(Vector3Int origoPosition) {
         if (isFieldInBounds(origoPosition)
             && worldMatrix[origoPosition.x, origoPosition.z] is Road) {
@@ -256,6 +271,10 @@ public class WorldManager : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// Build a road according to the number of non road fields orthogonally.
+    /// If this number is 4, build a straight road.
+    /// </summary>
     private void BuildNewRoadIfNumberOfOrthogonallyAdjacentNonRoadFieldsIsFour(Vector3Int origoPosition, int numberOfOrthogonallyAdjacentNonRoadFields) {
         if (numberOfOrthogonallyAdjacentNonRoadFields == 4) {
             worldMatrix[origoPosition.x, origoPosition.z] =
@@ -263,6 +282,10 @@ public class WorldManager : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// Build a road according the number of non road fields orthogonally.
+    /// If this number is 3, build a straight road that has the correct angle.
+    /// </summary>
     private void BuildNewRoadIfNumberOfOrthogonallyAdjacentNonRoadFieldsIsThree(Vector3Int origoPosition, int numberOfOrthogonallyAdjacentNonRoadFields,
         List<Field> orthogonallyAdjacentFields, List<Road> adjacentRoads) {
         if (numberOfOrthogonallyAdjacentNonRoadFields == 3) {
@@ -273,6 +296,10 @@ public class WorldManager : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// Build a road according the number of non road fields orthogonally.
+    /// If this number is 2, build a corner road that has the correct angle.
+    /// </summary>
     private void BuildNewRoadIfNumberOfOrthogonallyAdjacentNonRoadFieldsIsTwo(Vector3Int origoPosition, int numberOfOrthogonallyAdjacentNonRoadFields,
         List<Field> orthogonallyAdjacentFields, List<Road> adjacentRoads) {
         if (numberOfOrthogonallyAdjacentNonRoadFields == 2) {
@@ -299,6 +326,10 @@ public class WorldManager : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// Build a road according the number of non road fields orthogonally.
+    /// If this number is 1, build a three way road that has the correct angle.
+    /// </summary>
     private void BuildNewRoadIfNumberOfOrthogonallyAdjacentNonRoadFieldsIsOne(Vector3Int origoPosition, int numberOfOrthogonallyAdjacentNonRoadFields,
         List<Field> orthogonallyAdjacentFields, List<Field> adjacentNonRoadFields) {
         if (numberOfOrthogonallyAdjacentNonRoadFields == 1) {
@@ -309,6 +340,10 @@ public class WorldManager : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// Build a road according the number of non road fields orthogonally.
+    /// If this number is 0, build a four way road.
+    /// </summary>
     private void BuildNewRoadIfNumberOfOrthogonallyAdjacentNonRoadFieldsIsZero(Vector3Int origoPosition, int numberOfOrthogonallyAdjacentNonRoadFields) {
         if (numberOfOrthogonallyAdjacentNonRoadFields == 0) {
             worldMatrix[origoPosition.x, origoPosition.z] =
@@ -316,11 +351,17 @@ public class WorldManager : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// Get walkable adjacent fields.
+    /// </summary>
     public List<Field> GetWalkableAdjacentFields(Field field, bool isAIAgent) {
         return GetOrthogonallyAdjecentFields(field.getOrigoPosition())
              .FindAll(orthogonallyAdjacentField => IsFieldWalkable(field, isAIAgent));
     }
 
+    /// <summary>
+    /// Is field walkable.
+    /// </summary>
     public static bool IsFieldWalkable(Field field, bool isAIAgent) {
         if (isAIAgent) {
             return field is Road;
@@ -329,6 +370,9 @@ public class WorldManager : MonoBehaviour {
         return field is EmptyField || field is Road;
     }
 
+    /// <summary>
+    /// Get orthogonally adjecent fields.
+    /// </summary>
     public List<Field> GetOrthogonallyAdjecentFields(Vector3Int origoPosition) {
         List<Field> orthogonallyAdjacentFields = new List<Field>();
 
@@ -363,6 +407,9 @@ public class WorldManager : MonoBehaviour {
         return 1;
     }
 
+    /// <summary>
+    /// Build new HotdogCar.
+    /// </summary>
     public void BuildNewHotdogCar(Vector3Int origoPosition) {
         if (CanAreaBePopulatedWithStructure(origoPosition, hotdogCarPrefabAreaWidth, hotdogCarPrefabAreaLength)) {
             Restaurant hotdogCar = new Restaurant(hotdogCarPrefab, origoPosition, hotdogCarPrefabPositionOffset,
@@ -372,6 +419,9 @@ public class WorldManager : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// Build new KFC.
+    /// </summary>
     public void BuildNewKFC(Vector3Int origoPosition) {
         if (CanAreaBePopulatedWithStructure(origoPosition, kfcAreaWidth, kfcAreaLength)) {
             Restaurant kfc = new Restaurant(kfcPrefab, origoPosition, kfcPositionOffset,
@@ -380,7 +430,10 @@ public class WorldManager : MonoBehaviour {
             BuildNewStructure(kfc, origoPosition, kfcAreaWidth, kfcAreaLength);
         }
     }
-
+ 
+    /// <summary>
+    /// Build new OlivegardensRestaurant.
+    /// </summary>
     public void BuildNewOlivegardensRestaurant(Vector3Int origoPosition) {
         if (CanAreaBePopulatedWithStructure(origoPosition, olivegardensRestaurantAreaWidth, olivegardensRestaurantAreaLength)) {
             Restaurant olivegardensRestaurant = new Restaurant(olivegardensRestaurantPrefab, origoPosition, olivegardensRestaurantPositionOffset,
@@ -389,7 +442,10 @@ public class WorldManager : MonoBehaviour {
             BuildNewStructure(olivegardensRestaurant, origoPosition, olivegardensRestaurantAreaWidth, olivegardensRestaurantAreaLength);
         }
     }
-
+ 
+    /// <summary>
+    /// Build new TaverneRestaurant.
+    /// </summary>
     public void BuildNewTaverneRestaurant(Vector3Int origoPosition) {
         if (CanAreaBePopulatedWithStructure(origoPosition, taverneRestaurantAreaWidth, taverneRestaurantAreaLength)) {
             Restaurant taverneRestaurant = new Restaurant(taverneRestaurantPrefab, origoPosition, taverneRestaurantPositionOffset,
@@ -398,7 +454,10 @@ public class WorldManager : MonoBehaviour {
             BuildNewStructure(taverneRestaurant, origoPosition, taverneRestaurantAreaWidth, taverneRestaurantAreaLength);
         }
     }
-
+  
+    /// <summary>
+    /// Build new CafeRestaurant.
+    /// </summary>
     public void BuildNewCafeRestaurant(Vector3Int origoPosition) {
         if (CanAreaBePopulatedWithStructure(origoPosition, cafeRestaurantAreaWidth, cafeRestaurantAreaLength)) {
             Bar cafeRestaurant = new Bar(cafeRestaurantPrefab, origoPosition, cafeRestaurantPositionOffset,
@@ -407,7 +466,10 @@ public class WorldManager : MonoBehaviour {
             BuildNewStructure(cafeRestaurant, origoPosition, cafeRestaurantAreaWidth, cafeRestaurantAreaLength);
         }
     }
-
+      
+    /// <summary>
+    /// Build new Cafe.
+    /// </summary>
     public void BuildNewCafe(Vector3Int origoPosition) {
         if (CanAreaBePopulatedWithStructure(origoPosition, cafeAreaWidth, cafeAreaLength)) {
             Bar cafe = new Bar(cafePrefab, origoPosition, cafePositionOffset,
@@ -416,7 +478,10 @@ public class WorldManager : MonoBehaviour {
             BuildNewStructure(cafe, origoPosition, cafeAreaWidth, cafeAreaLength);
         }
     }
-
+       
+    /// <summary>
+    /// Build new LondonEye.
+    /// </summary>
     public void BuildNewLondonEye(Vector3Int origoPosition) {
         if (CanAreaBePopulatedWithStructure(origoPosition, londonEyeAreaWidth, londonEyeAreaLength)) {
             Attraction londonEye = new Attraction(londonEyePrefab, origoPosition, londonEyePositionOffset,
@@ -425,7 +490,10 @@ public class WorldManager : MonoBehaviour {
             BuildNewStructure(londonEye, origoPosition, londonEyeAreaWidth, londonEyeAreaLength);
         }
     }
-
+       
+    /// <summary>
+    /// Build new MerryGoRound.
+    /// </summary>
     public void BuildNewMerryGoRound(Vector3Int origoPosition) {
         if (CanAreaBePopulatedWithStructure(origoPosition, merryGoRoundAreaWidth, merryGoRoundAreaLength)) {
             Attraction merryGoRound = new Attraction(merryGoRoundPrefab, origoPosition, merryGoRoundPositionOffset,
@@ -434,7 +502,10 @@ public class WorldManager : MonoBehaviour {
             BuildNewStructure(merryGoRound, origoPosition, merryGoRoundAreaWidth, merryGoRoundAreaLength);
         }
     }
-
+       
+    /// <summary>
+    /// Build new RollerCoaster.
+    /// </summary>
     public void BuildNewRollerCoaster(Vector3Int origoPosition) {
         if (CanAreaBePopulatedWithStructure(origoPosition, rollerCoasterAreaWidth, rollerCoasterAreaLength)) {
             Attraction rollerCoaster = new Attraction(rollerCoasterPrefab, origoPosition, rollerCoasterPositionOffset,
@@ -443,7 +514,10 @@ public class WorldManager : MonoBehaviour {
             BuildNewStructure(rollerCoaster, origoPosition, rollerCoasterAreaWidth, rollerCoasterAreaLength);
         }
     }
-
+      
+    /// <summary>
+    /// Build new CircusTent.
+    /// </summary>
     public void BuildNewCircusTent(Vector3Int origoPosition) {
         if (CanAreaBePopulatedWithStructure(origoPosition, circusTentAreaWidth, circusTentAreaLength)) {
             Attraction circusTent = new Attraction(circusTentPrefab, origoPosition, circusTentPositionOffset,
@@ -452,7 +526,10 @@ public class WorldManager : MonoBehaviour {
             BuildNewStructure(circusTent, origoPosition, circusTentAreaWidth, circusTentAreaLength);
         }
     }
-
+     
+    /// <summary>
+    /// Build new BasicPark.
+    /// </summary>
     public void BuildNewBasicPark(Vector3Int origoPosition) {
         if (CanAreaBePopulatedWithStructure(origoPosition, basicParkAreaWidth, basicParkAreaLength)) {
             Park basicPark = new Park(basicParkPrefab, origoPosition, basicParkPositionOffset,
@@ -461,7 +538,10 @@ public class WorldManager : MonoBehaviour {
             BuildNewStructure(basicPark, origoPosition, basicParkAreaWidth, basicParkAreaLength);
         }
     }
-
+     
+    /// <summary>
+    /// Build new FountainPark.
+    /// </summary>
     public void BuildNewFountainPark(Vector3Int origoPosition) {
         if (CanAreaBePopulatedWithStructure(origoPosition, fountainParkAreaWidth, fountainParkAreaLength)) {
             Park fountainPark = new Park(fountainParkPrefab, origoPosition, fountainParkPositionOffset,
@@ -470,7 +550,10 @@ public class WorldManager : MonoBehaviour {
             BuildNewStructure(fountainPark, origoPosition, fountainParkAreaWidth, fountainParkAreaLength);
         }
     }
-
+     
+    /// <summary>
+    /// Build new HelicopterPark.
+    /// </summary>
     public void BuildNewHelicopterPark(Vector3Int origoPosition) {
         if (CanAreaBePopulatedWithStructure(origoPosition, helicopterParkAreaWidth, helicopterParkAreaLength)) {
             Park helicopterPark = new Park(helicopterParkPrefab, origoPosition, helicopterParkPositionOffset,
@@ -479,7 +562,10 @@ public class WorldManager : MonoBehaviour {
             BuildNewStructure(helicopterPark, origoPosition, helicopterParkAreaWidth, helicopterParkAreaLength);
         }
     }
-
+         
+    /// <summary>
+    /// Build new Structure.
+    /// </summary>
     private void BuildNewStructure(Structure structure, Vector3Int origoPosition, int areaWidth, int areaLength) {
         Debug.Log(origoPosition);
 
@@ -492,12 +578,18 @@ public class WorldManager : MonoBehaviour {
         SetNatureGameObjectsVisibilityOfArea(origoPosition, areaWidth, areaLength, false);
     }
 
+    /// <summary>
+    /// Can area be populated with structure.
+    /// </summary>
     private bool CanAreaBePopulatedWithStructure(Vector3Int origoPosition, int areaWidth, int areaLength) {
         return isAreaInBounds(origoPosition, areaWidth, areaLength)
-            && DoesAreaConsistOfOnlyEmptyField(origoPosition, areaWidth, areaLength)
+            && DoesAreaConsistOfOnlyEmptyFields(origoPosition, areaWidth, areaLength)
             && DoesAreaHaveOrthogonallyAdjecentRoadNextToIt(origoPosition, areaWidth, areaLength);
     }
 
+    /// <summary>
+    /// Does area have orthogonally adjecent road next to it.
+    /// </summary>
     private bool DoesAreaHaveOrthogonallyAdjecentRoadNextToIt(Vector3Int origoPosition, int areaWidth, int areaLength) {
         if (0 < origoPosition.z) {
             for (int i = origoPosition.x; i < origoPosition.x + areaWidth; i++) {
@@ -534,8 +626,11 @@ public class WorldManager : MonoBehaviour {
 
         return false;
     }
-
-    private bool DoesAreaConsistOfOnlyEmptyField(Vector3Int origoPosition, int areaWidth, int areaLength) {
+ 
+    /// <summary>
+    /// Does area consist of only empty fields.
+    /// </summary>
+    private bool DoesAreaConsistOfOnlyEmptyFields(Vector3Int origoPosition, int areaWidth, int areaLength) {
         for (int i = origoPosition.x; i < origoPosition.x + areaWidth; i++) {
             for (int j = origoPosition.z; j < origoPosition.z + areaLength; j++) {
                 if (!(worldMatrix[i, j] is EmptyField)) {
@@ -547,11 +642,17 @@ public class WorldManager : MonoBehaviour {
         return true;
     }
 
+    /// <summary>
+    /// Destroy the PopulatedField with the given origo position. 
+    /// </summary>
     public void Destroy(Vector3Int origoPosition) {
         DestroyStructure(origoPosition);
         DestroyRoad(origoPosition);
     }
 
+    /// <summary>
+    /// Destroy road.
+    /// </summary>
     private void DestroyRoad(Vector3Int origoPosition) {
         if (isFieldInBounds(origoPosition)
             && worldMatrix[origoPosition.x, origoPosition.z] is Road) {
@@ -567,6 +668,9 @@ public class WorldManager : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// Destroy structure.
+    /// </summary>
     private void DestroyStructure(Vector3Int origoPosition) {
         Field field = worldMatrix[origoPosition.x, origoPosition.z];
 
@@ -585,16 +689,25 @@ public class WorldManager : MonoBehaviour {
             }
         }
     }
-
+    
+    /// <summary>
+    /// Is field in bounds.
+    /// </summary>
     private bool isFieldInBounds(Vector3Int origoPosition) {
         return isAreaInBounds(origoPosition, 1, 1);
     }
-
+       
+    /// <summary>
+    /// Is area in bounds.
+    /// </summary>
     private bool isAreaInBounds(Vector3Int origoPosition, int areaWidth, int areaLength) {
         return 0 <= origoPosition.x && origoPosition.x + areaWidth < worldMatrixWidth
             && 0 <= origoPosition.z && origoPosition.z + areaLength < worldMatrixLength;
     }
-
+          
+    /// <summary>
+    /// Set nature game objects visibility of area.
+    /// </summary>
     private void SetNatureGameObjectsVisibilityOfArea(Vector3Int origoPosition, int areaWidth, int areaLength, bool isVisible) {
         for (int i = origoPosition.x; i < origoPosition.x + areaWidth; i++) {
             for (int j = origoPosition.z; j < origoPosition.z + areaLength; j++) {
@@ -602,7 +715,10 @@ public class WorldManager : MonoBehaviour {
             }
         }
     }
-
+             
+    /// <summary>
+    /// Set nature game objects visibility of field.
+    /// </summary>
     private void SetNatureGameObjectsVisibilityOfField(Vector3Int origoPosition, bool isVisible) {
         RaycastHit[] raycastHits = Physics.BoxCastAll(origoPosition + new Vector3(0, 0.5f, 0),
             new Vector3(0.5f, 0.5f, 0.5f), transform.up, Quaternion.identity, 1f, natureMask);
