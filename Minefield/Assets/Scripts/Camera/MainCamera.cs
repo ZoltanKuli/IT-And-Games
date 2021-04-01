@@ -30,11 +30,17 @@ public class MainCamera : MonoBehaviour {
     private float lowerZoomBound;
     [SerializeField]
     private float upperZoomBound;
-
+    
+    /// <summary>
+    /// Initialize mainCamera.
+    /// </summary>
     public void Start() {
         mainCamera = GetComponent<Camera>();
     }
 
+    /// <summary>
+    /// Move camera.
+    /// </summary>
     public void MoveCamera(Vector3 cameraMovementOffset) {
         cameraMovementOffset = Quaternion.Euler(mainCamera.transform.rotation.x,
             mainCamera.transform.rotation.y, mainCamera.transform.rotation.z)
@@ -53,7 +59,10 @@ public class MainCamera : MonoBehaviour {
         mainCamera.transform.position = Vector3.Lerp(originalCameraPosition, newCameraPosition, movementSpeed * Time.deltaTime);
     }
 
-    public void ChaneCameraZoom(Vector3 cameraZoomOffset, Vector3 cameraRotationOffset) {
+    /// <summary>
+    /// Change camera zoom.
+    /// </summary>
+    public void ChangeCameraZoom(Vector3 cameraZoomOffset, Vector3 cameraRotationOffset) {
         cameraZoomOffset = new Vector3(cameraZoomOffset.x, cameraZoomOffset.y * cameraZoomAmountY, cameraZoomOffset.z * cameraZoomAmountZ);
         cameraRotationOffset = new Vector3(cameraRotationOffset.x * cameraRotationAmountX, cameraRotationOffset.y, cameraRotationOffset.z);
         cameraZoomOffset = Quaternion.Euler(mainCamera.transform.rotation.x,

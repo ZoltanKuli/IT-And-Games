@@ -1,0 +1,13 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\Minefield",
+    "\\Minefield\\Assets",
+    "\\Minefield\\Assets\\Scripts",
+    "\\Minefield\\Assets\\Scripts\\Input",
+    "\\Minefield\\Assets\\Scripts\\World",
+    "\\Minefield\\Assets\\Scripts\\World\\Field"
+  ],
+  "SelectedNode": "\\Minefield\\Assets\\Scripts\\GameManager.cs",
+  "PreviewInSolutionExplorer": false
+}
