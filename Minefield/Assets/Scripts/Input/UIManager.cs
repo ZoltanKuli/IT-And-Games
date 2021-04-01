@@ -107,7 +107,9 @@ public class UIManager : MonoBehaviour {
     private Action onParkFountainBuildAction;
     private Action onParkHelicopterBuildAction;
 
-
+    /// <summary>
+    /// Connect the menu buttons with the pairing building method.
+    /// </summary>
     private void Start() {
         buttons = new List<Button> { buildStructureButton, buildRoadButton, destroyButton };
         panels = new List<GameObject> { structurePanel, barSelectorPanel, restaurantSelectorPanel, attractionSelectorPanel, parkSelectorPanel };
@@ -255,19 +257,28 @@ public class UIManager : MonoBehaviour {
             ToggleDisplayPanel(null, false);
         });
     }
-
+      
+    /// <summary>
+    /// Modify button outline.
+    /// </summary>
     private void ModifyButtonOutline(Button button) {
         var outline = button.GetComponent<Outline>();
         outline.effectColor = buttonOutlineColor;
         outline.enabled = true;
     }
-
+        
+    /// <summary>
+    /// Reset button color.
+    /// </summary>
     private void ResetButtonColor() {
         foreach (Button button in buttons) {
             button.GetComponent<Outline>().enabled = false;
         }
     }
 
+    /// <summary>
+    /// Show the correct panel when clicking one in the menu.
+    /// </summary>
     private void ToggleDisplayPanel(GameObject currentPanel, bool value) {
         foreach (GameObject panel in panels) {
             if (panel == currentPanel) {
@@ -277,63 +288,108 @@ public class UIManager : MonoBehaviour {
             }
         }
     }
-
+    
+    /// <summary>
+    /// Assign method to on build road action.
+    /// </summary>
     public void AssignMethodToOnBuildRoadAction(Action action) {
         onBuildRoadAction += action;
     }
-
+       
+    /// <summary>
+    /// Assign method to on destroy action.
+    /// </summary>
     public void AssignMethodToOnDestroyAction(Action action) {
         onDestroyAction += action;
     }
-
+          
+    /// <summary>
+    /// Assing method to on cafe build action.
+    /// </summary>
     public void AssingMethodToOnCafeBuildAction(Action action) {
         onCafeBuildAction += action;
     }
-
+             
+    /// <summary>
+    /// Assing method to on CafeRestaurant build action.
+    /// </summary>
     public void AssingMethodToOnCafeRestaurantBuildAction(Action action) {
         onCafeRestaurantBuildAction += action;
     }
-
+                
+    /// <summary>
+    /// Assing method to on HotdogCar build action.
+    /// </summary>
     public void AssingMethodToOnHotdogCarBuildAction(Action action) {
         onHotdogCarBuildAction += action;
     }
-
+                   
+    /// <summary>
+    /// Assing method to on KfcRestaurant build action.
+    /// </summary>
     public void AssingMethodToOnKfcRestaurantBuildAction(Action action) {
         onKfcRestaurantBuildAction += action;
     }
-
+                      
+    /// <summary>
+    /// Assing method to on OlivegardenRestaurant build action.
+    /// </summary>
     public void AssingMethodToOnOlivegardenRestaurantBuildAction(Action action) {
         onOlivegardensRestaurantBuildAction += action;
     }
-
+                         
+    /// <summary>
+    /// Assing method to on TaverneRestaurant build action.
+    /// </summary>
     public void AssingMethodToOnTaverneRestaurantBuildAction(Action action) {
         onTaverneRestaurantBuildAction += action;
     }
-
+                            
+    /// <summary>
+    /// Assing method to on CircusTent build action.
+    /// </summary>
     public void AssingMethodToOnCircusTentBuildAction(Action action) {
         onCircusTentBuildAction += action;
     }
-
+                               
+    /// <summary>
+    /// Assing method to on LondonEye build action.
+    /// </summary>
     public void AssingMethodToOnLondonEyeBuildAction(Action action) {
         onLondonEyeBuildAction += action;
     }
-
+                                  
+    /// <summary>
+    /// Assing method to on MerryGoRound build action.
+    /// </summary>
     public void AssingMethodToOnMerryGoRoundBuildAction(Action action) {
         onMerryGoRoundBuildAction += action;
     }
-
+                                     
+    /// <summary>
+    /// Assing method to on RollerCoaster build action.
+    /// </summary>
     public void AssingMethodToOnRollerCoasterBuildAction(Action action) {
         onRollerCoasterBuildAction += action;
     }
-
+                                        
+    /// <summary>
+    /// Assing method to on ParkBasic build action.
+    /// </summary>
     public void AssingMethodToOnParkBasicBuildAction(Action action) {
         onParkBasicBuildAction += action;
     }
-
+                                            
+    /// <summary>
+    /// Assing method to on ParkFountain build action.
+    /// </summary>
     public void AssingMethodToOnParkFountainBuildAction(Action action) {
         onParkFountainBuildAction += action;
     }
-
+                                               
+    /// <summary>
+    /// Assing method to on ParkHelicopter build action.
+    /// </summary>
     public void AssingMethodToOnParkHelicopterBuildAction(Action action) {
         onParkHelicopterBuildAction += action;
     }
