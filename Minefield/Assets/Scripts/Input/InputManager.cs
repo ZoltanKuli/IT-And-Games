@@ -25,6 +25,9 @@ public class InputManager : MonoBehaviour {
         UpdateCameraZoomOffset();
     }
 
+    /// <summary>
+    /// Returns the rounded click position.
+    /// </summary>
     private Vector3Int? RaycastGround() {
         RaycastHit raycastHit;
         Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
@@ -37,6 +40,9 @@ public class InputManager : MonoBehaviour {
         return null;
     }
 
+    /// <summary>
+    /// Invoke mouse click action if applicable.
+    /// </summary>
     private void InvokeMouseClickActionIfApplicable() {
         if (Input.GetMouseButtonDown(0) && EventSystem.current.IsPointerOverGameObject() == false) {
             var position = RaycastGround();
@@ -45,6 +51,9 @@ public class InputManager : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// Invoke mouse hold action if applicable.
+    /// </summary>
     private void InvokeMouseHoldActionIfApplicable() {
         if (Input.GetMouseButton(0) && EventSystem.current.IsPointerOverGameObject() == false) {
             var position = RaycastGround();
@@ -53,16 +62,25 @@ public class InputManager : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// Invoke mouse up action if applicable.
+    /// </summary>
     private void InvokeMouseUpActionIfApplicable() {
         if (Input.GetMouseButtonUp(0) && EventSystem.current.IsPointerOverGameObject() == false) {
             onMouseUpAction?.Invoke();
         }
     }
 
+    /// <summary>
+    /// Update camera movement offset.
+    /// </summary>
     private void UpdateCameraMovementOffset() {
         cameraMovementOffset = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
     }
 
+    /// <summary>
+    /// Update camera zoom offset.
+    /// </summary>
     private void UpdateCameraZoomOffset() {
         cameraZoomOffset = new Vector3(0, 0, 0);
         cameraRotationOffset = new Vector3(0, 0, 0);
@@ -76,32 +94,53 @@ public class InputManager : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// Assign method to on mouse click action.
+    /// </summary>
     public void AssignMethodToOnMouseClickAction(Action<Vector3Int> action) {
         onMouseClickAction += action;
     }
 
+    /// <summary>
+    /// Assign method to on mouse hold action.
+    /// </summary>
     public void AssignMethodToOnMouseHoldAction(Action<Vector3Int> action) {
         onMouseHoldAction += action;
     }
 
+    /// <summary>
+    /// Assign method to on mouse up action.
+    /// </summary>
     public void AssignMethodToOnMouseUpAction(Action action) {
         onMouseUpAction += action;
     }
 
+    /// <summary>
+    /// Reset mouse actions.
+    /// </summary>
     public void ResetMouseActions() {
         onMouseClickAction = null;
         onMouseHoldAction = null;
         onMouseUpAction = null;
     }
-
+    
+    /// <summary>
+    /// Get camera movement offset.
+    /// </summary>
     public Vector3 GetCameraMovementOffset() {
         return cameraMovementOffset;
     }
-
+      
+    /// <summary>
+    /// Get camera zoom offset.
+    /// </summary>
     public Vector3 GetCameraZoomOffset() {
         return cameraZoomOffset;
     }
-
+      
+    /// <summary>
+    /// Get camera rotation offset.
+    /// </summary>
     public Vector3 GetCameraRotationOffset() {
         return cameraRotationOffset;
     }
