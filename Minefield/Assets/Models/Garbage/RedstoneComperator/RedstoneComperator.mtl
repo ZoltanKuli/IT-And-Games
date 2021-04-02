@@ -1,0 +1,45 @@
+Wavefront OBJ material file
+# Contains 3 materials
+
+newmtl Redstone_Torch_(inactive)
+# Ns 0
+# Ka 0.2 0.2 0.2
+Kd 1 1 1
+Ks 0 0 0
+# map_Ka RedstoneComperator-RGBA.png
+# for G3D, to make textures look blocky:
+interpolateMode NEAREST_MAGNIFICATION_TRILINEAR_MIPMAP_MINIFICATION
+map_Kd RedstoneComperator-RGBA.png
+map_d RedstoneComperator-Alpha.png
+# illum 2
+# d 1
+# Tr 0
+
+newmtl Redstone_Torch_(active)
+# Ns 0
+# Ka 0.2 0.2 0.2
+Kd 1 1 1
+Ks 0 0 0
+Ke 0.318794 0.318794 0.318794
+# map_Ka RedstoneComperator-RGBA.png
+# for G3D, to make textures look blocky:
+interpolateMode NEAREST_MAGNIFICATION_TRILINEAR_MIPMAP_MINIFICATION
+map_Kd RedstoneComperator-RGBA.png
+map_d RedstoneComperator-Alpha.png
+map_Ke RedstoneComperator-RGBA.png
+# illum 2
+# d 1
+# Tr 0
+
+newmtl Redstone_Comparator
+# Ns 0
+# Ka 0.2 0.2 0.2
+Kd 1 1 1
+Ks 0 0 0
+# map_Ka RedstoneComperator-RGB.png
+# for G3D, to make textures look blocky:
+interpolateMode NEAREST_MAGNIFICATION_TRILINEAR_MIPMAP_MINIFICATION
+map_Kd RedstoneComperator-RGB.png
+# illum 2
+# d 1
+# Tr 0

@@ -1,0 +1,18 @@
+Wavefront OBJ material file
+# Contains 1 materials
+
+newmtl Redstone_Torch_(active)
+# Ns 0
+# Ka 0.2 0.2 0.2
+Kd 1 1 1
+Ks 0 0 0
+Ke 0.318794 0.318794 0.318794
+# map_Ka RedstoneTorch-RGBA.png
+# for G3D, to make textures look blocky:
+interpolateMode NEAREST_MAGNIFICATION_TRILINEAR_MIPMAP_MINIFICATION
+map_Kd RedstoneTorch-RGBA.png
+map_d RedstoneTorch-Alpha.png
+map_Ke RedstoneTorch-RGBA.png
+# illum 2
+# d 1
+# Tr 0

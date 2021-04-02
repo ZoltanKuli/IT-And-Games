@@ -1,0 +1,31 @@
+Wavefront OBJ material file
+# Contains 2 materials
+
+newmtl Redstone_Torch_(active)
+# Ns 0
+# Ka 0.2 0.2 0.2
+Kd 1 1 1
+Ks 0 0 0
+Ke 0.318794 0.318794 0.318794
+# map_Ka RedstoneRepeater-RGBA.png
+# for G3D, to make textures look blocky:
+interpolateMode NEAREST_MAGNIFICATION_TRILINEAR_MIPMAP_MINIFICATION
+map_Kd RedstoneRepeater-RGBA.png
+map_d RedstoneRepeater-Alpha.png
+map_Ke RedstoneRepeater-RGBA.png
+# illum 2
+# d 1
+# Tr 0
+
+newmtl Redstone_Repeater_(active)
+# Ns 0
+# Ka 0.2 0.2 0.2
+Kd 1 1 1
+Ks 0 0 0
+# map_Ka RedstoneRepeater-RGB.png
+# for G3D, to make textures look blocky:
+interpolateMode NEAREST_MAGNIFICATION_TRILINEAR_MIPMAP_MINIFICATION
+map_Kd RedstoneRepeater-RGB.png
+# illum 2
+# d 1
+# Tr 0
