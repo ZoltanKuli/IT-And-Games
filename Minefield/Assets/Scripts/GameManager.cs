@@ -38,6 +38,8 @@ public class GameManager : MonoBehaviour {
         uIManager.AssingMethodToOnParkBasicBuildAction(BuildNewParkBasic);
         uIManager.AssingMethodToOnParkFountainBuildAction(BuildNewParkFountain);
         uIManager.AssingMethodToOnParkHelicopterBuildAction(BuildNewParkHelicopter);
+
+        uIManager.AssingMethodToOnGarbageCanBuildAction(BuildNewGarbageCan);
     }
 
     /// <summary>
@@ -136,6 +138,13 @@ public class GameManager : MonoBehaviour {
     /// </summary>
     private void BuildNewParkHelicopter() {
         ResetMouseActionsAndAssignMethodToOnMouseClickAction(worldManager.BuildNewHelicopterPark);
+    }
+
+    /// <summary>
+    /// Reset the Mouse click to the BuildNewGarbageCan Action.
+    /// </summary>
+    private void BuildNewGarbageCan() {
+        ResetMouseActionsAndAssignMethodToOnMouseClickAction(worldManager.BuildNewGarbageCan);
     }
 
     /// <summary>
