@@ -71,6 +71,8 @@ public class GameManager : MonoBehaviour {
         uIManager.AssingMethodToOnParkFountainBuildAction(BuildNewParkFountain);
         uIManager.AssingMethodToOnParkHelicopterBuildAction(BuildNewParkHelicopter);
 
+        uIManager.AssingMethodToOnGarbageCanBuildAction(BuildNewGarbageCan);
+
         entrance = worldManager.GetEntrance();
 
         npcs = new List<NPC>();
@@ -173,6 +175,13 @@ public class GameManager : MonoBehaviour {
     /// </summary>
     private void BuildNewParkHelicopter() {
         ResetMouseActionsAndAssignMethodToOnMouseClickAction(worldManager.BuildNewHelicopterPark);
+    }
+
+    /// <summary>
+    /// Reset the Mouse click to the BuildNewGarbageCan Action.
+    /// </summary>
+    private void BuildNewGarbageCan() {
+        ResetMouseActionsAndAssignMethodToOnMouseClickAction(worldManager.BuildNewGarbageCan);
     }
 
     /// <summary>

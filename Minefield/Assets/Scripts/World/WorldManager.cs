@@ -182,6 +182,17 @@ public class WorldManager : MonoBehaviour {
     [SerializeField]
     private float helicopterParkYRotation;
 
+    [SerializeField]
+    private GameObject garbageCanPrefab;
+    [SerializeField]
+    private int garbageCanAreaWidth;
+    [SerializeField]
+    private int garbageCanAreaLength;
+    [SerializeField]
+    private Vector3 garbageCanPositionOffset;
+    [SerializeField]
+    private float garbageCanYRotation;
+
     /// <summary>
     /// Initialize world.
     /// </summary>
@@ -641,6 +652,18 @@ public class WorldManager : MonoBehaviour {
             BuildNewStructure(helicopterPark, origoPosition, helicopterParkAreaWidth, helicopterParkAreaLength);
 
             parks.Add(helicopterPark);
+        }
+    }
+ 
+    /// <summary>
+    /// Build new GarbageCan.
+    /// </summary>
+    public void BuildNewGarbageCan(Vector3Int origoPosition) {
+        if (CanAreaBePopulatedWithStructure(origoPosition, garbageCanAreaWidth, garbageCanAreaLength)) {
+            GarbageCan garbageCan = new GarbageCan(garbageCanPrefab, origoPosition, garbageCanPositionOffset,
+                garbageCanYRotation, garbageCanAreaWidth, garbageCanAreaLength);
+
+            BuildNewStructure(garbageCan, origoPosition, garbageCanAreaWidth, garbageCanAreaLength);
         }
     }
 
