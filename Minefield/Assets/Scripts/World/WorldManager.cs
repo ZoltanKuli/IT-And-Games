@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class WorldManager : MonoBehaviour {
@@ -9,9 +8,27 @@ public class WorldManager : MonoBehaviour {
     private int worldMatrixWidth;
     [SerializeField]
     private int worldMatrixLength;
+    [SerializeField]
+    private float npcNumberDevisior;
+
+    private List<Restaurant> restaurants;
+    private List<Bar> bars;
+    private List<Attraction> attractions;
+    private List<Park> parks;
+    private List<GarbageCan> garbageCans;
+
+    private System.Random random;
 
     [SerializeField]
     private LayerMask natureMask;
+
+    private Entrance entrance;
+    [SerializeField]
+    private GameObject entrancePrefab;
+    [SerializeField]
+    private Vector3 entrancePositionOffset;
+    [SerializeField]
+    private float entrancePrefabYRotation;
 
     [SerializeField]
     private GameObject straightRoadPrefab;
@@ -166,12 +183,34 @@ public class WorldManager : MonoBehaviour {
     private float helicopterParkYRotation;
 
     /// <summary>
-    /// Initialize FieldWorldMatrix.
+    /// Initialize world.
     /// </summary>
     public void Start() {
         InitializeFieldWorldMatrix();
 
-        for (int i = 0; i < 97; i++) {
+        random = new System.Random();
+
+        BuildNewEntrance();
+
+        restaurants = new List<Restaurant>();
+        bars = new List<Bar>();
+        attractions = new List<Attraction>();
+        parks = new List<Park>();
+        garbageCans = new List<GarbageCan>();
+
+        for (int i = 1; i < 21; i++) {
+            BuildNewRoad(new Vector3Int(i, 0, 50));
+        }
+
+        BuildNewRoad(new Vector3Int(20, 0, 49));
+        BuildNewRoad(new Vector3Int(20, 0, 48));
+        BuildNewRoad(new Vector3Int(21, 0, 48));
+        BuildNewRoad(new Vector3Int(22, 0, 48));
+        BuildNewRoad(new Vector3Int(23, 0, 48));
+        BuildNewRoad(new Vector3Int(23, 0, 49));
+        BuildNewRoad(new Vector3Int(23, 0, 48));
+
+        for (int i = 23; i < 97; i++) {
             BuildNewRoad(new Vector3Int(i, 0, 50));
         }
 
@@ -192,7 +231,7 @@ public class WorldManager : MonoBehaviour {
         BuildNewCircusTent(new Vector3Int(53, 0, 51));
         BuildNewRollerCoaster(new Vector3Int(67, 0, 51));
     }
-    
+
     /// <summary>
     /// Initialize FieldWorldMatrix.
     /// </summary>
@@ -204,6 +243,27 @@ public class WorldManager : MonoBehaviour {
                 worldMatrix[i, j] = new EmptyField(new Vector3Int(i, 0, j));
             }
         }
+    }
+
+    public int GetMaximumNPCNumberBasedOnWorldMatrixSize() {
+        return (int)Mathf.Ceil((worldMatrixWidth * worldMatrixLength) / npcNumberDevisior);
+    }
+
+    /// <summary>
+    /// Build new entrance.
+    /// </summary>
+    private void BuildNewEntrance() {
+        Vector3Int entranceOrigoPosition = new Vector3Int(random.Next(worldMatrixWidth), 0, random.Next(worldMatrixLength));
+        entranceOrigoPosition = new Vector3Int(0, 0, 50);
+        entrance = new Entrance(entrancePrefab, entranceOrigoPosition, entrancePositionOffset, entrancePrefabYRotation);
+        worldMatrix[entranceOrigoPosition.x, entranceOrigoPosition.z] = entrance;
+    }
+
+    /// <summary>
+    /// Get entrance.
+    /// </summary>
+    public Entrance GetEntrance() {
+        return entrance;
     }
 
     /// <summary>
@@ -233,7 +293,7 @@ public class WorldManager : MonoBehaviour {
             adjustOrthogonallyAdjacentRoads(origoPosition);
         }
     }
-    
+
     /// <summary>
     /// Adjust orthogonally adjacent roads.
     /// </summary>
@@ -243,7 +303,7 @@ public class WorldManager : MonoBehaviour {
         adjustRoad(new Vector3Int(origoPosition.x + 1, origoPosition.y, origoPosition.z));
         adjustRoad(new Vector3Int(origoPosition.x, origoPosition.y, origoPosition.z - 1));
     }
-       
+
     /// <summary>
     /// Adjust road.
     /// </summary>
@@ -272,8 +332,7 @@ public class WorldManager : MonoBehaviour {
     }
 
     /// <summary>
-    /// Build a road according to the number of non road fields orthogonally.
-    /// If this number is 4, build a straight road.
+    /// Build new road if number of orthogonally adjacent non road fields is four.
     /// </summary>
     private void BuildNewRoadIfNumberOfOrthogonallyAdjacentNonRoadFieldsIsFour(Vector3Int origoPosition, int numberOfOrthogonallyAdjacentNonRoadFields) {
         if (numberOfOrthogonallyAdjacentNonRoadFields == 4) {
@@ -283,8 +342,7 @@ public class WorldManager : MonoBehaviour {
     }
 
     /// <summary>
-    /// Build a road according the number of non road fields orthogonally.
-    /// If this number is 3, build a straight road that has the correct angle.
+    /// Build new road if number of orthogonally adjacent non road fields is three.
     /// </summary>
     private void BuildNewRoadIfNumberOfOrthogonallyAdjacentNonRoadFieldsIsThree(Vector3Int origoPosition, int numberOfOrthogonallyAdjacentNonRoadFields,
         List<Field> orthogonallyAdjacentFields, List<Road> adjacentRoads) {
@@ -297,8 +355,7 @@ public class WorldManager : MonoBehaviour {
     }
 
     /// <summary>
-    /// Build a road according the number of non road fields orthogonally.
-    /// If this number is 2, build a corner road that has the correct angle.
+    /// Build new road if number of orthogonally adjacent non road fields is two.
     /// </summary>
     private void BuildNewRoadIfNumberOfOrthogonallyAdjacentNonRoadFieldsIsTwo(Vector3Int origoPosition, int numberOfOrthogonallyAdjacentNonRoadFields,
         List<Field> orthogonallyAdjacentFields, List<Road> adjacentRoads) {
@@ -327,8 +384,7 @@ public class WorldManager : MonoBehaviour {
     }
 
     /// <summary>
-    /// Build a road according the number of non road fields orthogonally.
-    /// If this number is 1, build a three way road that has the correct angle.
+    /// Build new road if number of orthogonally adjacent non road fields is one.
     /// </summary>
     private void BuildNewRoadIfNumberOfOrthogonallyAdjacentNonRoadFieldsIsOne(Vector3Int origoPosition, int numberOfOrthogonallyAdjacentNonRoadFields,
         List<Field> orthogonallyAdjacentFields, List<Field> adjacentNonRoadFields) {
@@ -341,8 +397,7 @@ public class WorldManager : MonoBehaviour {
     }
 
     /// <summary>
-    /// Build a road according the number of non road fields orthogonally.
-    /// If this number is 0, build a four way road.
+    /// Build new road if number of orthogonally adjacent non road fields is zero.
     /// </summary>
     private void BuildNewRoadIfNumberOfOrthogonallyAdjacentNonRoadFieldsIsZero(Vector3Int origoPosition, int numberOfOrthogonallyAdjacentNonRoadFields) {
         if (numberOfOrthogonallyAdjacentNonRoadFields == 0) {
@@ -355,8 +410,8 @@ public class WorldManager : MonoBehaviour {
     /// Get walkable adjacent fields.
     /// </summary>
     public List<Field> GetWalkableAdjacentFields(Field field, bool isAIAgent) {
-        return GetOrthogonallyAdjecentFields(field.getOrigoPosition())
-             .FindAll(orthogonallyAdjacentField => IsFieldWalkable(field, isAIAgent));
+        return GetOrthogonallyAdjecentFields(field.GetOrigoPosition())
+             .FindAll(orthogonallyAdjacentField => IsFieldWalkable(orthogonallyAdjacentField, isAIAgent));
     }
 
     /// <summary>
@@ -364,7 +419,7 @@ public class WorldManager : MonoBehaviour {
     /// </summary>
     public static bool IsFieldWalkable(Field field, bool isAIAgent) {
         if (isAIAgent) {
-            return field is Road;
+            return field is Road || field is Entrance;
         }
 
         return field is EmptyField || field is Road;
@@ -416,6 +471,8 @@ public class WorldManager : MonoBehaviour {
                 hotdogCarPrefabYRotation, hotdogCarPrefabAreaWidth, hotdogCarPrefabAreaLength);
 
             BuildNewStructure(hotdogCar, origoPosition, hotdogCarPrefabAreaWidth, hotdogCarPrefabAreaLength);
+
+            restaurants.Add(hotdogCar);
         }
     }
 
@@ -428,9 +485,11 @@ public class WorldManager : MonoBehaviour {
                 kfcYRotation, kfcAreaWidth, kfcAreaLength);
 
             BuildNewStructure(kfc, origoPosition, kfcAreaWidth, kfcAreaLength);
+
+            restaurants.Add(kfc);
         }
     }
- 
+
     /// <summary>
     /// Build new OlivegardensRestaurant.
     /// </summary>
@@ -440,9 +499,11 @@ public class WorldManager : MonoBehaviour {
                 olivegardensRestaurantYRotation, olivegardensRestaurantAreaWidth, olivegardensRestaurantAreaLength);
 
             BuildNewStructure(olivegardensRestaurant, origoPosition, olivegardensRestaurantAreaWidth, olivegardensRestaurantAreaLength);
+
+            restaurants.Add(olivegardensRestaurant);
         }
     }
- 
+
     /// <summary>
     /// Build new TaverneRestaurant.
     /// </summary>
@@ -452,9 +513,11 @@ public class WorldManager : MonoBehaviour {
                 taverneRestaurantYRotation, taverneRestaurantAreaWidth, taverneRestaurantAreaLength);
 
             BuildNewStructure(taverneRestaurant, origoPosition, taverneRestaurantAreaWidth, taverneRestaurantAreaLength);
+
+            restaurants.Add(taverneRestaurant);
         }
     }
-  
+
     /// <summary>
     /// Build new CafeRestaurant.
     /// </summary>
@@ -464,9 +527,11 @@ public class WorldManager : MonoBehaviour {
                 cafeRestaurantYRotation, cafeRestaurantAreaWidth, cafeRestaurantAreaLength);
 
             BuildNewStructure(cafeRestaurant, origoPosition, cafeRestaurantAreaWidth, cafeRestaurantAreaLength);
+
+            bars.Add(cafeRestaurant);
         }
     }
-      
+
     /// <summary>
     /// Build new Cafe.
     /// </summary>
@@ -476,9 +541,11 @@ public class WorldManager : MonoBehaviour {
                 cafeYRotation, cafeAreaWidth, cafeAreaLength);
 
             BuildNewStructure(cafe, origoPosition, cafeAreaWidth, cafeAreaLength);
+
+            bars.Add(cafe);
         }
     }
-       
+
     /// <summary>
     /// Build new LondonEye.
     /// </summary>
@@ -488,9 +555,11 @@ public class WorldManager : MonoBehaviour {
                 londonEyeYRotation, londonEyeAreaWidth, londonEyeAreaLength);
 
             BuildNewStructure(londonEye, origoPosition, londonEyeAreaWidth, londonEyeAreaLength);
+
+            attractions.Add(londonEye);
         }
     }
-       
+
     /// <summary>
     /// Build new MerryGoRound.
     /// </summary>
@@ -500,9 +569,11 @@ public class WorldManager : MonoBehaviour {
                 merryGoRoundYRotation, merryGoRoundAreaWidth, merryGoRoundAreaLength);
 
             BuildNewStructure(merryGoRound, origoPosition, merryGoRoundAreaWidth, merryGoRoundAreaLength);
+
+            attractions.Add(merryGoRound);
         }
     }
-       
+
     /// <summary>
     /// Build new RollerCoaster.
     /// </summary>
@@ -512,9 +583,11 @@ public class WorldManager : MonoBehaviour {
                 rollerCoasterYRotation, rollerCoasterAreaWidth, rollerCoasterAreaLength);
 
             BuildNewStructure(rollerCoaster, origoPosition, rollerCoasterAreaWidth, rollerCoasterAreaLength);
+
+            attractions.Add(rollerCoaster);
         }
     }
-      
+
     /// <summary>
     /// Build new CircusTent.
     /// </summary>
@@ -524,9 +597,11 @@ public class WorldManager : MonoBehaviour {
                 circusTentYRotation, circusTentAreaWidth, circusTentAreaLength);
 
             BuildNewStructure(circusTent, origoPosition, circusTentAreaWidth, circusTentAreaLength);
+
+            attractions.Add(circusTent);
         }
     }
-     
+
     /// <summary>
     /// Build new BasicPark.
     /// </summary>
@@ -536,9 +611,11 @@ public class WorldManager : MonoBehaviour {
                 basicParkYRotation, basicParkAreaWidth, basicParkAreaLength);
 
             BuildNewStructure(basicPark, origoPosition, basicParkAreaWidth, basicParkAreaLength);
+
+            parks.Add(basicPark);
         }
     }
-     
+
     /// <summary>
     /// Build new FountainPark.
     /// </summary>
@@ -548,9 +625,11 @@ public class WorldManager : MonoBehaviour {
                 fountainParkYRotation, fountainParkAreaWidth, fountainParkAreaLength);
 
             BuildNewStructure(fountainPark, origoPosition, fountainParkAreaWidth, fountainParkAreaLength);
+
+            parks.Add(fountainPark);
         }
     }
-     
+
     /// <summary>
     /// Build new HelicopterPark.
     /// </summary>
@@ -560,15 +639,15 @@ public class WorldManager : MonoBehaviour {
                 helicopterParkYRotation, helicopterParkAreaWidth, helicopterParkAreaLength);
 
             BuildNewStructure(helicopterPark, origoPosition, helicopterParkAreaWidth, helicopterParkAreaLength);
+
+            parks.Add(helicopterPark);
         }
     }
-         
+
     /// <summary>
     /// Build new Structure.
     /// </summary>
     private void BuildNewStructure(Structure structure, Vector3Int origoPosition, int areaWidth, int areaLength) {
-        Debug.Log(origoPosition);
-
         for (int i = origoPosition.x; i < origoPosition.x + areaWidth; i++) {
             for (int j = origoPosition.z; j < origoPosition.z + areaLength; j++) {
                 worldMatrix[i, j] = structure;
@@ -626,7 +705,53 @@ public class WorldManager : MonoBehaviour {
 
         return false;
     }
- 
+
+    /// <summary>
+    /// Get orthogonally adjecent roads around structure.
+    /// </summary>
+    public List<Road> GetOrthogonallyAdjecentRoadsAroundStructure(Structure structure) {
+        List<Road> orthogonallyAdjacentRoadsAroundStructure = new List<Road>(); 
+
+        if (0 < structure.GetOrigoPosition().z) {
+            for (int i = structure.GetOrigoPosition().x; i < structure.GetOrigoPosition().x + structure.GetWidth(); i++) {
+                if (worldMatrix[i, structure.GetOrigoPosition().z - 1] is Road) {
+                    orthogonallyAdjacentRoadsAroundStructure.Add(
+                        (Road) worldMatrix[i, structure.GetOrigoPosition().z - 1]);
+                }
+            }
+        }
+
+        if (structure.GetOrigoPosition().x + structure.GetWidth() < worldMatrixWidth - 1) {
+            for (int i = structure.GetOrigoPosition().z; i < structure.GetOrigoPosition().z + structure.GetLength(); i++) {
+                if (worldMatrix[structure.GetOrigoPosition().x + structure.GetWidth(), i] is Road) {
+                    orthogonallyAdjacentRoadsAroundStructure.Add(
+                        (Road)worldMatrix[structure.GetOrigoPosition().x + structure.GetWidth(), i]);
+                }
+            }
+        }
+
+        if (structure.GetOrigoPosition().z + structure.GetLength() < worldMatrixLength - 1) {
+            for (int i = structure.GetOrigoPosition().x; i < structure.GetOrigoPosition().x + structure.GetWidth(); i++) {
+                if (worldMatrix[i, structure.GetOrigoPosition().z + structure.GetWidth()] is Road) {
+                    orthogonallyAdjacentRoadsAroundStructure.Add(
+                        (Road)worldMatrix[i, structure.GetOrigoPosition().z + structure.GetWidth()]);
+                }
+            }
+        }
+
+        if (0 < structure.GetOrigoPosition().x) {
+            for (int i = structure.GetOrigoPosition().z; i < structure.GetOrigoPosition().z + structure.GetLength(); i++) {
+                if (worldMatrix[structure.GetOrigoPosition().x - 1, i] is Road) {
+                    orthogonallyAdjacentRoadsAroundStructure.Add(
+                        (Road)worldMatrix[structure.GetOrigoPosition().x - 1, i]);
+                }
+            }
+        }
+
+
+        return orthogonallyAdjacentRoadsAroundStructure;
+    }
+
     /// <summary>
     /// Does area consist of only empty fields.
     /// </summary>
@@ -687,16 +812,35 @@ public class WorldManager : MonoBehaviour {
                     }
                 }
             }
+
+            RemoveStructureFromListBasedOnType(structure);
         }
     }
-    
+
+    /// <summary>
+    /// Remove structure from list based on type.
+    /// </summary>
+    private void RemoveStructureFromListBasedOnType(Structure structure) {
+        if (structure is Restaurant) {
+            restaurants.Remove((Restaurant)structure);
+        } else if (structure is Bar) {
+            bars.Remove((Bar)structure);
+        } else if (structure is Attraction) {
+            attractions.Remove((Attraction)structure);
+        } else if (structure is Park) {
+            parks.Remove((Park)structure);
+        } else if (structure is GarbageCan) {
+            garbageCans.Remove((GarbageCan)structure);
+        }
+    }
+
     /// <summary>
     /// Is field in bounds.
     /// </summary>
     private bool isFieldInBounds(Vector3Int origoPosition) {
         return isAreaInBounds(origoPosition, 1, 1);
     }
-       
+
     /// <summary>
     /// Is area in bounds.
     /// </summary>
@@ -704,7 +848,7 @@ public class WorldManager : MonoBehaviour {
         return 0 <= origoPosition.x && origoPosition.x + areaWidth < worldMatrixWidth
             && 0 <= origoPosition.z && origoPosition.z + areaLength < worldMatrixLength;
     }
-          
+
     /// <summary>
     /// Set nature game objects visibility of area.
     /// </summary>
@@ -715,7 +859,7 @@ public class WorldManager : MonoBehaviour {
             }
         }
     }
-             
+
     /// <summary>
     /// Set nature game objects visibility of field.
     /// </summary>
@@ -744,5 +888,33 @@ public class WorldManager : MonoBehaviour {
                 SetNatureGameObjectsVisibilityOfField(origoPosition + new Vector3Int(0, 0, 1), false);
             }
         }
+    }
+
+    /// <summary>
+    /// Get field at position.
+    /// </summary>
+    public Field GetFieldAtPosition(Vector3Int position) {
+        return worldMatrix[position.x, position.z];
+    }
+
+    /// <summary>
+    /// Get random restaurant.
+    /// </summary>
+    public Restaurant GetRandomRestaurant() {
+        return restaurants[random.Next(restaurants.Count)];
+    }
+
+    /// <summary>
+    /// Get random bar.
+    /// </summary>
+    public Bar getRandomBar() {
+        return bars[random.Next(bars.Count)];
+    }
+
+    /// <summary>
+    /// Get random attraction.
+    /// </summary>
+    public Attraction getRandomAttraction() {
+        return attractions[random.Next(attractions.Count)];
     }
 }

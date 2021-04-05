@@ -17,6 +17,9 @@ public class InputManager : MonoBehaviour {
     private Action<Vector3Int> onMouseHoldAction;
     private Action onMouseUpAction;
 
+    /// <summary>
+    /// Update.
+    /// </summary>
     private void Update() {
         InvokeMouseClickActionIfApplicable();
         InvokeMouseUpActionIfApplicable();

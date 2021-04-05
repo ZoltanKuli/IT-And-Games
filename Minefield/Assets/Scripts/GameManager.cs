@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour {
@@ -14,7 +15,38 @@ public class GameManager : MonoBehaviour {
 
     [SerializeField]
     private WorldManager worldManager;
-    
+
+    private Entrance entrance;
+
+    private List<NPC> npcs;
+    [SerializeField]
+    private float averageNPCSatisfaction;
+    [SerializeField]
+    private float minimumAverageNPCSatisfactionOfNPCsSpawn;
+    private int maximumNPCNumber;
+    [SerializeField]
+    private GameObject stevePrefab;
+    [SerializeField]
+    private float npcDistancePrecision;
+    [SerializeField]
+    private int npcDefaultSatisfaction;
+    [SerializeField]
+    private int npcMinimumSatisfactionOfStaying;
+    [SerializeField]
+    private int npcDefaultThirst;
+    [SerializeField]
+    private int npcMaximumThirstOfNotNeedingToDrink;
+    [SerializeField]
+    private int npcDefaultHunger;
+    [SerializeField]
+    private int npcMaximumHungerOfNotNeedingToEat;
+    [SerializeField]
+    private float npcMinimumSpeed;
+    [SerializeField]
+    private float npcMaximumSpeed;
+    [SerializeField]
+    private float npcRotationSpeedMultiplier;
+
     /// <summary>
     /// Fill up the menus with their actions.
     /// </summary>
@@ -38,6 +70,11 @@ public class GameManager : MonoBehaviour {
         uIManager.AssingMethodToOnParkBasicBuildAction(BuildNewParkBasic);
         uIManager.AssingMethodToOnParkFountainBuildAction(BuildNewParkFountain);
         uIManager.AssingMethodToOnParkHelicopterBuildAction(BuildNewParkHelicopter);
+
+        entrance = worldManager.GetEntrance();
+
+        npcs = new List<NPC>();
+        maximumNPCNumber = worldManager.GetMaximumNPCNumberBasedOnWorldMatrixSize();
     }
 
     /// <summary>
@@ -144,7 +181,7 @@ public class GameManager : MonoBehaviour {
     private void Destroy() {
         ResetMouseActionsAndAssignMethodToOnMouseClickAction(worldManager.Destroy);
     }
- 
+
     /// <summary>
     /// Reset the Mouse click to the Action what is given via the parameter.
     /// </summary>
@@ -153,8 +190,50 @@ public class GameManager : MonoBehaviour {
         inputManager.AssignMethodToOnMouseClickAction(action);
     }
 
+    /// <summary>
+    /// Update.
+    /// </summary>
     private void Update() {
         mainCamera.MoveCamera(inputManager.GetCameraMovementOffset());
         mainCamera.ChangeCameraZoom(inputManager.GetCameraZoomOffset(), inputManager.GetCameraRotationOffset());
+
+        SpawnNPC();
+
+        UpdateNPCS();
+
+        UpdateAverageNPCSatisfaction();
+    }
+
+    /// <summary>
+    /// Update average npc satisfaction.
+    /// </summary>
+    private void UpdateAverageNPCSatisfaction() {
+        averageNPCSatisfaction = 0;
+
+        foreach (NPC npc in npcs) {
+            averageNPCSatisfaction += npc.GetSatisfaction();
+        }
+
+        averageNPCSatisfaction /= npcs.Count;
+    }
+
+    /// <summary>
+    /// Spawn npc.
+    /// </summary>
+    private void SpawnNPC() {
+        if (minimumAverageNPCSatisfactionOfNPCsSpawn <= averageNPCSatisfaction && npcs.Count < maximumNPCNumber) {
+            npcs.Add(new NPC(stevePrefab, entrance.GetOrigoPosition(), worldManager, npcDistancePrecision,
+            npcDefaultSatisfaction, npcMinimumSatisfactionOfStaying, npcDefaultThirst, npcMaximumThirstOfNotNeedingToDrink,
+            npcDefaultHunger, npcMaximumHungerOfNotNeedingToEat, npcMinimumSpeed, npcMaximumSpeed, npcRotationSpeedMultiplier));
+        }
+    }
+
+    /// <summary>
+    /// Update npcs
+    /// </summary>
+    private void UpdateNPCS() {
+        foreach (NPC npc in npcs) {
+            npc.Update();
+        }
     }
 }

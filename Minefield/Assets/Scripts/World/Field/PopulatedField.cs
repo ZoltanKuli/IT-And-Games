@@ -15,19 +15,31 @@ public abstract class PopulatedField : Field {
         this.areaLength = areaLength;
     }
 
+    /// <summary>
+    /// Set rotation.
+    /// </summary>
     public void SetRotation(float yAngle) {
         gameObject.transform.rotation = Quaternion.Euler(0, yAngle, 0);
     }
 
+    /// <summary>
+    /// Destroy game object.
+    /// </summary>
     public void DestroyGameObject() {
         GameObject.Destroy(gameObject);
     }
 
-    public int getWidth() {
+    /// <summary>
+    /// Get width.
+    /// </summary>
+    public int GetWidth() {
         return areaWidth;
     }
 
-    public int getLength() {
+    /// <summary>
+    /// Get length.
+    /// </summary>
+    public int GetLength() {
         return areaLength;
     }
 }

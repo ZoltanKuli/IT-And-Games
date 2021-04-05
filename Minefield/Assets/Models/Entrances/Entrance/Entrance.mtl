@@ -1,0 +1,74 @@
+Wavefront OBJ material file
+# Contains 5 materials
+
+newmtl Obsidian
+# Ns 0
+# Ka 0.2 0.2 0.2
+Kd 1 1 1
+Ks 0 0 0
+# map_Ka Entrance-RGB.png
+# for G3D, to make textures look blocky:
+interpolateMode NEAREST_MAGNIFICATION_TRILINEAR_MIPMAP_MINIFICATION
+map_Kd Entrance-RGB.png
+# illum 2
+# d 1
+# Tr 0
+
+newmtl Nether_Portal
+# Ns 0
+# Ka 0.2 0.2 0.2
+Kd 1 1 1
+Ks 0.03 0.03 0.03
+Ke 0.627989 0.627989 0.627989
+# map_Ka Entrance-RGBA.png
+# for G3D, to make textures look blocky:
+interpolateMode NEAREST_MAGNIFICATION_TRILINEAR_MIPMAP_MINIFICATION
+map_Kd Entrance-RGBA.png
+map_d Entrance-Alpha.png
+map_Ke Entrance-RGBA.png
+# illum 4
+# d 0.8
+# Tr 0.2
+# Tf 0.2 0.2 0.2
+
+newmtl Block_of_Quartz
+# Ns 0
+# Ka 0.2 0.2 0.2
+Kd 1 1 1
+Ks 0 0 0
+# map_Ka Entrance-RGB.png
+# for G3D, to make textures look blocky:
+interpolateMode NEAREST_MAGNIFICATION_TRILINEAR_MIPMAP_MINIFICATION
+map_Kd Entrance-RGB.png
+# illum 2
+# d 1
+# Tr 0
+
+newmtl Quartz_Stairs
+# Ns 0
+# Ka 0.2 0.2 0.2
+Kd 1 1 1
+Ks 0 0 0
+# map_Ka Entrance-RGB.png
+# for G3D, to make textures look blocky:
+interpolateMode NEAREST_MAGNIFICATION_TRILINEAR_MIPMAP_MINIFICATION
+map_Kd Entrance-RGB.png
+# illum 2
+# d 1
+# Tr 0
+
+newmtl Soul_Torch
+# Ns 0
+# Ka 0.2 0.2 0.2
+Kd 1 1 1
+Ks 0 0 0
+Ke 0.544331 0.544331 0.544331
+# map_Ka Entrance-RGBA.png
+# for G3D, to make textures look blocky:
+interpolateMode NEAREST_MAGNIFICATION_TRILINEAR_MIPMAP_MINIFICATION
+map_Kd Entrance-RGBA.png
+map_d Entrance-Alpha.png
+map_Ke Entrance-RGBA.png
+# illum 2
+# d 1
+# Tr 0
