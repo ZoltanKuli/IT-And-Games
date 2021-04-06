@@ -6,9 +6,9 @@ public class InputManager : MonoBehaviour {
 
     [SerializeField]
     private Camera mainCamera;
-    private Vector3 cameraMovementOffset;
-    private Vector3 cameraZoomOffset;
-    private Vector3 cameraRotationOffset;
+    private Vector3 cameraMovementDirection;
+    private Vector3 cameraZoomDirection;
+    private Vector3 cameraRotationDirection;
 
     [SerializeField]
     private LayerMask groundMask;
@@ -24,8 +24,8 @@ public class InputManager : MonoBehaviour {
         InvokeMouseClickActionIfApplicable();
         InvokeMouseUpActionIfApplicable();
         InvokeMouseHoldActionIfApplicable();
-        UpdateCameraMovementOffset();
-        UpdateCameraZoomOffset();
+        UpdateCameraMovementDirection();
+        UpdateCameraZoomAndRotationDirection();
     }
 
     /// <summary>
@@ -75,25 +75,25 @@ public class InputManager : MonoBehaviour {
     }
 
     /// <summary>
-    /// Update camera movement offset.
+    /// Update camera movement direction.
     /// </summary>
-    private void UpdateCameraMovementOffset() {
-        cameraMovementOffset = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+    private void UpdateCameraMovementDirection() {
+        cameraMovementDirection = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
     }
 
     /// <summary>
-    /// Update camera zoom offset.
+    /// Update camera zoom and rotation direction.
     /// </summary>
-    private void UpdateCameraZoomOffset() {
-        cameraZoomOffset = new Vector3(0, 0, 0);
-        cameraRotationOffset = new Vector3(0, 0, 0);
+    private void UpdateCameraZoomAndRotationDirection() {
+        cameraZoomDirection = new Vector3(0, 0, 0);
+        cameraRotationDirection = new Vector3(0, 0, 0);
 
         if (Input.GetAxis("Mouse ScrollWheel") < 0) {
-            cameraZoomOffset = new Vector3(0, 1, -1);
-            cameraRotationOffset = new Vector3(1, 0, 0);
+            cameraZoomDirection = new Vector3(0, 1, -1);
+            cameraRotationDirection = new Vector3(1, 0, 0);
         } else if (0 < Input.GetAxis("Mouse ScrollWheel")) {
-            cameraZoomOffset = new Vector3(0, -1, 1);
-            cameraRotationOffset = new Vector3(-1, 0, 0);
+            cameraZoomDirection = new Vector3(0, -1, 1);
+            cameraRotationDirection = new Vector3(-1, 0, 0);
         }
     }
 
@@ -126,25 +126,25 @@ public class InputManager : MonoBehaviour {
         onMouseHoldAction = null;
         onMouseUpAction = null;
     }
-    
+
     /// <summary>
-    /// Get camera movement offset.
+    /// Get camera movement direction.
     /// </summary>
-    public Vector3 GetCameraMovementOffset() {
-        return cameraMovementOffset;
+    public Vector3 GetCameraMovementDirection() {
+        return cameraMovementDirection;
+    }
+
+    /// <summary>
+    /// Get camera zoom direction.
+    /// </summary>
+    public Vector3 GetCameraZoomDirection() {
+        return cameraZoomDirection;
     }
       
     /// <summary>
-    /// Get camera zoom offset.
+    /// Get camera rotation direction.
     /// </summary>
-    public Vector3 GetCameraZoomOffset() {
-        return cameraZoomOffset;
-    }
-      
-    /// <summary>
-    /// Get camera rotation offset.
-    /// </summary>
-    public Vector3 GetCameraRotationOffset() {
-        return cameraRotationOffset;
+    public Vector3 GetCameraRotationDirection() {
+        return cameraRotationDirection;
     }
 }

@@ -203,8 +203,8 @@ public class GameManager : MonoBehaviour {
     /// Update.
     /// </summary>
     private void Update() {
-        mainCamera.MoveCamera(inputManager.GetCameraMovementOffset());
-        mainCamera.ChangeCameraZoom(inputManager.GetCameraZoomOffset(), inputManager.GetCameraRotationOffset());
+        mainCamera.UpdateCameraPosition(inputManager.GetCameraMovementDirection());
+        mainCamera.UpdateCameraZoomAndRotation(inputManager.GetCameraZoomDirection(), inputManager.GetCameraRotationDirection());
 
         SpawnNPC();
 

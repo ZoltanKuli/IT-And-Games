@@ -39,49 +39,59 @@ public class MainCamera : MonoBehaviour {
     }
 
     /// <summary>
-    /// Move camera.
+    /// Update camera position.
     /// </summary>
-    public void MoveCamera(Vector3 cameraMovementOffset) {
-        cameraMovementOffset = Quaternion.Euler(mainCamera.transform.rotation.x,
+    public void UpdateCameraPosition(Vector3 cameraMovementDirection) {
+        Vector3 cameraMovementOffset = Quaternion.Euler(mainCamera.transform.rotation.x,
             mainCamera.transform.rotation.y, mainCamera.transform.rotation.z)
-            * cameraMovementOffset;
+            * cameraMovementDirection;
 
         Vector3 originalCameraPosition = mainCamera.transform.position;
         Vector3 newCameraPosition = originalCameraPosition + cameraMovementOffset;
 
-        if ((newCameraPosition.x < lowerXBound
-            || newCameraPosition.z < lowerZBound)
-            || (upperXBound < newCameraPosition.x
-            || upperZBound < newCameraPosition.z)) {
-            newCameraPosition = originalCameraPosition - cameraMovementOffset;
-        }
-
-        mainCamera.transform.position = Vector3.Lerp(originalCameraPosition, newCameraPosition, movementSpeed * Time.deltaTime);
+        mainCamera.transform.position = Vector3.Lerp(originalCameraPosition, ClampNewCameraPosition(newCameraPosition), movementSpeed * Time.deltaTime);
     }
 
     /// <summary>
-    /// Change camera zoom.
+    /// Clamp new camera position.
     /// </summary>
-    public void ChangeCameraZoom(Vector3 cameraZoomOffset, Vector3 cameraRotationOffset) {
-        cameraZoomOffset = new Vector3(cameraZoomOffset.x, cameraZoomOffset.y * cameraZoomAmountY, cameraZoomOffset.z * cameraZoomAmountZ);
-        cameraRotationOffset = new Vector3(cameraRotationOffset.x * cameraRotationAmountX, cameraRotationOffset.y, cameraRotationOffset.z);
+    private Vector3 ClampNewCameraPosition(Vector3 newCameraPosition) {
+        Vector3 clampedCameraPosition = new Vector3(newCameraPosition.x, newCameraPosition.y, newCameraPosition.z);
+        
+        if (clampedCameraPosition.x <= lowerXBound) {
+            clampedCameraPosition.x = lowerXBound;
+        }
+
+        if (clampedCameraPosition.z <= lowerZBound) {
+            clampedCameraPosition.z = lowerZBound;
+        }
+
+        if (upperXBound <= clampedCameraPosition.x) {
+            clampedCameraPosition.x = upperXBound;
+        }
+
+        if (upperZBound <= clampedCameraPosition.z) {
+            clampedCameraPosition.z = upperZBound;
+        }
+
+        return clampedCameraPosition;
+    }
+
+    /// <summary>
+    /// Update camera zoom and rotation.
+    /// </summary>
+    public void UpdateCameraZoomAndRotation(Vector3 cameraZoomDirection, Vector3 cameraRotationDirection) {
+        Vector3 cameraZoomOffset = new Vector3(cameraZoomDirection.x, cameraZoomDirection.y * cameraZoomAmountY, cameraZoomDirection.z * cameraZoomAmountZ);
         cameraZoomOffset = Quaternion.Euler(mainCamera.transform.rotation.x,
             mainCamera.transform.rotation.y, mainCamera.transform.rotation.z)
             * cameraZoomOffset;
+        Vector3 cameraRotationOffset = new Vector3(cameraRotationDirection.x * cameraRotationAmountX, cameraRotationDirection.y, cameraRotationDirection.z);
 
         Vector3 originalCameraZoom = mainCamera.transform.position;
-
         Vector3 newCameraZoom = originalCameraZoom + cameraZoomOffset;
 
         Vector3 originalCameraRotation = mainCamera.transform.eulerAngles;
         Vector3 newCameraRotation = originalCameraRotation + cameraRotationOffset;
-
-        if ((newCameraZoom.x < lowerXBound
-            || newCameraZoom.z < lowerZBound)
-            || (upperXBound < newCameraZoom.x
-            || upperZBound < newCameraZoom.z)) {
-            newCameraZoom = new Vector3(newCameraZoom.x, newCameraZoom.y, originalCameraZoom.z);
-        }
 
         if (lowerZoomBound < newCameraZoom.y && newCameraZoom.y < upperZoomBound) {
             mainCamera.transform.position = Vector3.Lerp(originalCameraZoom, newCameraZoom, zoomSpeed * Time.deltaTime);
