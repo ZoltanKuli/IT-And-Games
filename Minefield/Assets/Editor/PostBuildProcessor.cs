@@ -5,9 +5,9 @@ using UnityEngine;
 
 #if UNITY_IOS
 using UnityEditor.iOS.Xcode;
-
-public static class BuildPostProcess
-{
+#endif
+public static class BuildPostProcess {
+#if UNITY_IOS
     private const string PLIST_FILE = "Info.plist";
     private const string EXIST_ON_SUSPEND_KEY = "UIApplicationExitsOnSuspend";
 
@@ -63,5 +63,5 @@ public static class BuildPostProcess
 
         File.WriteAllText(plistPath, plist.WriteToString());
     }
-}
 #endif
+}
