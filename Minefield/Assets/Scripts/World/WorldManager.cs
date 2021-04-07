@@ -49,6 +49,14 @@ public class WorldManager : MonoBehaviour {
     private Vector3 hotdogCarPrefabPositionOffset;
     [SerializeField]
     private float hotdogCarPrefabYRotation;
+    [SerializeField]
+    private float hotdogCarMoneyOwedIncreaseAmount;
+    [SerializeField]
+    private int hotdogCarSatisfactionIncreaseAmount;
+    [SerializeField]
+    private int hotdogCarSecondsBetweenActions;
+    [SerializeField]
+    private int hotdogCarDecreaseHungerAmount;
 
     [SerializeField]
     private GameObject kfcPrefab;
@@ -60,6 +68,14 @@ public class WorldManager : MonoBehaviour {
     private Vector3 kfcPositionOffset;
     [SerializeField]
     private float kfcYRotation;
+    [SerializeField]
+    private float kfcMoneyOwedIncreaseAmount;
+    [SerializeField]
+    private int kfcSatisfactionIncreaseAmount;
+    [SerializeField]
+    private int kfcSecondsBetweenActions;
+    [SerializeField]
+    private int kfcDecreaseHungerAmount;
 
     [SerializeField]
     private GameObject olivegardensRestaurantPrefab;
@@ -71,6 +87,14 @@ public class WorldManager : MonoBehaviour {
     private Vector3 olivegardensRestaurantPositionOffset;
     [SerializeField]
     private float olivegardensRestaurantYRotation;
+    [SerializeField]
+    private float olivegardensRestaurantMoneyOwedIncreaseAmount;
+    [SerializeField]
+    private int olivegardensRestaurantSatisfactionIncreaseAmount;
+    [SerializeField]
+    private int olivegardensRestaurantSecondsBetweenActions;
+    [SerializeField]
+    private int olivegardensRestaurantDecreaseHungerAmount;
 
     [SerializeField]
     private GameObject taverneRestaurantPrefab;
@@ -82,6 +106,14 @@ public class WorldManager : MonoBehaviour {
     private Vector3 taverneRestaurantPositionOffset;
     [SerializeField]
     private float taverneRestaurantYRotation;
+    [SerializeField]
+    private float taverneRestaurantMoneyOwedIncreaseAmount;
+    [SerializeField]
+    private int taverneRestaurantSatisfactionIncreaseAmount;
+    [SerializeField]
+    private int taverneRestaurantSecondsBetweenActions;
+    [SerializeField]
+    private int taverneRestaurantDecreaseHungerAmount;
 
     [SerializeField]
     private GameObject cafeRestaurantPrefab;
@@ -93,6 +125,14 @@ public class WorldManager : MonoBehaviour {
     private Vector3 cafeRestaurantPositionOffset;
     [SerializeField]
     private float cafeRestaurantYRotation;
+    [SerializeField]
+    private float cafeRestaurantMoneyOwedIncreaseAmount;
+    [SerializeField]
+    private int cafeRestaurantSatisfactionIncreaseAmount;
+    [SerializeField]
+    private int cafeRestaurantSecondsBetweenActions;
+    [SerializeField]
+    private int cafeRestaurantDecreaseThirstAmount;
 
     [SerializeField]
     private GameObject cafePrefab;
@@ -104,6 +144,14 @@ public class WorldManager : MonoBehaviour {
     private Vector3 cafePositionOffset;
     [SerializeField]
     private float cafeYRotation;
+    [SerializeField]
+    private float cafeMoneyOwedIncreaseAmount;
+    [SerializeField]
+    private int cafeSatisfactionIncreaseAmount;
+    [SerializeField]
+    private int cafeSecondsBetweenActions;
+    [SerializeField]
+    private int cafeDecreaseThirstAmount;
 
     [SerializeField]
     private GameObject londonEyePrefab;
@@ -115,6 +163,12 @@ public class WorldManager : MonoBehaviour {
     private Vector3 londonEyePositionOffset;
     [SerializeField]
     private float londonEyeYRotation;
+    [SerializeField]
+    private float londonEyeMoneyOwedIncreaseAmount;
+    [SerializeField]
+    private int londonEyeSatisfactionIncreaseAmount;
+    [SerializeField]
+    private int londonEyeSecondsBetweenActions;
 
     [SerializeField]
     private GameObject merryGoRoundPrefab;
@@ -126,6 +180,12 @@ public class WorldManager : MonoBehaviour {
     private Vector3 merryGoRoundPositionOffset;
     [SerializeField]
     private float merryGoRoundYRotation;
+    [SerializeField]
+    private float merryGoRoundMoneyOwedIncreaseAmount;
+    [SerializeField]
+    private int merryGoRoundSatisfactionIncreaseAmount;
+    [SerializeField]
+    private int merryGoRoundSecondsBetweenActions;
 
     [SerializeField]
     private GameObject rollerCoasterPrefab;
@@ -137,6 +197,12 @@ public class WorldManager : MonoBehaviour {
     private Vector3 rollerCoasterPositionOffset;
     [SerializeField]
     private float rollerCoasterYRotation;
+    [SerializeField]
+    private float rollerCoasterMoneyOwedIncreaseAmount;
+    [SerializeField]
+    private int rollerCoasterSatisfactionIncreaseAmount;
+    [SerializeField]
+    private int rollerCoasterSecondsBetweenActions;
 
     [SerializeField]
     private GameObject circusTentPrefab;
@@ -148,6 +214,12 @@ public class WorldManager : MonoBehaviour {
     private Vector3 circusTentPositionOffset;
     [SerializeField]
     private float circusTentYRotation;
+    [SerializeField]
+    private float circusTentMoneyOwedIncreaseAmount;
+    [SerializeField]
+    private int circusTentSatisfactionIncreaseAmount;
+    [SerializeField]
+    private int circusTentSecondsBetweenActions;
 
     [SerializeField]
     private GameObject basicParkPrefab;
@@ -159,6 +231,12 @@ public class WorldManager : MonoBehaviour {
     private Vector3 basicParkPositionOffset;
     [SerializeField]
     private float basicParkYRotation;
+    [SerializeField]
+    private float basicParkMoneyOwedIncreaseAmount;
+    [SerializeField]
+    private int basicParkSatisfactionIncreaseAmount;
+    [SerializeField]
+    private int basicParkSecondsBetweenActions;
 
     [SerializeField]
     private GameObject fountainParkPrefab;
@@ -170,6 +248,12 @@ public class WorldManager : MonoBehaviour {
     private Vector3 fountainParkPositionOffset;
     [SerializeField]
     private float fountainParkYRotation;
+    [SerializeField]
+    private float fountainParkMoneyOwedIncreaseAmount;
+    [SerializeField]
+    private int fountainParkSatisfactionIncreaseAmount;
+    [SerializeField]
+    private int fountainParkSecondsBetweenActions;
 
     [SerializeField]
     private GameObject helicopterParkPrefab;
@@ -181,6 +265,12 @@ public class WorldManager : MonoBehaviour {
     private Vector3 helicopterParkPositionOffset;
     [SerializeField]
     private float helicopterParkYRotation;
+    [SerializeField]
+    private float helicopterParkMoneyOwedIncreaseAmount;
+    [SerializeField]
+    private int helicopterParkSatisfactionIncreaseAmount;
+    [SerializeField]
+    private int helicopterParkSecondsBetweenActions;
 
     [SerializeField]
     private GameObject garbageCanPrefab;
@@ -192,6 +282,12 @@ public class WorldManager : MonoBehaviour {
     private Vector3 garbageCanPositionOffset;
     [SerializeField]
     private float garbageCanYRotation;
+    [SerializeField]
+    private float garbageCanMoneyOwedIncreaseAmount;
+    [SerializeField]
+    private int garbageCanSatisfactionIncreaseAmount;
+    [SerializeField]
+    private int garbageCanSecondsBetweenActions;
 
     /// <summary>
     /// Initialize world.
@@ -479,7 +575,9 @@ public class WorldManager : MonoBehaviour {
     public void BuildNewHotdogCar(Vector3Int origoPosition) {
         if (CanAreaBePopulatedWithStructure(origoPosition, hotdogCarPrefabAreaWidth, hotdogCarPrefabAreaLength)) {
             Restaurant hotdogCar = new Restaurant(hotdogCarPrefab, origoPosition, hotdogCarPrefabPositionOffset,
-                hotdogCarPrefabYRotation, hotdogCarPrefabAreaWidth, hotdogCarPrefabAreaLength);
+                hotdogCarPrefabYRotation, hotdogCarPrefabAreaWidth, hotdogCarPrefabAreaLength,
+                hotdogCarMoneyOwedIncreaseAmount, hotdogCarSatisfactionIncreaseAmount, hotdogCarSecondsBetweenActions,
+                hotdogCarDecreaseHungerAmount);
 
             BuildNewStructure(hotdogCar, origoPosition, hotdogCarPrefabAreaWidth, hotdogCarPrefabAreaLength);
 
@@ -493,7 +591,9 @@ public class WorldManager : MonoBehaviour {
     public void BuildNewKFC(Vector3Int origoPosition) {
         if (CanAreaBePopulatedWithStructure(origoPosition, kfcAreaWidth, kfcAreaLength)) {
             Restaurant kfc = new Restaurant(kfcPrefab, origoPosition, kfcPositionOffset,
-                kfcYRotation, kfcAreaWidth, kfcAreaLength);
+                kfcYRotation, kfcAreaWidth, kfcAreaLength,
+                kfcMoneyOwedIncreaseAmount, kfcSatisfactionIncreaseAmount, kfcSecondsBetweenActions,
+                kfcDecreaseHungerAmount);
 
             BuildNewStructure(kfc, origoPosition, kfcAreaWidth, kfcAreaLength);
 
@@ -507,7 +607,9 @@ public class WorldManager : MonoBehaviour {
     public void BuildNewOlivegardensRestaurant(Vector3Int origoPosition) {
         if (CanAreaBePopulatedWithStructure(origoPosition, olivegardensRestaurantAreaWidth, olivegardensRestaurantAreaLength)) {
             Restaurant olivegardensRestaurant = new Restaurant(olivegardensRestaurantPrefab, origoPosition, olivegardensRestaurantPositionOffset,
-                olivegardensRestaurantYRotation, olivegardensRestaurantAreaWidth, olivegardensRestaurantAreaLength);
+                olivegardensRestaurantYRotation, olivegardensRestaurantAreaWidth, olivegardensRestaurantAreaLength,
+                olivegardensRestaurantMoneyOwedIncreaseAmount, olivegardensRestaurantSatisfactionIncreaseAmount, olivegardensRestaurantSecondsBetweenActions,
+                olivegardensRestaurantDecreaseHungerAmount);
 
             BuildNewStructure(olivegardensRestaurant, origoPosition, olivegardensRestaurantAreaWidth, olivegardensRestaurantAreaLength);
 
@@ -521,7 +623,9 @@ public class WorldManager : MonoBehaviour {
     public void BuildNewTaverneRestaurant(Vector3Int origoPosition) {
         if (CanAreaBePopulatedWithStructure(origoPosition, taverneRestaurantAreaWidth, taverneRestaurantAreaLength)) {
             Restaurant taverneRestaurant = new Restaurant(taverneRestaurantPrefab, origoPosition, taverneRestaurantPositionOffset,
-                taverneRestaurantYRotation, taverneRestaurantAreaWidth, taverneRestaurantAreaLength);
+                taverneRestaurantYRotation, taverneRestaurantAreaWidth, taverneRestaurantAreaLength,
+                taverneRestaurantMoneyOwedIncreaseAmount, taverneRestaurantSatisfactionIncreaseAmount, taverneRestaurantSecondsBetweenActions,
+                taverneRestaurantDecreaseHungerAmount);
 
             BuildNewStructure(taverneRestaurant, origoPosition, taverneRestaurantAreaWidth, taverneRestaurantAreaLength);
 
@@ -535,7 +639,9 @@ public class WorldManager : MonoBehaviour {
     public void BuildNewCafeRestaurant(Vector3Int origoPosition) {
         if (CanAreaBePopulatedWithStructure(origoPosition, cafeRestaurantAreaWidth, cafeRestaurantAreaLength)) {
             Bar cafeRestaurant = new Bar(cafeRestaurantPrefab, origoPosition, cafeRestaurantPositionOffset,
-                cafeRestaurantYRotation, cafeRestaurantAreaWidth, cafeRestaurantAreaLength);
+                cafeRestaurantYRotation, cafeRestaurantAreaWidth, cafeRestaurantAreaLength,
+                cafeRestaurantMoneyOwedIncreaseAmount, cafeRestaurantSatisfactionIncreaseAmount, cafeRestaurantSecondsBetweenActions,
+                cafeRestaurantDecreaseThirstAmount);
 
             BuildNewStructure(cafeRestaurant, origoPosition, cafeRestaurantAreaWidth, cafeRestaurantAreaLength);
 
@@ -549,7 +655,9 @@ public class WorldManager : MonoBehaviour {
     public void BuildNewCafe(Vector3Int origoPosition) {
         if (CanAreaBePopulatedWithStructure(origoPosition, cafeAreaWidth, cafeAreaLength)) {
             Bar cafe = new Bar(cafePrefab, origoPosition, cafePositionOffset,
-                cafeYRotation, cafeAreaWidth, cafeAreaLength);
+                cafeYRotation, cafeAreaWidth, cafeAreaLength,
+                cafeMoneyOwedIncreaseAmount, cafeSatisfactionIncreaseAmount, cafeSecondsBetweenActions,
+                cafeDecreaseThirstAmount);
 
             BuildNewStructure(cafe, origoPosition, cafeAreaWidth, cafeAreaLength);
 
@@ -563,7 +671,8 @@ public class WorldManager : MonoBehaviour {
     public void BuildNewLondonEye(Vector3Int origoPosition) {
         if (CanAreaBePopulatedWithStructure(origoPosition, londonEyeAreaWidth, londonEyeAreaLength)) {
             Attraction londonEye = new Attraction(londonEyePrefab, origoPosition, londonEyePositionOffset,
-                londonEyeYRotation, londonEyeAreaWidth, londonEyeAreaLength);
+                londonEyeYRotation, londonEyeAreaWidth, londonEyeAreaLength,
+                londonEyeMoneyOwedIncreaseAmount, londonEyeSatisfactionIncreaseAmount, londonEyeSecondsBetweenActions);
 
             BuildNewStructure(londonEye, origoPosition, londonEyeAreaWidth, londonEyeAreaLength);
 
@@ -577,7 +686,8 @@ public class WorldManager : MonoBehaviour {
     public void BuildNewMerryGoRound(Vector3Int origoPosition) {
         if (CanAreaBePopulatedWithStructure(origoPosition, merryGoRoundAreaWidth, merryGoRoundAreaLength)) {
             Attraction merryGoRound = new Attraction(merryGoRoundPrefab, origoPosition, merryGoRoundPositionOffset,
-                merryGoRoundYRotation, merryGoRoundAreaWidth, merryGoRoundAreaLength);
+                merryGoRoundYRotation, merryGoRoundAreaWidth, merryGoRoundAreaLength,
+                merryGoRoundMoneyOwedIncreaseAmount, merryGoRoundSatisfactionIncreaseAmount, merryGoRoundSecondsBetweenActions);
 
             BuildNewStructure(merryGoRound, origoPosition, merryGoRoundAreaWidth, merryGoRoundAreaLength);
 
@@ -591,7 +701,8 @@ public class WorldManager : MonoBehaviour {
     public void BuildNewRollerCoaster(Vector3Int origoPosition) {
         if (CanAreaBePopulatedWithStructure(origoPosition, rollerCoasterAreaWidth, rollerCoasterAreaLength)) {
             Attraction rollerCoaster = new Attraction(rollerCoasterPrefab, origoPosition, rollerCoasterPositionOffset,
-                rollerCoasterYRotation, rollerCoasterAreaWidth, rollerCoasterAreaLength);
+                rollerCoasterYRotation, rollerCoasterAreaWidth, rollerCoasterAreaLength,
+                rollerCoasterMoneyOwedIncreaseAmount, rollerCoasterSatisfactionIncreaseAmount, rollerCoasterSecondsBetweenActions);
 
             BuildNewStructure(rollerCoaster, origoPosition, rollerCoasterAreaWidth, rollerCoasterAreaLength);
 
@@ -605,7 +716,8 @@ public class WorldManager : MonoBehaviour {
     public void BuildNewCircusTent(Vector3Int origoPosition) {
         if (CanAreaBePopulatedWithStructure(origoPosition, circusTentAreaWidth, circusTentAreaLength)) {
             Attraction circusTent = new Attraction(circusTentPrefab, origoPosition, circusTentPositionOffset,
-                circusTentYRotation, circusTentAreaWidth, circusTentAreaLength);
+                circusTentYRotation, circusTentAreaWidth, circusTentAreaLength,
+                circusTentMoneyOwedIncreaseAmount, circusTentSatisfactionIncreaseAmount, circusTentSecondsBetweenActions);
 
             BuildNewStructure(circusTent, origoPosition, circusTentAreaWidth, circusTentAreaLength);
 
@@ -619,7 +731,8 @@ public class WorldManager : MonoBehaviour {
     public void BuildNewBasicPark(Vector3Int origoPosition) {
         if (CanAreaBePopulatedWithStructure(origoPosition, basicParkAreaWidth, basicParkAreaLength)) {
             Park basicPark = new Park(basicParkPrefab, origoPosition, basicParkPositionOffset,
-                basicParkYRotation, basicParkAreaWidth, basicParkAreaLength);
+                basicParkYRotation, basicParkAreaWidth, basicParkAreaLength,
+                basicParkMoneyOwedIncreaseAmount, basicParkSatisfactionIncreaseAmount, basicParkSecondsBetweenActions);
 
             BuildNewStructure(basicPark, origoPosition, basicParkAreaWidth, basicParkAreaLength);
 
@@ -633,7 +746,8 @@ public class WorldManager : MonoBehaviour {
     public void BuildNewFountainPark(Vector3Int origoPosition) {
         if (CanAreaBePopulatedWithStructure(origoPosition, fountainParkAreaWidth, fountainParkAreaLength)) {
             Park fountainPark = new Park(fountainParkPrefab, origoPosition, fountainParkPositionOffset,
-                fountainParkYRotation, fountainParkAreaWidth, fountainParkAreaLength);
+                fountainParkYRotation, fountainParkAreaWidth, fountainParkAreaLength,
+                fountainParkMoneyOwedIncreaseAmount, fountainParkSatisfactionIncreaseAmount, fountainParkSecondsBetweenActions);
 
             BuildNewStructure(fountainPark, origoPosition, fountainParkAreaWidth, fountainParkAreaLength);
 
@@ -647,7 +761,8 @@ public class WorldManager : MonoBehaviour {
     public void BuildNewHelicopterPark(Vector3Int origoPosition) {
         if (CanAreaBePopulatedWithStructure(origoPosition, helicopterParkAreaWidth, helicopterParkAreaLength)) {
             Park helicopterPark = new Park(helicopterParkPrefab, origoPosition, helicopterParkPositionOffset,
-                helicopterParkYRotation, helicopterParkAreaWidth, helicopterParkAreaLength);
+                helicopterParkYRotation, helicopterParkAreaWidth, helicopterParkAreaLength,
+                helicopterParkMoneyOwedIncreaseAmount, helicopterParkSatisfactionIncreaseAmount, helicopterParkSecondsBetweenActions);
 
             BuildNewStructure(helicopterPark, origoPosition, helicopterParkAreaWidth, helicopterParkAreaLength);
 
@@ -661,7 +776,8 @@ public class WorldManager : MonoBehaviour {
     public void BuildNewGarbageCan(Vector3Int origoPosition) {
         if (CanAreaBePopulatedWithStructure(origoPosition, garbageCanAreaWidth, garbageCanAreaLength)) {
             GarbageCan garbageCan = new GarbageCan(garbageCanPrefab, origoPosition, garbageCanPositionOffset,
-                garbageCanYRotation, garbageCanAreaWidth, garbageCanAreaLength);
+                garbageCanYRotation, garbageCanAreaWidth, garbageCanAreaLength,
+                garbageCanMoneyOwedIncreaseAmount, garbageCanSatisfactionIncreaseAmount, garbageCanSecondsBetweenActions);
 
             BuildNewStructure(garbageCan, origoPosition, garbageCanAreaWidth, garbageCanAreaLength);
         }

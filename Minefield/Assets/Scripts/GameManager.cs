@@ -46,6 +46,16 @@ public class GameManager : MonoBehaviour {
     private float npcMaximumSpeed;
     [SerializeField]
     private float npcRotationSpeedMultiplier;
+    [SerializeField]
+    private int secondsUntilThirstGrowth;
+    [SerializeField]
+    private int thirstGrowthAmount;
+    [SerializeField]
+    private int secondsUntilHungerGrowth;
+    [SerializeField]
+    private int hungerGrowthAmount;
+    [SerializeField]
+    private float loweringDistanceOnInvisibility;
 
     /// <summary>
     /// Fill up the menus with their actions.
@@ -76,6 +86,13 @@ public class GameManager : MonoBehaviour {
         entrance = worldManager.GetEntrance();
 
         npcs = new List<NPC>();
+        for (int i = 0; i < 10; i++) {
+            npcs.Add(new NPC(stevePrefab, entrance.GetOrigoPosition(), worldManager, npcDistancePrecision,
+            npcDefaultSatisfaction, npcMinimumSatisfactionOfStaying, npcDefaultThirst, npcMaximumThirstOfNotNeedingToDrink,
+            npcDefaultHunger, npcMaximumHungerOfNotNeedingToEat, npcMinimumSpeed, npcMaximumSpeed, npcRotationSpeedMultiplier,
+            secondsUntilThirstGrowth, thirstGrowthAmount, secondsUntilHungerGrowth, hungerGrowthAmount,
+            loweringDistanceOnInvisibility));
+        }
         maximumNPCNumber = worldManager.GetMaximumNPCNumberBasedOnWorldMatrixSize();
     }
 
@@ -224,6 +241,8 @@ public class GameManager : MonoBehaviour {
         }
 
         averageNPCSatisfaction /= npcs.Count;
+
+        Debug.Log("NPC Number:" + npcs.Count + "; Average Satisfaction: " + averageNPCSatisfaction);
     }
 
     /// <summary>
@@ -233,7 +252,9 @@ public class GameManager : MonoBehaviour {
         if (minimumAverageNPCSatisfactionOfNPCsSpawn <= averageNPCSatisfaction && npcs.Count < maximumNPCNumber) {
             npcs.Add(new NPC(stevePrefab, entrance.GetOrigoPosition(), worldManager, npcDistancePrecision,
             npcDefaultSatisfaction, npcMinimumSatisfactionOfStaying, npcDefaultThirst, npcMaximumThirstOfNotNeedingToDrink,
-            npcDefaultHunger, npcMaximumHungerOfNotNeedingToEat, npcMinimumSpeed, npcMaximumSpeed, npcRotationSpeedMultiplier));
+            npcDefaultHunger, npcMaximumHungerOfNotNeedingToEat, npcMinimumSpeed, npcMaximumSpeed, npcRotationSpeedMultiplier,
+            secondsUntilThirstGrowth, thirstGrowthAmount, secondsUntilHungerGrowth, hungerGrowthAmount,
+            loweringDistanceOnInvisibility));
         }
     }
 
