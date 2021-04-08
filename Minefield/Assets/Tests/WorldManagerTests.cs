@@ -9,7 +9,7 @@ namespace Tests {
 
         [SetUp]
         public void SetUp() {
-            SceneManager.LoadScene("MineField");
+            SceneManager.LoadScene("Minefield");
         }
 
         [UnityTest]
