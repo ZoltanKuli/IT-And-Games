@@ -19,8 +19,9 @@ public class GameManager : MonoBehaviour {
     private Entrance entrance;
 
     private List<NPC> npcs;
-    [SerializeField]
     private float averageNPCSatisfaction;
+    private float averageNPCThirst;
+    private float averageNPCHunger;
     [SerializeField]
     private float minimumAverageNPCSatisfactionOfNPCsSpawn;
     private int maximumNPCNumber;
@@ -29,17 +30,29 @@ public class GameManager : MonoBehaviour {
     [SerializeField]
     private float npcDistancePrecision;
     [SerializeField]
-    private int npcDefaultSatisfaction;
+    private int npcDefaultSatisfactionMinimum;
     [SerializeField]
-    private int npcMinimumSatisfactionOfStaying;
+    private int npcDefaultSatisfactionMaximum;
     [SerializeField]
-    private int npcDefaultThirst;
+    private int npcMinimumSatisfactionOfStayingMinimum;
     [SerializeField]
-    private int npcMaximumThirstOfNotNeedingToDrink;
+    private int npcMinimumSatisfactionOfStayingMaximum;
     [SerializeField]
-    private int npcDefaultHunger;
+    private int npcDefaultThirstMinimum;
     [SerializeField]
-    private int npcMaximumHungerOfNotNeedingToEat;
+    private int npcDefaultThirstMaximum;
+    [SerializeField]
+    private int npcMaximumThirstOfNotNeedingToDrinkMinimum;
+    [SerializeField]
+    private int npcMaximumThirstOfNotNeedingToDrinkMaximum;
+    [SerializeField]
+    private int npcDefaultHungerMinimum;
+    [SerializeField]
+    private int npcDefaultHungerMaximum;
+    [SerializeField]
+    private int npcMaximumHungerOfNotNeedingToEatMinimum;
+    [SerializeField]
+    private int npcMaximumHungerOfNotNeedingToEatMaximum;
     [SerializeField]
     private float npcMinimumSpeed;
     [SerializeField]
@@ -47,15 +60,33 @@ public class GameManager : MonoBehaviour {
     [SerializeField]
     private float npcRotationSpeedMultiplier;
     [SerializeField]
-    private int secondsUntilThirstGrowth;
+    private int secondsUntilThirstGrowthMinimum;
     [SerializeField]
-    private int thirstGrowthAmount;
+    private int secondsUntilThirstGrowthMaximum;
     [SerializeField]
-    private int secondsUntilHungerGrowth;
+    private int thirstGrowthAmountMinimum;
     [SerializeField]
-    private int hungerGrowthAmount;
+    private int thirstGrowthAmountMaximum;
+    [SerializeField]
+    private int secondsUntilHungerGrowthMinimum;
+    [SerializeField]
+    private int secondsUntilHungerGrowthMaximum;
+    [SerializeField]
+    private int hungerGrowthAmountMinimum;
+    [SerializeField]
+    private int hungerGrowthAmountMaximum;
     [SerializeField]
     private float loweringDistanceOnInvisibility;
+    [SerializeField]
+    private int thirstDecreaseDissatisfactionAmountMinimum;
+    [SerializeField]
+    private int thirstDecreaseDissatisfactionAmountMaximum;
+    [SerializeField]
+    private int hungerDecreaseDissatisfactionAmountMinimum;
+    [SerializeField]
+    private int hungerDecreaseDissatisfactionAmountMaximum;
+
+    private System.Random random;
 
     /// <summary>
     /// Fill up the menus with their actions.
@@ -85,15 +116,18 @@ public class GameManager : MonoBehaviour {
 
         entrance = worldManager.GetEntrance();
 
+        mainCamera.transform.position = new Vector3(entrance.GetOrigoPosition().x,
+            mainCamera.transform.position.y, entrance.GetOrigoPosition().z);
+
         npcs = new List<NPC>();
-        for (int i = 0; i < 10; i++) {
-            npcs.Add(new NPC(stevePrefab, entrance.GetOrigoPosition(), worldManager, npcDistancePrecision,
-            npcDefaultSatisfaction, npcMinimumSatisfactionOfStaying, npcDefaultThirst, npcMaximumThirstOfNotNeedingToDrink,
-            npcDefaultHunger, npcMaximumHungerOfNotNeedingToEat, npcMinimumSpeed, npcMaximumSpeed, npcRotationSpeedMultiplier,
-            secondsUntilThirstGrowth, thirstGrowthAmount, secondsUntilHungerGrowth, hungerGrowthAmount,
-            loweringDistanceOnInvisibility));
-        }
+
+        averageNPCSatisfaction = 100;
+        averageNPCThirst = 100;
+        averageNPCHunger = 100;
+
         maximumNPCNumber = worldManager.GetMaximumNPCNumberBasedOnWorldMatrixSize();
+
+        random = new System.Random();
     }
 
     /// <summary>
@@ -228,6 +262,13 @@ public class GameManager : MonoBehaviour {
         UpdateNPCS();
 
         UpdateAverageNPCSatisfaction();
+        UpdateAverageNPCThirst();
+        UpdateAverageNPCHunnger();
+
+        Debug.Log("NPC Number:" + npcs.Count 
+            + "; Average Satisfaction: " + averageNPCSatisfaction 
+            + "; Average Thirst: " + averageNPCThirst 
+            + "; Average Hunger: " + averageNPCHunger);
     }
 
     /// <summary>
@@ -236,13 +277,43 @@ public class GameManager : MonoBehaviour {
     private void UpdateAverageNPCSatisfaction() {
         averageNPCSatisfaction = 0;
 
-        foreach (NPC npc in npcs) {
-            averageNPCSatisfaction += npc.GetSatisfaction();
+        if (0 < npcs.Count) {
+            foreach (NPC npc in npcs) {
+                averageNPCSatisfaction += npc.GetSatisfaction();
+            }
+
+            averageNPCSatisfaction /= npcs.Count;
         }
+    }
 
-        averageNPCSatisfaction /= npcs.Count;
+    /// <summary>
+    /// Update average npc thirst.
+    /// </summary>
+    private void UpdateAverageNPCThirst() {
+        averageNPCThirst = 0;
 
-        Debug.Log("NPC Number:" + npcs.Count + "; Average Satisfaction: " + averageNPCSatisfaction);
+        if (0 < npcs.Count) {
+            foreach (NPC npc in npcs) {
+                averageNPCThirst += npc.GetThirst();
+            }
+
+            averageNPCThirst /= npcs.Count;
+        }
+    }
+
+    /// <summary>
+    /// Update average npc hunger.
+    /// </summary>
+    private void UpdateAverageNPCHunnger() {
+        averageNPCHunger = 0;
+
+        if (0 < npcs.Count) {
+            foreach (NPC npc in npcs) {
+                averageNPCHunger += npc.GetHunger();
+            }
+
+            averageNPCHunger /= npcs.Count;
+        }
     }
 
     /// <summary>
@@ -251,10 +322,20 @@ public class GameManager : MonoBehaviour {
     private void SpawnNPC() {
         if (minimumAverageNPCSatisfactionOfNPCsSpawn <= averageNPCSatisfaction && npcs.Count < maximumNPCNumber) {
             npcs.Add(new NPC(stevePrefab, entrance.GetOrigoPosition(), worldManager, npcDistancePrecision,
-            npcDefaultSatisfaction, npcMinimumSatisfactionOfStaying, npcDefaultThirst, npcMaximumThirstOfNotNeedingToDrink,
-            npcDefaultHunger, npcMaximumHungerOfNotNeedingToEat, npcMinimumSpeed, npcMaximumSpeed, npcRotationSpeedMultiplier,
-            secondsUntilThirstGrowth, thirstGrowthAmount, secondsUntilHungerGrowth, hungerGrowthAmount,
-            loweringDistanceOnInvisibility));
+            random.Next(npcDefaultSatisfactionMinimum, npcDefaultSatisfactionMaximum),
+            random.Next(npcMinimumSatisfactionOfStayingMinimum, npcMinimumSatisfactionOfStayingMaximum),
+            random.Next(npcDefaultThirstMinimum, npcDefaultThirstMaximum),
+            random.Next(npcMaximumThirstOfNotNeedingToDrinkMinimum, npcMaximumThirstOfNotNeedingToDrinkMaximum),
+            random.Next(npcDefaultHungerMinimum, npcDefaultHungerMaximum),
+            random.Next(npcMaximumHungerOfNotNeedingToEatMinimum, npcMaximumHungerOfNotNeedingToEatMaximum), 
+            npcMinimumSpeed, npcMaximumSpeed, npcRotationSpeedMultiplier,
+            random.Next(secondsUntilThirstGrowthMinimum, secondsUntilThirstGrowthMaximum),
+            random.Next(thirstGrowthAmountMinimum, thirstGrowthAmountMaximum),
+            random.Next(secondsUntilHungerGrowthMinimum, secondsUntilHungerGrowthMaximum),
+            random.Next(hungerGrowthAmountMinimum, hungerGrowthAmountMaximum),
+            loweringDistanceOnInvisibility,
+            random.Next(thirstDecreaseDissatisfactionAmountMinimum, thirstDecreaseDissatisfactionAmountMaximum),
+            random.Next(hungerDecreaseDissatisfactionAmountMinimum, hungerDecreaseDissatisfactionAmountMaximum)));
         }
     }
 
@@ -262,8 +343,14 @@ public class GameManager : MonoBehaviour {
     /// Update npcs
     /// </summary>
     private void UpdateNPCS() {
-        foreach (NPC npc in npcs) {
-            npc.Update();
+        for (int i = 0; i < npcs.Count; i++) {
+            NPC npc = npcs[i];
+            if (!npc.IsDestroyed()) {
+                npc.Update();
+            } else {
+                npcs.RemoveAt(i);
+                i--;
+            }
         }
     }
 }

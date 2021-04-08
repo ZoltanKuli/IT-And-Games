@@ -6,33 +6,26 @@ public class Bar : Structure {
     private int decreaseThirstAmount;
 
     public Bar(GameObject prefab, Vector3Int origoPosition, Vector3 prefabOffset, float yAngle, int areaWidth, int areaLength,
-        float moneyOwedIncreaseAmount, int satisfactionIncreaseAmount, int secondsBetweenActions, int decreaseThirstAmount)
+        float moneyOwedIncreaseAmount, int satisfactionIncreaseAmount, int secondsBetweenActions, int decreaseThirstAmount, int maxQueueLength)
         : base(prefab, origoPosition, prefabOffset, yAngle, areaWidth, areaLength,
-            moneyOwedIncreaseAmount, satisfactionIncreaseAmount, secondsBetweenActions) {
+            moneyOwedIncreaseAmount, satisfactionIncreaseAmount, secondsBetweenActions,
+            maxQueueLength) {
         this.decreaseThirstAmount = decreaseThirstAmount;
     }
 
-    public new void Action(NPC npc) {
-        if (!queu.Contains(npc)) {
-            npc.IncreaseOrDecreaseSatisfaction(-queu.Count);
-            queu.Enqueue(npc);
-        }
+    /// <summary>
+    /// Remove npc inside.
+    /// </summary>
+    protected new void RemoveNPCInside() {
+        if (npcInside != null) {
+            npcInside.SetIsBusy(false);
+            npcInside.SetIsVisible(true);
 
-        if (lastActionTime.AddSeconds(secondsBetweenActions) <= DateTime.Now) {
-            if (npcInside != null) {
-                npcInside.SetIsBusy(false);
-                npcInside.SetIsVisible(true);
-                npcInside.IncreaseOrDecreaseSatisfaction(satisfactionIncreaseAmount);
-                npcInside.DecreaseThirst(decreaseThirstAmount);
-                npcInside.IncreaseOrDecreaseMoneyOwed(moneyOwedIncreaseAmount);
-            }
+            npcInside.IncreaseOrDecreaseSatisfaction(satisfactionIncreaseAmount);
+            npcInside.DecreaseThirst(decreaseThirstAmount);
+            npcInside.IncreaseOrDecreaseMoneyOwed(moneyOwedIncreaseAmount);
 
             npcInside = null;
-            if (0 < queu.Count) {
-                npcInside = queu.Dequeue();
-            }
-
-            lastActionTime = DateTime.Now;
         }
     }
 }

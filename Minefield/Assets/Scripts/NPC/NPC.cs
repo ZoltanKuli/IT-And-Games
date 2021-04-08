@@ -5,7 +5,7 @@ using UnityEngine;
 public class NPC {
 
     private GameObject gameObject;
-    private float originalHeight;
+    private Vector3 entrancePosition;
     private float loweringDistanceOnInvisibility;
 
     private WorldManager worldManager;
@@ -13,6 +13,7 @@ public class NPC {
     private float distancePrecision;
 
     private bool isBusy;
+    private bool isVisible;
     private float moneyOwed;
 
     private int satisfaction;
@@ -22,29 +23,32 @@ public class NPC {
     private int hunger;
     private int maximumHungerOfNotNeedingToEat;
 
-    private DateTime lastThirstGrowthTime;
     private int secondsUntilThirstGrowth;
+    private DateTime timeOfNextThirstGrowth;
     private int thirstGrowthAmount;
-    private DateTime lastHungerGrowthTime;
     private int secondsUntilHungerGrowth;
+    private DateTime timeOfNextHungertGrowth;
     private int hungerGrowthAmount;
+    private int thirstDecreaseDissatisfactionAmount;
+    private int hungerDecreaseDissatisfactionAmount;
 
     private Field destinationStructure;
     private List<Field> path;
     private float minimumSpeed;
     private float maximumSpeed;
+    private float speed;
     private float rotationSpeedMultiplier;
 
     private System.Random random;
 
-    public NPC(GameObject prefab, Vector3Int position, WorldManager worldManager, float distancePrecision,
+    public NPC(GameObject prefab, Vector3Int entrancePosition, WorldManager worldManager, float distancePrecision,
         int defaultSatisfaction, int minimumSatisfactionOfStaying, int defaultThirst, int maximumThirstOfNotNeedingToDrink,
         int defaultHunger, int maximumHungerOfNotNeedingToEat, float minimumSpeed, float maximumSpeed, float rotationSpeedMultiplier,
         int secondsUntilThirstGrowth, int thirstGrowthAmount, int secondsUntilHungerGrowth, int hungerGrowthAmount,
-        float loweringDistanceOnInvisibility) {
-        gameObject = GameObject.Instantiate(prefab, position, Quaternion.identity);
-        originalHeight = position.y;
-
+        float loweringDistanceOnInvisibility, int thirstDecreaseDissatisfactionAmount, int hungerDecreaseDissatisfactionAmount) {
+        gameObject = GameObject.Instantiate(prefab, entrancePosition, Quaternion.identity);
+        this.entrancePosition = entrancePosition;
+        isVisible = true;
         this.worldManager = worldManager;
 
         this.distancePrecision = distancePrecision;
@@ -62,14 +66,17 @@ public class NPC {
         this.maximumSpeed = maximumSpeed;
         this.rotationSpeedMultiplier = rotationSpeedMultiplier;
 
-        lastThirstGrowthTime = DateTime.Now;
         this.secondsUntilThirstGrowth = secondsUntilThirstGrowth;
+        timeOfNextThirstGrowth = DateTime.UtcNow.AddSeconds(secondsUntilThirstGrowth);
         this.thirstGrowthAmount = thirstGrowthAmount;
-        lastHungerGrowthTime = DateTime.Now;
         this.secondsUntilHungerGrowth = secondsUntilHungerGrowth;
+        timeOfNextHungertGrowth = DateTime.UtcNow.AddSeconds(secondsUntilHungerGrowth);
         this.hungerGrowthAmount = hungerGrowthAmount;
 
         this.loweringDistanceOnInvisibility = loweringDistanceOnInvisibility;
+
+        this.thirstDecreaseDissatisfactionAmount = thirstDecreaseDissatisfactionAmount;
+        this.hungerDecreaseDissatisfactionAmount = hungerDecreaseDissatisfactionAmount;
 
         random = new System.Random(gameObject.GetHashCode());
     }
@@ -100,14 +107,16 @@ public class NPC {
     /// Increase thirst.
     /// </summary>
     private void IncreaseThirst() {
-        if (lastThirstGrowthTime.AddSeconds(secondsUntilThirstGrowth) <= DateTime.Now) {
-            lastThirstGrowthTime = DateTime.Now;
+        if (timeOfNextThirstGrowth <= DateTime.UtcNow) {
+            timeOfNextThirstGrowth = DateTime.UtcNow.AddSeconds(secondsUntilThirstGrowth);
 
             if ((thirst + thirstGrowthAmount) <= 100) {
                 thirst += thirstGrowthAmount;
             } else {
                 thirst = 100;
             }
+
+            IncreaseOrDecreaseSatisfaction(-thirstDecreaseDissatisfactionAmount);
         }
     }
 
@@ -115,14 +124,16 @@ public class NPC {
     /// Increase hunger.
     /// </summary>
     private void IncreaseHunger() {
-        if (lastHungerGrowthTime.AddSeconds(secondsUntilHungerGrowth) <= DateTime.Now) {
-            lastThirstGrowthTime = DateTime.Now;
+        if (timeOfNextHungertGrowth <= DateTime.UtcNow) {
+            timeOfNextHungertGrowth = DateTime.UtcNow.AddSeconds(secondsUntilHungerGrowth);
 
             if ((hunger + hungerGrowthAmount) <= 100) {
                 hunger += hungerGrowthAmount;
             } else {
                 hunger = 100;
             }
+
+            IncreaseOrDecreaseSatisfaction(-hungerDecreaseDissatisfactionAmount);
         }
     }
 
@@ -130,14 +141,10 @@ public class NPC {
     /// Decrease thirst.
     /// </summary>
     public void DecreaseThirst(int decreaseThirstAmount) {
-        if (lastThirstGrowthTime.AddSeconds(secondsUntilThirstGrowth) <= DateTime.Now) {
-            lastThirstGrowthTime = DateTime.Now;
-
-            if (0 <= (thirst - decreaseThirstAmount)) {
-                thirst -= decreaseThirstAmount;
-            } else {
-                thirst = 0;
-            }
+        if (0 <= (thirst - decreaseThirstAmount)) {
+            thirst -= decreaseThirstAmount;
+        } else {
+            thirst = 0;
         }
     }
 
@@ -145,14 +152,10 @@ public class NPC {
     /// Decrease hunger.
     /// </summary>
     public void DecreaseHunger(int decreaseHungerAmount) {
-        if (lastHungerGrowthTime.AddSeconds(secondsUntilHungerGrowth) <= DateTime.Now) {
-            lastThirstGrowthTime = DateTime.Now;
-
-            if (0 <= (hunger - decreaseHungerAmount)) {
-                hunger -= decreaseHungerAmount;
-            } else {
-                hunger = 0;
-            }
+        if (0 <= (hunger - decreaseHungerAmount)) {
+            hunger -= decreaseHungerAmount;
+        } else {
+            hunger = 0;
         }
     }
 
@@ -163,8 +166,6 @@ public class NPC {
         if (!isBusy) {
             SetDestinationStructure();
             SetPath();
-
-            isBusy = true;
         }
     }
 
@@ -172,13 +173,20 @@ public class NPC {
     /// Set destination structure.
     /// </summary>
     private void SetDestinationStructure() {
-        if (maximumThirstOfNotNeedingToDrink <= thirst) {
-            destinationStructure = worldManager.getRandomBar();
-        } else if (maximumHungerOfNotNeedingToEat <= hunger) {
-            destinationStructure = worldManager.GetRandomRestaurant();
-        } else {
-            destinationStructure = worldManager.getRandomAttraction();
+        Field tmpDestinationStructure = destinationStructure;
+        int structuresCount = worldManager.GetStructuresCount();
+
+        for (int i = 0; i < structuresCount && destinationStructure == tmpDestinationStructure; i++) {
+            if (maximumThirstOfNotNeedingToDrink <= thirst) {
+                tmpDestinationStructure = worldManager.getRandomBar();
+            } else if (maximumHungerOfNotNeedingToEat <= hunger) {
+                tmpDestinationStructure = worldManager.GetRandomRestaurant();
+            } else {
+                tmpDestinationStructure = worldManager.getRandomAttraction();
+            }
         }
+
+        destinationStructure = tmpDestinationStructure;
     }
 
     /// <summary>
@@ -187,11 +195,16 @@ public class NPC {
     private void SetPath() {
         List<Road> orthogonallyAdjacentRoadsAroundDestinationStructure = worldManager.GetOrthogonallyAdjecentRoadsAroundStructure((Structure)destinationStructure);
 
-        path = null;
-        foreach (Road orthogonallyAdjacentRoadAroundDestinationStructure in orthogonallyAdjacentRoadsAroundDestinationStructure) {
+        path = new List<Field>();
+        while (orthogonallyAdjacentRoadsAroundDestinationStructure.Count != 0) {
+            Road orthogonallyAdjacentRoadAroundDestinationStructure = orthogonallyAdjacentRoadsAroundDestinationStructure[random.Next(orthogonallyAdjacentRoadsAroundDestinationStructure.Count)];
+            orthogonallyAdjacentRoadsAroundDestinationStructure.Remove(orthogonallyAdjacentRoadAroundDestinationStructure);
+
             path = PathFinder.FindPath(worldManager, worldManager.GetFieldAtPosition(GetPositionRoundedToVector3Int()), orthogonallyAdjacentRoadAroundDestinationStructure, true);
 
             if (0 < path.Capacity) {
+                isBusy = true;
+                speed = GetMovementSpeed();
                 break;
             }
         }
@@ -209,7 +222,14 @@ public class NPC {
     /// </summary>
     private void MoveGameObjectToDestinationIfNotAlreadyThere() {
         if (path.Count != 0) {
-            gameObject.transform.position = Vector3.MoveTowards(gameObject.transform.position, path[path.Count - 1].GetOrigoPosition(), GetMovementSpeed() * Time.deltaTime);
+            if ((path[path.Count - 1] != worldManager.GetFieldAtPosition(path[path.Count - 1].GetOrigoPosition()))
+                || destinationStructure != worldManager.GetFieldAtPosition(destinationStructure.GetOrigoPosition())) {
+                path = new List<Field>();
+                isBusy = false;
+                return;
+            }
+
+            gameObject.transform.position = Vector3.MoveTowards(gameObject.transform.position, path[path.Count - 1].GetOrigoPosition(), speed * Time.deltaTime);
 
             RotateGameObjectTowardsMovementDirection(path[path.Count - 1].GetOrigoPosition());
 
@@ -226,10 +246,6 @@ public class NPC {
         if (path.Count == 0 && isBusy) {
             Structure structure = (Structure)destinationStructure;
             structure.Action(this);
-
-            if (Math.Abs(gameObject.transform.position.y - originalHeight) <= distancePrecision) {
-                SetIsVisible(false);
-            }
         }
     }
 
@@ -239,7 +255,7 @@ public class NPC {
     private void RotateGameObjectTowardsMovementDirection(Vector3 target) {
         Vector3 targetDirection = target - gameObject.transform.position;
 
-        Vector3 newDirection = Vector3.RotateTowards(gameObject.transform.forward, targetDirection, rotationSpeedMultiplier * GetMovementSpeed() * Time.deltaTime, 0.0f);
+        Vector3 newDirection = Vector3.RotateTowards(gameObject.transform.forward, targetDirection, rotationSpeedMultiplier * speed * Time.deltaTime, 0.0f);
 
         gameObject.transform.rotation = Quaternion.LookRotation(newDirection);
     }
@@ -261,12 +277,36 @@ public class NPC {
     }
 
     /// <summary>
+    /// Get thirst.
+    /// </summary>
+    public int GetThirst() {
+        return thirst;
+    }
+
+    /// <summary>
+    /// Get hunger.
+    /// </summary>
+    public int GetHunger() {
+        return hunger;
+    }
+
+    /// <summary>
     /// Destroy game object.
     /// </summary>
     private void DestroyGameObjectIfSatisfactionIsLowerThanMinimumSatisfactionOfstaying() {
-        if (satisfaction < minimumSatisfactionOfStaying) {
+        if (isVisible && satisfaction < minimumSatisfactionOfStaying) {
+            path = new List<Field>();
+            isBusy = false;
             GameObject.Destroy(gameObject);
+            gameObject = null;
         }
+    }
+
+    /// <summary>
+    /// Is destroyed.
+    /// </summary>
+    public bool IsDestroyed() {
+        return gameObject == null;
     }
 
     /// <summary>
@@ -281,14 +321,26 @@ public class NPC {
     /// </summary>
     public void SetIsVisible(bool isVisible) {
         if (isVisible) {
+            TeleportBackToSpawnIfNotStandingOnARoadOrTheEntrance();
             gameObject.transform.position = gameObject.transform.position + new Vector3(0, loweringDistanceOnInvisibility, 0);
         } else {
             gameObject.transform.position = gameObject.transform.position - new Vector3(0, loweringDistanceOnInvisibility, 0);
-            Debug.Log("doublefuck" + gameObject.transform.position);
         }
 
-        if (gameObject.transform.position.y > 10) {
-            Debug.Log("fuck" + gameObject.transform.position);
+        Debug.Log(gameObject.transform.position);
+
+        this.isVisible = isVisible;
+    }
+
+    /// <summary>
+    /// Teleport back to spawn if not standing on a road ar the entrance.
+    /// </summary>
+    private void TeleportBackToSpawnIfNotStandingOnARoadOrTheEntrance() {
+        if (!(worldManager.GetFieldAtPosition(Vector3Int.RoundToInt(gameObject.transform.position)) is Road)
+            && !(worldManager.GetFieldAtPosition(Vector3Int.RoundToInt(gameObject.transform.position)) is Entrance)) {
+            gameObject.transform.position = new Vector3(entrancePosition.x, entrancePosition.y, entrancePosition.z);
+            path = new List<Field>();
+            isBusy = false;
         }
     }
 
