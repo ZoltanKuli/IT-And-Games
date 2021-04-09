@@ -280,9 +280,9 @@ public class GameManager : MonoBehaviour {
         UpdateAverageNPCHunnger();
         UpdatePlayersBalanceFromNPCSMoneyOwed();
 
-        Debug.Log("NPC Number:" + npcs.Count 
-            + "; Average Satisfaction: " + averageNPCSatisfaction
+        Debug.Log("NPC Number:" + npcs.Count
             + "; Player's Balance: " + playersBalance
+            + "; Average Satisfaction: " + averageNPCSatisfaction
             + "; Average Thirst: " + averageNPCThirst 
             + "; Average Hunger: " + averageNPCHunger);
     }
