@@ -178,11 +178,11 @@ public class NPC {
 
         for (int i = 0; i < structuresCount && destinationStructure == tmpDestinationStructure; i++) {
             if (maximumThirstOfNotNeedingToDrink <= thirst) {
-                tmpDestinationStructure = worldManager.getRandomBar();
+                tmpDestinationStructure = worldManager.GetRandomBar();
             } else if (maximumHungerOfNotNeedingToEat <= hunger) {
                 tmpDestinationStructure = worldManager.GetRandomRestaurant();
             } else {
-                tmpDestinationStructure = worldManager.getRandomAttraction();
+                tmpDestinationStructure = worldManager.GetRandomAttraction();
             }
         }
 
@@ -234,6 +234,7 @@ public class NPC {
             RotateGameObjectTowardsMovementDirection(path[path.Count - 1].GetOrigoPosition());
 
             if (Vector3.Distance(gameObject.transform.position, path[path.Count - 1].GetOrigoPosition()) <= distancePrecision) {
+                CallUpdateOnParksIfOrthogonallyAdjacent(path[path.Count - 1].GetOrigoPosition());
                 path.RemoveAt(path.Count - 1);
             }
         }
@@ -245,7 +246,7 @@ public class NPC {
     private void EnterDestinationStructure() {
         if (path.Count == 0 && isBusy) {
             Structure structure = (Structure)destinationStructure;
-            structure.Action(this);
+            structure.Update(this);
         }
     }
 
@@ -327,8 +328,6 @@ public class NPC {
             gameObject.transform.position = gameObject.transform.position - new Vector3(0, loweringDistanceOnInvisibility, 0);
         }
 
-        Debug.Log(gameObject.transform.position);
-
         this.isVisible = isVisible;
     }
 
@@ -369,5 +368,19 @@ public class NPC {
     /// </summary>
     public float GetMoneyOwed() {
         return moneyOwed;
+    }
+
+    /// <summary>
+    /// Call update on parks if orthogonally adjacent.
+    /// </summary>
+    private void CallUpdateOnParksIfOrthogonallyAdjacent(Vector3Int origoPosition) {
+        List<Field> orthogonallyAdjecentFields = worldManager.GetOrthogonallyAdjecentFields(origoPosition);
+
+        foreach(Field orthogonallyAdjecentField in orthogonallyAdjecentFields) {
+            if (orthogonallyAdjecentField is Park) {
+                Park orthogonallyAdjecentPark = (Park)orthogonallyAdjecentField;
+                orthogonallyAdjecentPark.Update(this);
+            }
+        }
     }
 }

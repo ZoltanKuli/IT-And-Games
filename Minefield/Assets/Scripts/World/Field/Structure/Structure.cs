@@ -27,9 +27,9 @@ public class Structure : PopulatedField {
     }
 
     /// <summary>
-    /// Action.
+    /// Update.
     /// </summary>
-    public void Action(NPC npc) {
+    public virtual void Update(NPC npc) {
         AddNPCToQueueIfNotAlreadyInIt(npc);
 
         ActionWhenLastActionWithSecondsBetweenActionsIsSoonerThanNow();
@@ -39,22 +39,9 @@ public class Structure : PopulatedField {
     }
 
     /// <summary>
-    /// Action when last action with seconds between actions is sooner than now.
-    /// </summary>
-    protected void ActionWhenLastActionWithSecondsBetweenActionsIsSoonerThanNow() {
-        if (lastActionTime <= DateTime.Now || npcInside == null) {
-            RemoveNPCInside();
-
-            LetFirstNPCInQueueInside();
-
-            lastActionTime = DateTime.Now.AddSeconds(secondsBetweenActions);
-        }
-    }
-
-    /// <summary>
     /// Add npc to queue if not already in it.
     /// </summary>
-    protected void AddNPCToQueueIfNotAlreadyInIt(NPC npc) {
+    protected virtual void AddNPCToQueueIfNotAlreadyInIt(NPC npc) {
         if (!queu.Contains(npc) && npc != npcInside) {
             if (maxQueueLength <= queu.Count) {
                 npc.SetIsBusy(false);
@@ -69,9 +56,22 @@ public class Structure : PopulatedField {
     }
 
     /// <summary>
+    /// Action when last action with seconds between actions is sooner than now.
+    /// </summary>
+    protected virtual void ActionWhenLastActionWithSecondsBetweenActionsIsSoonerThanNow() {
+        if (lastActionTime <= DateTime.Now || npcInside == null) {
+            RemoveNPCInside();
+
+            LetFirstNPCInQueueInside();
+
+            lastActionTime = DateTime.Now.AddSeconds(secondsBetweenActions);
+        }
+    }
+
+    /// <summary>
     /// Let first npc in queue inside.
     /// </summary>
-    protected void LetFirstNPCInQueueInside() {
+    protected virtual void LetFirstNPCInQueueInside() {
         if (0 < queu.Count) {
             npcInside = queu.Dequeue();
         }
@@ -80,7 +80,7 @@ public class Structure : PopulatedField {
     /// <summary>
     /// Remove npc inside if is destroyed.
     /// </summary>
-    protected void RemoveNPCInsideIfIsDestroyed() {
+    protected virtual void RemoveNPCInsideIfIsDestroyed() {
         if (isDestroyed && npcInside != null) {
             npcInside.SetIsBusy(false);
             npcInside.SetIsVisible(true);
@@ -94,7 +94,7 @@ public class Structure : PopulatedField {
     /// <summary>
     /// Remove npc inside.
     /// </summary>
-    protected void RemoveNPCInside() {
+    protected virtual void RemoveNPCInside() {
         if (npcInside != null) {
             npcInside.SetIsBusy(false);
             npcInside.SetIsVisible(true);
@@ -109,7 +109,7 @@ public class Structure : PopulatedField {
     /// <summary>
     /// Remove npcs from queue if is destroyed.
     /// </summary>
-    protected void RemoveNPCsFromQueueIfIsDestroyed() {
+    protected virtual void RemoveNPCsFromQueueIfIsDestroyed() {
         if (isDestroyed) {
             while (queu.Count != 0) {
                 NPC npcInQueue = queu.Dequeue();

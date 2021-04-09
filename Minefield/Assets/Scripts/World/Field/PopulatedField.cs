@@ -28,7 +28,7 @@ public abstract class PopulatedField : Field {
     /// <summary>
     /// Destroy game object.
     /// </summary>
-    public void DestroyGameObject() {
+    public virtual void DestroyGameObject() {
         GameObject.Destroy(gameObject);
         isDestroyed = true;
     }

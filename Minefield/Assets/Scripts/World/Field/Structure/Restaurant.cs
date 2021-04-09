@@ -16,7 +16,7 @@ public class Restaurant : Structure {
     /// <summary>
     /// Remove npc inside.
     /// </summary>
-    protected new void RemoveNPCInside() {
+    protected override void RemoveNPCInside() {
         if (npcInside != null) {
             npcInside.SetIsBusy(false);
             npcInside.SetIsVisible(true);

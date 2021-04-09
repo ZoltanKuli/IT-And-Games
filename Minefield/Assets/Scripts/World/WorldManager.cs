@@ -252,13 +252,9 @@ public class WorldManager : MonoBehaviour {
     [SerializeField]
     private float basicParkYRotation;
     [SerializeField]
-    private float basicParkMoneyOwedIncreaseAmount;
-    [SerializeField]
     private int basicParkSatisfactionIncreaseAmount;
     [SerializeField]
     private int basicParkSecondsBetweenActions;
-    [SerializeField]
-    private int basicParkMaxQueueLength;
 
     [SerializeField]
     private GameObject fountainParkPrefab;
@@ -271,13 +267,9 @@ public class WorldManager : MonoBehaviour {
     [SerializeField]
     private float fountainParkYRotation;
     [SerializeField]
-    private float fountainParkMoneyOwedIncreaseAmount;
-    [SerializeField]
     private int fountainParkSatisfactionIncreaseAmount;
     [SerializeField]
     private int fountainParkSecondsBetweenActions;
-    [SerializeField]
-    private int fountainParkMaxQueueLength;
 
     [SerializeField]
     private GameObject helicopterParkPrefab;
@@ -290,13 +282,9 @@ public class WorldManager : MonoBehaviour {
     [SerializeField]
     private float helicopterParkYRotation;
     [SerializeField]
-    private float helicopterParkMoneyOwedIncreaseAmount;
-    [SerializeField]
     private int helicopterParkSatisfactionIncreaseAmount;
     [SerializeField]
     private int helicopterParkSecondsBetweenActions;
-    [SerializeField]
-    private int helicopterParkMaxQueueLength;
 
     [SerializeField]
     private GameObject garbageCanPrefab;
@@ -601,6 +589,9 @@ public class WorldManager : MonoBehaviour {
         return orthogonallyAdjacentFields;
     }
 
+    /// <summary>
+    /// Get cost of entering field.
+    /// </summary>
     public float GetCostOfEnteringField(Field orthogonallyAdjacentField) {
         return 1;
     }
@@ -772,8 +763,7 @@ public class WorldManager : MonoBehaviour {
         if (CanAreaBePopulatedWithStructure(origoPosition, basicParkAreaWidth, basicParkAreaLength)) {
             Park basicPark = new Park(basicParkPrefab, origoPosition, basicParkPositionOffset,
                 basicParkYRotation, basicParkAreaWidth, basicParkAreaLength,
-                basicParkMoneyOwedIncreaseAmount, basicParkSatisfactionIncreaseAmount, 
-                basicParkSecondsBetweenActions, basicParkMaxQueueLength);
+                basicParkSatisfactionIncreaseAmount, basicParkSecondsBetweenActions);
 
             BuildNewStructure(basicPark, origoPosition, basicParkAreaWidth, basicParkAreaLength);
 
@@ -788,8 +778,7 @@ public class WorldManager : MonoBehaviour {
         if (CanAreaBePopulatedWithStructure(origoPosition, fountainParkAreaWidth, fountainParkAreaLength)) {
             Park fountainPark = new Park(fountainParkPrefab, origoPosition, fountainParkPositionOffset,
                 fountainParkYRotation, fountainParkAreaWidth, fountainParkAreaLength,
-                fountainParkMoneyOwedIncreaseAmount, fountainParkSatisfactionIncreaseAmount, 
-                fountainParkSecondsBetweenActions, fountainParkMaxQueueLength);
+                fountainParkSatisfactionIncreaseAmount, fountainParkSecondsBetweenActions);
 
             BuildNewStructure(fountainPark, origoPosition, fountainParkAreaWidth, fountainParkAreaLength);
 
@@ -804,8 +793,7 @@ public class WorldManager : MonoBehaviour {
         if (CanAreaBePopulatedWithStructure(origoPosition, helicopterParkAreaWidth, helicopterParkAreaLength)) {
             Park helicopterPark = new Park(helicopterParkPrefab, origoPosition, helicopterParkPositionOffset,
                 helicopterParkYRotation, helicopterParkAreaWidth, helicopterParkAreaLength,
-                helicopterParkMoneyOwedIncreaseAmount, helicopterParkSatisfactionIncreaseAmount, 
-                helicopterParkSecondsBetweenActions, helicopterParkMaxQueueLength);
+                helicopterParkSatisfactionIncreaseAmount, helicopterParkSecondsBetweenActions);
 
             BuildNewStructure(helicopterPark, origoPosition, helicopterParkAreaWidth, helicopterParkAreaLength);
 
@@ -1098,7 +1086,7 @@ public class WorldManager : MonoBehaviour {
     /// <summary>
     /// Get random bar.
     /// </summary>
-    public Bar getRandomBar() {
+    public Bar GetRandomBar() {
         if (bars.Count == 0) {
             return null;
         }
@@ -1109,7 +1097,7 @@ public class WorldManager : MonoBehaviour {
     /// <summary>
     /// Get random attraction.
     /// </summary>
-    public Attraction getRandomAttraction() {
+    public Attraction GetRandomAttraction() {
         if (attractions.Count == 0) {
             return null;
         }
