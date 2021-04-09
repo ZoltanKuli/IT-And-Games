@@ -111,8 +111,13 @@ public class NPC {
     /// Increase thirst and hunger.
     /// </summary>
     private void IncreaseThirstAndHunger() {
-        IncreaseThirst();
-        IncreaseHunger();
+        if (distancePrecision < Vector3.Distance(gameObject.transform.position, entrancePosition)) {
+            IncreaseThirst();
+            IncreaseHunger();
+        } else {
+            timeOfNextThirstGrowth = DateTime.UtcNow.AddSeconds(secondsUntilThirstGrowth);
+            timeOfNextHungertGrowth = DateTime.UtcNow.AddSeconds(secondsUntilHungerGrowth);
+        }
     }
 
     /// <summary>
@@ -342,8 +347,8 @@ public class NPC {
     /// </summary>
     public void SetIsVisible(bool isVisible) {
         if (isVisible) {
-            TeleportBackToSpawnIfNotStandingOnARoadOrTheEntrance();
             gameObject.transform.position = gameObject.transform.position + new Vector3(0, loweringDistanceOnInvisibility, 0);
+            TeleportBackToSpawnIfNotStandingOnARoadOrTheEntrance();
         } else {
             gameObject.transform.position = gameObject.transform.position - new Vector3(0, loweringDistanceOnInvisibility, 0);
         }

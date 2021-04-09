@@ -382,7 +382,7 @@ public class WorldManager : MonoBehaviour {
     private void BuildNewEntrance() {
         while (true) {
             Vector3Int entranceOrigoPosition = new Vector3Int(random.Next(worldMatrixWidth), 0, random.Next(worldMatrixLength));
-            entranceOrigoPosition = new Vector3Int(0, 0, 50);
+            //entranceOrigoPosition = new Vector3Int(0, 0, 50);
             if (worldMatrix[entranceOrigoPosition.x, entranceOrigoPosition.z] is EmptyField) {
                 entrance = new Entrance(entrancePrefab, entranceOrigoPosition, entrancePositionOffset, entrancePrefabYRotation);
                 worldMatrix[entranceOrigoPosition.x, entranceOrigoPosition.z] = entrance;
