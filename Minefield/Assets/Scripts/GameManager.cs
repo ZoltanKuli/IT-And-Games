@@ -21,6 +21,9 @@ public class GameManager : MonoBehaviour {
 
     private Entrance entrance;
 
+    [SerializeField]
+    private int entranceCost;
+
     private List<NPC> npcs;
     private float averageNPCSatisfaction;
     private float averageNPCThirst;
@@ -361,6 +364,8 @@ public class GameManager : MonoBehaviour {
             random.Next(hungerDecreaseDissatisfactionAmountMinimum, hungerDecreaseDissatisfactionAmountMaximum),
             minimumSecondsUntilGarbageDisposal, maximumSecondsUntilGarbageDisposal,
             random.Next(garbageDecreaseDissatisfactionAmountMinimum, garbageDecreaseDissatisfactionAmountMaximum)));
+
+            IncreaseOrDecreasePlayersBalance(entranceCost);
         }
     }
 
