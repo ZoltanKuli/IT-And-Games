@@ -30,6 +30,7 @@ public abstract class PopulatedField : Field {
     /// </summary>
     public virtual void DestroyGameObject() {
         GameObject.Destroy(gameObject);
+        gameObject = null;
         isDestroyed = true;
     }
 

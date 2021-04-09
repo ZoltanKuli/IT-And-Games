@@ -85,6 +85,14 @@ public class GameManager : MonoBehaviour {
     private int hungerDecreaseDissatisfactionAmountMinimum;
     [SerializeField]
     private int hungerDecreaseDissatisfactionAmountMaximum;
+    [SerializeField]
+    private int minimumSecondsUntilGarbageDisposal;
+    [SerializeField]
+    private int maximumSecondsUntilGarbageDisposal;
+    [SerializeField]
+    private int garbageDecreaseDissatisfactionAmountMinimum;
+    [SerializeField]
+    private int garbageDecreaseDissatisfactionAmountMaximum;
 
     private System.Random random;
 
@@ -335,7 +343,9 @@ public class GameManager : MonoBehaviour {
             random.Next(hungerGrowthAmountMinimum, hungerGrowthAmountMaximum),
             loweringDistanceOnInvisibility,
             random.Next(thirstDecreaseDissatisfactionAmountMinimum, thirstDecreaseDissatisfactionAmountMaximum),
-            random.Next(hungerDecreaseDissatisfactionAmountMinimum, hungerDecreaseDissatisfactionAmountMaximum)));
+            random.Next(hungerDecreaseDissatisfactionAmountMinimum, hungerDecreaseDissatisfactionAmountMaximum),
+            minimumSecondsUntilGarbageDisposal, maximumSecondsUntilGarbageDisposal,
+            random.Next(garbageDecreaseDissatisfactionAmountMinimum, garbageDecreaseDissatisfactionAmountMaximum)));
         }
     }
 

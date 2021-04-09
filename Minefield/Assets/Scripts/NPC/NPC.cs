@@ -39,13 +39,20 @@ public class NPC {
     private float speed;
     private float rotationSpeedMultiplier;
 
+    private bool hasGarbage;
+    private DateTime timeOfGarbageDropping;
+    private int minimumSecondsUntilGarbageDisposal;
+    private int maximumSecondsUntilGarbageDisposal;
+    private int garbageDecreaseDissatisfactionAmount;
+
     private System.Random random;
 
     public NPC(GameObject prefab, Vector3Int entrancePosition, WorldManager worldManager, float distancePrecision,
         int defaultSatisfaction, int minimumSatisfactionOfStaying, int defaultThirst, int maximumThirstOfNotNeedingToDrink,
         int defaultHunger, int maximumHungerOfNotNeedingToEat, float minimumSpeed, float maximumSpeed, float rotationSpeedMultiplier,
         int secondsUntilThirstGrowth, int thirstGrowthAmount, int secondsUntilHungerGrowth, int hungerGrowthAmount,
-        float loweringDistanceOnInvisibility, int thirstDecreaseDissatisfactionAmount, int hungerDecreaseDissatisfactionAmount) {
+        float loweringDistanceOnInvisibility, int thirstDecreaseDissatisfactionAmount, int hungerDecreaseDissatisfactionAmount, 
+        int minimumSecondsUntilGarbageDisposal, int maximumSecondsUntilGarbageDisposal, int garbageDecreaseDissatisfactionAmount) {
         gameObject = GameObject.Instantiate(prefab, entrancePosition, Quaternion.identity);
         this.entrancePosition = entrancePosition;
         isVisible = true;
@@ -78,7 +85,12 @@ public class NPC {
         this.thirstDecreaseDissatisfactionAmount = thirstDecreaseDissatisfactionAmount;
         this.hungerDecreaseDissatisfactionAmount = hungerDecreaseDissatisfactionAmount;
 
-        random = new System.Random(gameObject.GetHashCode());
+        hasGarbage = false;
+        this.minimumSecondsUntilGarbageDisposal = minimumSecondsUntilGarbageDisposal;
+        this.maximumSecondsUntilGarbageDisposal = maximumSecondsUntilGarbageDisposal;
+        this.garbageDecreaseDissatisfactionAmount = garbageDecreaseDissatisfactionAmount;
+
+        random = new System.Random(GetHashCode());
     }
 
     /// <summary>
@@ -230,11 +242,19 @@ public class NPC {
             }
 
             gameObject.transform.position = Vector3.MoveTowards(gameObject.transform.position, path[path.Count - 1].GetOrigoPosition(), speed * Time.deltaTime);
-
             RotateGameObjectTowardsMovementDirection(path[path.Count - 1].GetOrigoPosition());
+
+            if (path[path.Count - 1] is Road) {
+                DisposeOfGarbage((Road)path[path.Count - 1]);
+            }
 
             if (Vector3.Distance(gameObject.transform.position, path[path.Count - 1].GetOrigoPosition()) <= distancePrecision) {
                 CallUpdateOnParksIfOrthogonallyAdjacent(path[path.Count - 1].GetOrigoPosition());
+
+                if (path[path.Count - 1] is Road) {
+                    DecreaseSatisfactionIfThereIsGarbageOnTheRoad((Road)path[path.Count - 1]);
+                }
+
                 path.RemoveAt(path.Count - 1);
             }
         }
@@ -381,6 +401,53 @@ public class NPC {
                 Park orthogonallyAdjecentPark = (Park)orthogonallyAdjecentField;
                 orthogonallyAdjecentPark.Update(this);
             }
+        }
+    }
+
+    /// <summary>
+    /// Add garbage.
+    /// </summary>
+    public void AddGarbage() {
+        hasGarbage = true;
+        timeOfGarbageDropping = DateTime.Now.AddSeconds(random.Next(minimumSecondsUntilGarbageDisposal, maximumSecondsUntilGarbageDisposal)); ;
+    }
+
+    /// <summary>
+    /// Dispose of garbage.
+    /// </summary>
+    private void DisposeOfGarbage(Road road) {
+        if (hasGarbage && timeOfGarbageDropping <= DateTime.Now) {
+            GarbageCan garbageCan = GetOrthogonallyAdjacentGarbageCanIfThereIsAny(road.GetOrigoPosition());
+
+            if (garbageCan == null) {
+                road.PlaceAGarbageGameObjectOnTheRoadAtARandomLocation();
+            }
+
+            hasGarbage = false;
+        }
+    }
+
+    /// <summary>
+    /// Get orthogonally adjacent garbage can if there is any.
+    /// </summary>
+    private GarbageCan GetOrthogonallyAdjacentGarbageCanIfThereIsAny(Vector3Int origoPosition) {
+        List<Field> orthogonallyAdjecentFields = worldManager.GetOrthogonallyAdjecentFields(origoPosition);
+
+        foreach (Field orthogonallyAdjecentField in orthogonallyAdjecentFields) {
+            if (orthogonallyAdjecentField is GarbageCan) {
+                return (GarbageCan)orthogonallyAdjecentField;
+            }
+        }
+
+        return null;
+    }
+
+    /// <summary>
+    /// Decrease satisfaction if there is garbage on the road.
+    /// </summary>
+    private void DecreaseSatisfactionIfThereIsGarbageOnTheRoad(Road road) {
+        if (road.IsLitteredWithGarbage()) {
+            IncreaseOrDecreaseSatisfaction(-garbageDecreaseDissatisfactionAmount);
         }
     }
 }

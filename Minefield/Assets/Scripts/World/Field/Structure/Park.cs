@@ -54,8 +54,9 @@ public class Park : Structure {
     /// </summary>
     public override void DestroyGameObject() {
         GameObject.Destroy(gameObject);
-        isDestroyed = true;
+        gameObject = null;
         RemoveNPCsFromQueue();
+        isDestroyed = true;
     }
 
     /// <summary>

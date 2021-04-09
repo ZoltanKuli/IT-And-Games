@@ -24,6 +24,7 @@ public class Restaurant : Structure {
             npcInside.IncreaseOrDecreaseSatisfaction(satisfactionIncreaseAmount);
             npcInside.DecreaseHunger(decreaseHungerAmount);
             npcInside.IncreaseOrDecreaseMoneyOwed(moneyOwedIncreaseAmount);
+            npcInside.AddGarbage();
 
             npcInside = null;
         }

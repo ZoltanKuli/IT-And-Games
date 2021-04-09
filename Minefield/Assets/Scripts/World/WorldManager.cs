@@ -11,6 +11,7 @@ public class WorldManager : MonoBehaviour {
     [SerializeField]
     private float npcNumberDevisior;
 
+    private List<Road> roads;
     private List<Restaurant> restaurants;
     private List<Bar> bars;
     private List<Attraction> attractions;
@@ -38,6 +39,12 @@ public class WorldManager : MonoBehaviour {
     private GameObject threeWayRoadPrefab;
     [SerializeField]
     private GameObject fourWayRoadPrefab;
+    [SerializeField]
+    private List<GameObject> garbagePrefabs;
+    [SerializeField]
+    private float roadGarbageRange;
+    [SerializeField]
+    private int maximumNumberOfGarbageGameObjectsPerRoad;
 
     [SerializeField]
     private GameObject hotdogCarPrefab;
@@ -297,13 +304,7 @@ public class WorldManager : MonoBehaviour {
     [SerializeField]
     private float garbageCanYRotation;
     [SerializeField]
-    private float garbageCanMoneyOwedIncreaseAmount;
-    [SerializeField]
-    private int garbageCanSatisfactionIncreaseAmount;
-    [SerializeField]
-    private int garbageCanSecondsBetweenActions;
-    [SerializeField]
-    private int garbageCanMaxQueueLength;
+    private int maxNumberOfGarbageCansDivisor;
 
     /// <summary>
     /// Initialize world.
@@ -315,12 +316,14 @@ public class WorldManager : MonoBehaviour {
 
         BuildNewEntrance();
 
+        roads = new List<Road>();
         restaurants = new List<Restaurant>();
         bars = new List<Bar>();
         attractions = new List<Attraction>();
         parks = new List<Park>();
         garbageCans = new List<GarbageCan>();
 
+        // For Testing Purposes Only
         for (int i = 1; i < 21; i++) {
             BuildNewRoad(new Vector3Int(i, 0, 50));
         }
@@ -353,6 +356,7 @@ public class WorldManager : MonoBehaviour {
         BuildNewLondonEye(new Vector3Int(40, 0, 51));
         BuildNewCircusTent(new Vector3Int(53, 0, 51));
         BuildNewRollerCoaster(new Vector3Int(67, 0, 51));
+        // For Testing Purposes Only
     }
 
     /// <summary>
@@ -421,24 +425,24 @@ public class WorldManager : MonoBehaviour {
                orthogonallyAdjacentFields, orthogonallyAdjacentNonRoadFields);
             BuildNewRoadIfNumberOfOrthogonallyAdjacentNonRoadFieldsIsZero(origoPosition, numberOfOrthogonallyAdjacentNonRoadFields);
 
-            adjustOrthogonallyAdjacentRoads(origoPosition);
+            AdjustOrthogonallyAdjacentRoads(origoPosition);
         }
     }
 
     /// <summary>
     /// Adjust orthogonally adjacent roads.
     /// </summary>
-    private void adjustOrthogonallyAdjacentRoads(Vector3Int origoPosition) {
-        adjustRoad(new Vector3Int(origoPosition.x - 1, origoPosition.y, origoPosition.z));
-        adjustRoad(new Vector3Int(origoPosition.x, origoPosition.y, origoPosition.z + 1));
-        adjustRoad(new Vector3Int(origoPosition.x + 1, origoPosition.y, origoPosition.z));
-        adjustRoad(new Vector3Int(origoPosition.x, origoPosition.y, origoPosition.z - 1));
+    private void AdjustOrthogonallyAdjacentRoads(Vector3Int origoPosition) {
+        AdjustRoad(new Vector3Int(origoPosition.x - 1, origoPosition.y, origoPosition.z));
+        AdjustRoad(new Vector3Int(origoPosition.x, origoPosition.y, origoPosition.z + 1));
+        AdjustRoad(new Vector3Int(origoPosition.x + 1, origoPosition.y, origoPosition.z));
+        AdjustRoad(new Vector3Int(origoPosition.x, origoPosition.y, origoPosition.z - 1));
     }
 
     /// <summary>
     /// Adjust road.
     /// </summary>
-    private void adjustRoad(Vector3Int origoPosition) {
+    private void AdjustRoad(Vector3Int origoPosition) {
         if (isFieldInBounds(origoPosition)
             && worldMatrix[origoPosition.x, origoPosition.z] is Road) {
             List<Field> orthogonallyAdjacentFields = GetOrthogonallyAdjecentFields(origoPosition);
@@ -449,6 +453,7 @@ public class WorldManager : MonoBehaviour {
             int numberOfOrthogonallyAdjacentNonRoadFields = orthogonallyAdjacentNonRoadFields.Count;
 
             Road currentRoad = (Road)worldMatrix[origoPosition.x, origoPosition.z];
+            roads.Remove(currentRoad);
             currentRoad.DestroyGameObject();
 
             BuildNewRoadIfNumberOfOrthogonallyAdjacentNonRoadFieldsIsFour(origoPosition, numberOfOrthogonallyAdjacentNonRoadFields);
@@ -467,8 +472,11 @@ public class WorldManager : MonoBehaviour {
     /// </summary>
     private void BuildNewRoadIfNumberOfOrthogonallyAdjacentNonRoadFieldsIsFour(Vector3Int origoPosition, int numberOfOrthogonallyAdjacentNonRoadFields) {
         if (numberOfOrthogonallyAdjacentNonRoadFields == 4) {
-            worldMatrix[origoPosition.x, origoPosition.z] =
-                new StraightRoad(straightRoadPrefab, origoPosition, 0);
+            StraightRoad straightRoad = new StraightRoad(straightRoadPrefab, origoPosition, 0, 
+                garbagePrefabs, roadGarbageRange, maximumNumberOfGarbageGameObjectsPerRoad);
+
+            worldMatrix[origoPosition.x, origoPosition.z] = straightRoad;
+            roads.Add(straightRoad);
         }
     }
 
@@ -480,8 +488,11 @@ public class WorldManager : MonoBehaviour {
         if (numberOfOrthogonallyAdjacentNonRoadFields == 3) {
             int yAngleMultiplier = orthogonallyAdjacentFields.IndexOf(adjacentRoads[0]);
 
-            worldMatrix[origoPosition.x, origoPosition.z] =
-                new StraightRoad(straightRoadPrefab, origoPosition, yAngleMultiplier * 90);
+            StraightRoad straightRoad = new StraightRoad(straightRoadPrefab, origoPosition, yAngleMultiplier * 90, 
+                garbagePrefabs, roadGarbageRange, maximumNumberOfGarbageGameObjectsPerRoad);
+
+            worldMatrix[origoPosition.x, origoPosition.z] = straightRoad;
+            roads.Add(straightRoad);
         }
     }
 
@@ -496,7 +507,11 @@ public class WorldManager : MonoBehaviour {
 
             if ((indexOfFirstOrthogonallyAdjacentRoad == 0 && indexOfSecondOrthogonallyAdjacentRoad == 2)
                 || (indexOfFirstOrthogonallyAdjacentRoad == 1 && indexOfSecondOrthogonallyAdjacentRoad == 3)) {
-                worldMatrix[origoPosition.x, origoPosition.z] = new StraightRoad(straightRoadPrefab, origoPosition, indexOfFirstOrthogonallyAdjacentRoad * 90);
+                StraightRoad straightRoad = new StraightRoad(straightRoadPrefab, origoPosition, indexOfFirstOrthogonallyAdjacentRoad * 90, 
+                    garbagePrefabs, roadGarbageRange, maximumNumberOfGarbageGameObjectsPerRoad);
+
+                worldMatrix[origoPosition.x, origoPosition.z] = straightRoad;
+                roads.Add(straightRoad);
             } else {
                 int yAngleMultiplier = 0;
 
@@ -508,8 +523,11 @@ public class WorldManager : MonoBehaviour {
                     yAngleMultiplier = 3;
                 }
 
-                worldMatrix[origoPosition.x, origoPosition.z] =
-                    new CornerRoad(cornerRoadPrefab, origoPosition, yAngleMultiplier * 90);
+                CornerRoad cornerRoad = new CornerRoad(cornerRoadPrefab, origoPosition, yAngleMultiplier * 90,
+                    garbagePrefabs, roadGarbageRange, maximumNumberOfGarbageGameObjectsPerRoad);
+
+                worldMatrix[origoPosition.x, origoPosition.z] = cornerRoad;
+                roads.Add(cornerRoad);
             }
         }
     }
@@ -522,8 +540,11 @@ public class WorldManager : MonoBehaviour {
         if (numberOfOrthogonallyAdjacentNonRoadFields == 1) {
             int yAngleMultiplier = orthogonallyAdjacentFields.IndexOf(adjacentNonRoadFields[0]);
 
-            worldMatrix[origoPosition.x, origoPosition.z] =
-                new ThreeWayRoad(threeWayRoadPrefab, origoPosition, yAngleMultiplier * 90);
+            ThreeWayRoad threeWayRoad = new ThreeWayRoad(threeWayRoadPrefab, origoPosition, yAngleMultiplier * 90,
+                    garbagePrefabs, roadGarbageRange, maximumNumberOfGarbageGameObjectsPerRoad);
+
+            worldMatrix[origoPosition.x, origoPosition.z] = threeWayRoad;
+            roads.Add(threeWayRoad);
         }
     }
 
@@ -532,8 +553,11 @@ public class WorldManager : MonoBehaviour {
     /// </summary>
     private void BuildNewRoadIfNumberOfOrthogonallyAdjacentNonRoadFieldsIsZero(Vector3Int origoPosition, int numberOfOrthogonallyAdjacentNonRoadFields) {
         if (numberOfOrthogonallyAdjacentNonRoadFields == 0) {
-            worldMatrix[origoPosition.x, origoPosition.z] =
-                new FourWayRoad(fourWayRoadPrefab, origoPosition, 0);
+            FourWayRoad fourWayRoad = new FourWayRoad(fourWayRoadPrefab, origoPosition, 0,
+                    garbagePrefabs, roadGarbageRange, maximumNumberOfGarbageGameObjectsPerRoad);
+
+            worldMatrix[origoPosition.x, origoPosition.z] = fourWayRoad;
+            roads.Add(fourWayRoad);
         }
     }
 
@@ -805,13 +829,14 @@ public class WorldManager : MonoBehaviour {
     /// Build new GarbageCan.
     /// </summary>
     public void BuildNewGarbageCan(Vector3Int origoPosition) {
-        if (CanAreaBePopulatedWithStructure(origoPosition, garbageCanAreaWidth, garbageCanAreaLength)) {
+        if (garbageCans.Count < Mathf.Ceil(roads.Count / (float)maxNumberOfGarbageCansDivisor) 
+            && CanAreaBePopulatedWithStructure(origoPosition, garbageCanAreaWidth, garbageCanAreaLength)) {
             GarbageCan garbageCan = new GarbageCan(garbageCanPrefab, origoPosition, garbageCanPositionOffset,
-                garbageCanYRotation, garbageCanAreaWidth, garbageCanAreaLength,
-                garbageCanMoneyOwedIncreaseAmount, garbageCanSatisfactionIncreaseAmount, 
-                garbageCanSecondsBetweenActions, garbageCanMaxQueueLength);
+                garbageCanYRotation, garbageCanAreaWidth, garbageCanAreaLength);
 
             BuildNewStructure(garbageCan, origoPosition, garbageCanAreaWidth, garbageCanAreaLength);
+
+            garbageCans.Add(garbageCan);
         }
     }
 
@@ -957,6 +982,7 @@ public class WorldManager : MonoBehaviour {
         if (isFieldInBounds(origoPosition)
             && worldMatrix[origoPosition.x, origoPosition.z] is Road) {
             Road currentRoad = (Road)worldMatrix[origoPosition.x, origoPosition.z];
+            roads.Remove(currentRoad);
             currentRoad.DestroyGameObject();
 
             worldMatrix[origoPosition.x, origoPosition.z] =
@@ -964,7 +990,7 @@ public class WorldManager : MonoBehaviour {
 
             SetNatureGameObjectsVisibilityOfField(origoPosition, true);
 
-            adjustOrthogonallyAdjacentRoads(origoPosition);
+            AdjustOrthogonallyAdjacentRoads(origoPosition);
         }
     }
 

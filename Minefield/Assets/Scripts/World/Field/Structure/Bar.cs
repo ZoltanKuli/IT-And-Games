@@ -24,6 +24,7 @@ public class Bar : Structure {
             npcInside.IncreaseOrDecreaseSatisfaction(satisfactionIncreaseAmount);
             npcInside.DecreaseThirst(decreaseThirstAmount);
             npcInside.IncreaseOrDecreaseMoneyOwed(moneyOwedIncreaseAmount);
+            npcInside.AddGarbage();
 
             npcInside = null;
         }
