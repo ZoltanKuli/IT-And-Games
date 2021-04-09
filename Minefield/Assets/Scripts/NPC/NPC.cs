@@ -182,6 +182,7 @@ public class NPC {
     private void SetDestinationStructureAndPathIfNotBusy() {
         if (!isBusy) {
             SetDestinationStructure();
+            TeleportBackToSpawnIfNotStandingOnARoadOrTheEntrance();
             SetPath();
         }
     }

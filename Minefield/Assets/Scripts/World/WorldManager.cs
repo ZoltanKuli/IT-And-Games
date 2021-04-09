@@ -452,9 +452,10 @@ public class WorldManager : MonoBehaviour {
 
             int numberOfOrthogonallyAdjacentNonRoadFields = orthogonallyAdjacentNonRoadFields.Count;
 
-            Road currentRoad = (Road)worldMatrix[origoPosition.x, origoPosition.z];
-            roads.Remove(currentRoad);
-            currentRoad.DestroyGameObject();
+            Road previousRoad = (Road)worldMatrix[origoPosition.x, origoPosition.z];
+            List<GameObject> garbageGameObjectsOfPreviousRoad = previousRoad.GetGarbageGameObjects();
+            roads.Remove(previousRoad);
+            previousRoad.DestroyGameObject();
 
             BuildNewRoadIfNumberOfOrthogonallyAdjacentNonRoadFieldsIsFour(origoPosition, numberOfOrthogonallyAdjacentNonRoadFields);
             BuildNewRoadIfNumberOfOrthogonallyAdjacentNonRoadFieldsIsThree(origoPosition, numberOfOrthogonallyAdjacentNonRoadFields,
@@ -464,6 +465,9 @@ public class WorldManager : MonoBehaviour {
             BuildNewRoadIfNumberOfOrthogonallyAdjacentNonRoadFieldsIsOne(origoPosition, numberOfOrthogonallyAdjacentNonRoadFields,
                orthogonallyAdjacentFields, orthogonallyAdjacentNonRoadFields);
             BuildNewRoadIfNumberOfOrthogonallyAdjacentNonRoadFieldsIsZero(origoPosition, numberOfOrthogonallyAdjacentNonRoadFields);
+
+            Road newRoad = (Road)worldMatrix[origoPosition.x, origoPosition.z];
+            newRoad.SetGarbageGameObjects(garbageGameObjectsOfPreviousRoad);
         }
     }
 

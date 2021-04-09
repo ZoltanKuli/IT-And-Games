@@ -8,6 +8,7 @@ public abstract class Road : PopulatedField {
     List<GameObject> garbagePrefabs;
 
     private List<GameObject> garbageGameObjects;
+    bool wereGarbageGameObjectsGet;
 
     private System.Random random;
 
@@ -20,6 +21,7 @@ public abstract class Road : PopulatedField {
         this.maximumNumberOfGarbages = maximumNumberOfGarbageGameObjects;
 
         garbageGameObjects = new List<GameObject>();
+        wereGarbageGameObjectsGet = false;
 
         random = new System.Random(GetHashCode());
     }
@@ -51,11 +53,13 @@ public abstract class Road : PopulatedField {
     /// Clean up garbage.
     /// </summary>
     public void CleanUpGarbage() {
-        foreach (GameObject garbageGameObject in garbageGameObjects) {
-            GameObject.Destroy(garbageGameObject);
-        }
+        if (!wereGarbageGameObjectsGet) {
+            foreach (GameObject garbageGameObject in garbageGameObjects) {
+                GameObject.Destroy(garbageGameObject);
+            }
 
-        garbageGameObjects.Clear();
+            garbageGameObjects.Clear();
+        }
     }
 
     /// <summary>
@@ -66,5 +70,20 @@ public abstract class Road : PopulatedField {
         gameObject = null;
         CleanUpGarbage();
         isDestroyed = true;
+    }
+
+    /// <summary>
+    /// Set garbage game objects.
+    /// </summary>
+    public void SetGarbageGameObjects(List<GameObject> garbageGameObjects) {
+        this.garbageGameObjects = garbageGameObjects;
+    }
+
+    /// <summary>
+    /// Get garbage game objects.
+    /// </summary>
+    public List<GameObject> GetGarbageGameObjects() {
+        wereGarbageGameObjectsGet = true;
+        return garbageGameObjects;
     }
 }
