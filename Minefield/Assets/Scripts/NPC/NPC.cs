@@ -14,7 +14,7 @@ public class NPC {
 
     private bool isBusy;
     private bool isVisible;
-    private float moneyOwed;
+    private int moneyOwed;
 
     private int satisfaction;
     private int minimumSatisfactionOfStaying;
@@ -385,14 +385,14 @@ public class NPC {
     /// <summary>
     /// Increase moneyOwed.
     /// </summary>
-    public void IncreaseOrDecreaseMoneyOwed(float moneyOwedIncreaseOrDecreaseAmount) {
+    public void IncreaseOrDecreaseMoneyOwed(int moneyOwedIncreaseOrDecreaseAmount) {
         moneyOwed += moneyOwedIncreaseOrDecreaseAmount;
     }
 
     /// <summary>
     /// Get moneyOwed.
     /// </summary>
-    public float GetMoneyOwed() {
+    public int GetMoneyOwed() {
         return moneyOwed;
     }
 

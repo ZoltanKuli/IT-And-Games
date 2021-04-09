@@ -3,6 +3,9 @@ using UnityEngine;
 
 public class WorldManager : MonoBehaviour {
 
+    [SerializeField]
+    private GameManager gameManager;
+
     private Field[,] worldMatrix;
     [SerializeField]
     private int worldMatrixWidth;
@@ -45,6 +48,8 @@ public class WorldManager : MonoBehaviour {
     private float roadGarbageRange;
     [SerializeField]
     private int maximumNumberOfGarbageGameObjectsPerRoad;
+    [SerializeField]
+    private int roadCost;
 
     [SerializeField]
     private GameObject hotdogCarPrefab;
@@ -57,7 +62,7 @@ public class WorldManager : MonoBehaviour {
     [SerializeField]
     private float hotdogCarPrefabYRotation;
     [SerializeField]
-    private float hotdogCarMoneyOwedIncreaseAmount;
+    private int hotdogCarMoneyOwedIncreaseAmount;
     [SerializeField]
     private int hotdogCarSatisfactionIncreaseAmount;
     [SerializeField]
@@ -66,6 +71,8 @@ public class WorldManager : MonoBehaviour {
     private int hotdogCarDecreaseHungerAmount;
     [SerializeField]
     private int hotdogCarMaxQueueLength;
+    [SerializeField]
+    private int hotdogCarCost;
 
     [SerializeField]
     private GameObject kfcPrefab;
@@ -78,7 +85,7 @@ public class WorldManager : MonoBehaviour {
     [SerializeField]
     private float kfcYRotation;
     [SerializeField]
-    private float kfcMoneyOwedIncreaseAmount;
+    private int kfcMoneyOwedIncreaseAmount;
     [SerializeField]
     private int kfcSatisfactionIncreaseAmount;
     [SerializeField]
@@ -87,6 +94,8 @@ public class WorldManager : MonoBehaviour {
     private int kfcDecreaseHungerAmount;
     [SerializeField]
     private int kfcMaxQueueLength;
+    [SerializeField]
+    private int kfcCost;
 
     [SerializeField]
     private GameObject olivegardensRestaurantPrefab;
@@ -99,7 +108,7 @@ public class WorldManager : MonoBehaviour {
     [SerializeField]
     private float olivegardensRestaurantYRotation;
     [SerializeField]
-    private float olivegardensRestaurantMoneyOwedIncreaseAmount;
+    private int olivegardensRestaurantMoneyOwedIncreaseAmount;
     [SerializeField]
     private int olivegardensRestaurantSatisfactionIncreaseAmount;
     [SerializeField]
@@ -108,6 +117,8 @@ public class WorldManager : MonoBehaviour {
     private int olivegardensRestaurantDecreaseHungerAmount;
     [SerializeField]
     private int olivegardensRestaurantMaxQueueLength;
+    [SerializeField]
+    private int olivegardensRestaurantCost;
 
     [SerializeField]
     private GameObject taverneRestaurantPrefab;
@@ -120,7 +131,7 @@ public class WorldManager : MonoBehaviour {
     [SerializeField]
     private float taverneRestaurantYRotation;
     [SerializeField]
-    private float taverneRestaurantMoneyOwedIncreaseAmount;
+    private int taverneRestaurantMoneyOwedIncreaseAmount;
     [SerializeField]
     private int taverneRestaurantSatisfactionIncreaseAmount;
     [SerializeField]
@@ -129,6 +140,8 @@ public class WorldManager : MonoBehaviour {
     private int taverneRestaurantDecreaseHungerAmount;
     [SerializeField]
     private int taverneRestaurantMaxQueueLength;
+    [SerializeField]
+    private int taverneRestaurantCost;
 
     [SerializeField]
     private GameObject cafeRestaurantPrefab;
@@ -141,7 +154,7 @@ public class WorldManager : MonoBehaviour {
     [SerializeField]
     private float cafeRestaurantYRotation;
     [SerializeField]
-    private float cafeRestaurantMoneyOwedIncreaseAmount;
+    private int cafeRestaurantMoneyOwedIncreaseAmount;
     [SerializeField]
     private int cafeRestaurantSatisfactionIncreaseAmount;
     [SerializeField]
@@ -150,6 +163,8 @@ public class WorldManager : MonoBehaviour {
     private int cafeRestaurantDecreaseThirstAmount;
     [SerializeField]
     private int cafeRestaurantMaxQueueLength;
+    [SerializeField]
+    private int cafeRestaurantCost;
 
     [SerializeField]
     private GameObject cafePrefab;
@@ -162,7 +177,7 @@ public class WorldManager : MonoBehaviour {
     [SerializeField]
     private float cafeYRotation;
     [SerializeField]
-    private float cafeMoneyOwedIncreaseAmount;
+    private int cafeMoneyOwedIncreaseAmount;
     [SerializeField]
     private int cafeSatisfactionIncreaseAmount;
     [SerializeField]
@@ -171,6 +186,8 @@ public class WorldManager : MonoBehaviour {
     private int cafeDecreaseThirstAmount;
     [SerializeField]
     private int cafeMaxQueueLength;
+    [SerializeField]
+    private int cafeCost;
 
     [SerializeField]
     private GameObject londonEyePrefab;
@@ -183,13 +200,15 @@ public class WorldManager : MonoBehaviour {
     [SerializeField]
     private float londonEyeYRotation;
     [SerializeField]
-    private float londonEyeMoneyOwedIncreaseAmount;
+    private int londonEyeMoneyOwedIncreaseAmount;
     [SerializeField]
     private int londonEyeSatisfactionIncreaseAmount;
     [SerializeField]
     private int londonEyeSecondsBetweenActions;
     [SerializeField]
     private int londonEyeMaxQueueLength;
+    [SerializeField]
+    private int londonEyeCost;
 
     [SerializeField]
     private GameObject merryGoRoundPrefab;
@@ -202,13 +221,15 @@ public class WorldManager : MonoBehaviour {
     [SerializeField]
     private float merryGoRoundYRotation;
     [SerializeField]
-    private float merryGoRoundMoneyOwedIncreaseAmount;
+    private int merryGoRoundMoneyOwedIncreaseAmount;
     [SerializeField]
     private int merryGoRoundSatisfactionIncreaseAmount;
     [SerializeField]
     private int merryGoRoundSecondsBetweenActions;
     [SerializeField]
     private int merryGoRoundMaxQueueLength;
+    [SerializeField]
+    private int merryGoRoundCost;
 
     [SerializeField]
     private GameObject rollerCoasterPrefab;
@@ -221,13 +242,15 @@ public class WorldManager : MonoBehaviour {
     [SerializeField]
     private float rollerCoasterYRotation;
     [SerializeField]
-    private float rollerCoasterMoneyOwedIncreaseAmount;
+    private int rollerCoasterMoneyOwedIncreaseAmount;
     [SerializeField]
     private int rollerCoasterSatisfactionIncreaseAmount;
     [SerializeField]
     private int rollerCoasterSecondsBetweenActions;
     [SerializeField]
     private int rollerCoasterMaxQueueLength;
+    [SerializeField]
+    private int rollerCoasterCost;
 
     [SerializeField]
     private GameObject circusTentPrefab;
@@ -240,13 +263,15 @@ public class WorldManager : MonoBehaviour {
     [SerializeField]
     private float circusTentYRotation;
     [SerializeField]
-    private float circusTentMoneyOwedIncreaseAmount;
+    private int circusTentMoneyOwedIncreaseAmount;
     [SerializeField]
     private int circusTentSatisfactionIncreaseAmount;
     [SerializeField]
     private int circusTentSecondsBetweenActions;
     [SerializeField]
     private int circusTentMaxQueueLength;
+    [SerializeField]
+    private int circusTentCost;
 
     [SerializeField]
     private GameObject basicParkPrefab;
@@ -262,6 +287,8 @@ public class WorldManager : MonoBehaviour {
     private int basicParkSatisfactionIncreaseAmount;
     [SerializeField]
     private int basicParkSecondsBetweenActions;
+    [SerializeField]
+    private int basicParkCost;
 
     [SerializeField]
     private GameObject fountainParkPrefab;
@@ -277,6 +304,8 @@ public class WorldManager : MonoBehaviour {
     private int fountainParkSatisfactionIncreaseAmount;
     [SerializeField]
     private int fountainParkSecondsBetweenActions;
+    [SerializeField]
+    private int fountainParkCost;
 
     [SerializeField]
     private GameObject helicopterParkPrefab;
@@ -292,6 +321,8 @@ public class WorldManager : MonoBehaviour {
     private int helicopterParkSatisfactionIncreaseAmount;
     [SerializeField]
     private int helicopterParkSecondsBetweenActions;
+    [SerializeField]
+    private int helicopterParkCost;
 
     [SerializeField]
     private GameObject garbageCanPrefab;
@@ -305,6 +336,8 @@ public class WorldManager : MonoBehaviour {
     private float garbageCanYRotation;
     [SerializeField]
     private int maxNumberOfGarbageCansDivisor;
+    [SerializeField]
+    private int garbageCanCost;
 
     /// <summary>
     /// Initialize world.
@@ -405,7 +438,8 @@ public class WorldManager : MonoBehaviour {
     /// Build a new road according to its surroundings. (e.g. Crossroads, Turns)
     /// </summary>
     public void BuildNewRoad(Vector3Int origoPosition) {
-        if (isFieldInBounds(origoPosition)
+        if (roadCost <= gameManager.GetPlayersBalance()
+            && isFieldInBounds(origoPosition)
             && worldMatrix[origoPosition.x, origoPosition.z] is EmptyField) {
             List<Field> orthogonallyAdjacentFields = GetOrthogonallyAdjecentFields(origoPosition);
 
@@ -426,6 +460,8 @@ public class WorldManager : MonoBehaviour {
             BuildNewRoadIfNumberOfOrthogonallyAdjacentNonRoadFieldsIsZero(origoPosition, numberOfOrthogonallyAdjacentNonRoadFields);
 
             AdjustOrthogonallyAdjacentRoads(origoPosition);
+
+            gameManager.IncreaseOrDecreasePlayersBalance(-roadCost);
         }
     }
 
@@ -628,7 +664,8 @@ public class WorldManager : MonoBehaviour {
     /// Build new HotdogCar.
     /// </summary>
     public void BuildNewHotdogCar(Vector3Int origoPosition) {
-        if (CanAreaBePopulatedWithStructure(origoPosition, hotdogCarPrefabAreaWidth, hotdogCarPrefabAreaLength)) {
+        if (hotdogCarCost <= gameManager.GetPlayersBalance()
+            && CanAreaBePopulatedWithStructure(origoPosition, hotdogCarPrefabAreaWidth, hotdogCarPrefabAreaLength)) {
             Restaurant hotdogCar = new Restaurant(hotdogCarPrefab, origoPosition, hotdogCarPrefabPositionOffset,
                 hotdogCarPrefabYRotation, hotdogCarPrefabAreaWidth, hotdogCarPrefabAreaLength,
                 hotdogCarMoneyOwedIncreaseAmount, hotdogCarSatisfactionIncreaseAmount, 
@@ -637,6 +674,8 @@ public class WorldManager : MonoBehaviour {
             BuildNewStructure(hotdogCar, origoPosition, hotdogCarPrefabAreaWidth, hotdogCarPrefabAreaLength);
 
             restaurants.Add(hotdogCar);
+
+            gameManager.IncreaseOrDecreasePlayersBalance(-hotdogCarCost);
         }
     }
 
@@ -644,7 +683,8 @@ public class WorldManager : MonoBehaviour {
     /// Build new KFC.
     /// </summary>
     public void BuildNewKFC(Vector3Int origoPosition) {
-        if (CanAreaBePopulatedWithStructure(origoPosition, kfcAreaWidth, kfcAreaLength)) {
+        if (kfcCost <= gameManager.GetPlayersBalance()
+            && CanAreaBePopulatedWithStructure(origoPosition, kfcAreaWidth, kfcAreaLength)) {
             Restaurant kfc = new Restaurant(kfcPrefab, origoPosition, kfcPositionOffset,
                 kfcYRotation, kfcAreaWidth, kfcAreaLength,
                 kfcMoneyOwedIncreaseAmount, kfcSatisfactionIncreaseAmount, 
@@ -653,6 +693,8 @@ public class WorldManager : MonoBehaviour {
             BuildNewStructure(kfc, origoPosition, kfcAreaWidth, kfcAreaLength);
 
             restaurants.Add(kfc);
+
+            gameManager.IncreaseOrDecreasePlayersBalance(-kfcCost);
         }
     }
 
@@ -660,7 +702,8 @@ public class WorldManager : MonoBehaviour {
     /// Build new OlivegardensRestaurant.
     /// </summary>
     public void BuildNewOlivegardensRestaurant(Vector3Int origoPosition) {
-        if (CanAreaBePopulatedWithStructure(origoPosition, olivegardensRestaurantAreaWidth, olivegardensRestaurantAreaLength)) {
+        if (olivegardensRestaurantCost <= gameManager.GetPlayersBalance()
+            && CanAreaBePopulatedWithStructure(origoPosition, olivegardensRestaurantAreaWidth, olivegardensRestaurantAreaLength)) {
             Restaurant olivegardensRestaurant = new Restaurant(olivegardensRestaurantPrefab, origoPosition, olivegardensRestaurantPositionOffset,
                 olivegardensRestaurantYRotation, olivegardensRestaurantAreaWidth, olivegardensRestaurantAreaLength,
                 olivegardensRestaurantMoneyOwedIncreaseAmount, olivegardensRestaurantSatisfactionIncreaseAmount, 
@@ -669,6 +712,8 @@ public class WorldManager : MonoBehaviour {
             BuildNewStructure(olivegardensRestaurant, origoPosition, olivegardensRestaurantAreaWidth, olivegardensRestaurantAreaLength);
 
             restaurants.Add(olivegardensRestaurant);
+
+            gameManager.IncreaseOrDecreasePlayersBalance(-olivegardensRestaurantCost);
         }
     }
 
@@ -676,7 +721,8 @@ public class WorldManager : MonoBehaviour {
     /// Build new TaverneRestaurant.
     /// </summary>
     public void BuildNewTaverneRestaurant(Vector3Int origoPosition) {
-        if (CanAreaBePopulatedWithStructure(origoPosition, taverneRestaurantAreaWidth, taverneRestaurantAreaLength)) {
+        if (taverneRestaurantCost <= gameManager.GetPlayersBalance()
+            && CanAreaBePopulatedWithStructure(origoPosition, taverneRestaurantAreaWidth, taverneRestaurantAreaLength)) {
             Restaurant taverneRestaurant = new Restaurant(taverneRestaurantPrefab, origoPosition, taverneRestaurantPositionOffset,
                 taverneRestaurantYRotation, taverneRestaurantAreaWidth, taverneRestaurantAreaLength,
                 taverneRestaurantMoneyOwedIncreaseAmount, taverneRestaurantSatisfactionIncreaseAmount, 
@@ -685,6 +731,8 @@ public class WorldManager : MonoBehaviour {
             BuildNewStructure(taverneRestaurant, origoPosition, taverneRestaurantAreaWidth, taverneRestaurantAreaLength);
 
             restaurants.Add(taverneRestaurant);
+
+            gameManager.IncreaseOrDecreasePlayersBalance(-taverneRestaurantCost);
         }
     }
 
@@ -692,7 +740,8 @@ public class WorldManager : MonoBehaviour {
     /// Build new CafeRestaurant.
     /// </summary>
     public void BuildNewCafeRestaurant(Vector3Int origoPosition) {
-        if (CanAreaBePopulatedWithStructure(origoPosition, cafeRestaurantAreaWidth, cafeRestaurantAreaLength)) {
+        if (cafeRestaurantCost <= gameManager.GetPlayersBalance()
+            && CanAreaBePopulatedWithStructure(origoPosition, cafeRestaurantAreaWidth, cafeRestaurantAreaLength)) {
             Bar cafeRestaurant = new Bar(cafeRestaurantPrefab, origoPosition, cafeRestaurantPositionOffset,
                 cafeRestaurantYRotation, cafeRestaurantAreaWidth, cafeRestaurantAreaLength,
                 cafeRestaurantMoneyOwedIncreaseAmount, cafeRestaurantSatisfactionIncreaseAmount, 
@@ -701,6 +750,8 @@ public class WorldManager : MonoBehaviour {
             BuildNewStructure(cafeRestaurant, origoPosition, cafeRestaurantAreaWidth, cafeRestaurantAreaLength);
 
             bars.Add(cafeRestaurant);
+
+            gameManager.IncreaseOrDecreasePlayersBalance(-cafeRestaurantCost);
         }
     }
 
@@ -708,7 +759,8 @@ public class WorldManager : MonoBehaviour {
     /// Build new Cafe.
     /// </summary>
     public void BuildNewCafe(Vector3Int origoPosition) {
-        if (CanAreaBePopulatedWithStructure(origoPosition, cafeAreaWidth, cafeAreaLength)) {
+        if (cafeCost <= gameManager.GetPlayersBalance()
+            && CanAreaBePopulatedWithStructure(origoPosition, cafeAreaWidth, cafeAreaLength)) {
             Bar cafe = new Bar(cafePrefab, origoPosition, cafePositionOffset,
                 cafeYRotation, cafeAreaWidth, cafeAreaLength,
                 cafeMoneyOwedIncreaseAmount, cafeSatisfactionIncreaseAmount, cafeSecondsBetweenActions,
@@ -717,6 +769,8 @@ public class WorldManager : MonoBehaviour {
             BuildNewStructure(cafe, origoPosition, cafeAreaWidth, cafeAreaLength);
 
             bars.Add(cafe);
+
+            gameManager.IncreaseOrDecreasePlayersBalance(-cafeCost);
         }
     }
 
@@ -724,7 +778,8 @@ public class WorldManager : MonoBehaviour {
     /// Build new LondonEye.
     /// </summary>
     public void BuildNewLondonEye(Vector3Int origoPosition) {
-        if (CanAreaBePopulatedWithStructure(origoPosition, londonEyeAreaWidth, londonEyeAreaLength)) {
+        if (londonEyeCost <= gameManager.GetPlayersBalance()
+            && CanAreaBePopulatedWithStructure(origoPosition, londonEyeAreaWidth, londonEyeAreaLength)) {
             Attraction londonEye = new Attraction(londonEyePrefab, origoPosition, londonEyePositionOffset,
                 londonEyeYRotation, londonEyeAreaWidth, londonEyeAreaLength,
                 londonEyeMoneyOwedIncreaseAmount, londonEyeSatisfactionIncreaseAmount, 
@@ -733,6 +788,8 @@ public class WorldManager : MonoBehaviour {
             BuildNewStructure(londonEye, origoPosition, londonEyeAreaWidth, londonEyeAreaLength);
 
             attractions.Add(londonEye);
+
+            gameManager.IncreaseOrDecreasePlayersBalance(-londonEyeCost);
         }
     }
 
@@ -740,7 +797,8 @@ public class WorldManager : MonoBehaviour {
     /// Build new MerryGoRound.
     /// </summary>
     public void BuildNewMerryGoRound(Vector3Int origoPosition) {
-        if (CanAreaBePopulatedWithStructure(origoPosition, merryGoRoundAreaWidth, merryGoRoundAreaLength)) {
+        if (merryGoRoundCost <= gameManager.GetPlayersBalance()
+            && CanAreaBePopulatedWithStructure(origoPosition, merryGoRoundAreaWidth, merryGoRoundAreaLength)) {
             Attraction merryGoRound = new Attraction(merryGoRoundPrefab, origoPosition, merryGoRoundPositionOffset,
                 merryGoRoundYRotation, merryGoRoundAreaWidth, merryGoRoundAreaLength,
                 merryGoRoundMoneyOwedIncreaseAmount, merryGoRoundSatisfactionIncreaseAmount, 
@@ -749,6 +807,8 @@ public class WorldManager : MonoBehaviour {
             BuildNewStructure(merryGoRound, origoPosition, merryGoRoundAreaWidth, merryGoRoundAreaLength);
 
             attractions.Add(merryGoRound);
+
+            gameManager.IncreaseOrDecreasePlayersBalance(-merryGoRoundCost);
         }
     }
 
@@ -756,7 +816,8 @@ public class WorldManager : MonoBehaviour {
     /// Build new RollerCoaster.
     /// </summary>
     public void BuildNewRollerCoaster(Vector3Int origoPosition) {
-        if (CanAreaBePopulatedWithStructure(origoPosition, rollerCoasterAreaWidth, rollerCoasterAreaLength)) {
+        if (rollerCoasterCost <= gameManager.GetPlayersBalance()
+            && CanAreaBePopulatedWithStructure(origoPosition, rollerCoasterAreaWidth, rollerCoasterAreaLength)) {
             Attraction rollerCoaster = new Attraction(rollerCoasterPrefab, origoPosition, rollerCoasterPositionOffset,
                 rollerCoasterYRotation, rollerCoasterAreaWidth, rollerCoasterAreaLength,
                 rollerCoasterMoneyOwedIncreaseAmount, rollerCoasterSatisfactionIncreaseAmount, 
@@ -765,6 +826,8 @@ public class WorldManager : MonoBehaviour {
             BuildNewStructure(rollerCoaster, origoPosition, rollerCoasterAreaWidth, rollerCoasterAreaLength);
 
             attractions.Add(rollerCoaster);
+
+            gameManager.IncreaseOrDecreasePlayersBalance(-rollerCoasterCost);
         }
     }
 
@@ -772,7 +835,8 @@ public class WorldManager : MonoBehaviour {
     /// Build new CircusTent.
     /// </summary>
     public void BuildNewCircusTent(Vector3Int origoPosition) {
-        if (CanAreaBePopulatedWithStructure(origoPosition, circusTentAreaWidth, circusTentAreaLength)) {
+        if (circusTentCost <= gameManager.GetPlayersBalance()
+            && CanAreaBePopulatedWithStructure(origoPosition, circusTentAreaWidth, circusTentAreaLength)) {
             Attraction circusTent = new Attraction(circusTentPrefab, origoPosition, circusTentPositionOffset,
                 circusTentYRotation, circusTentAreaWidth, circusTentAreaLength,
                 circusTentMoneyOwedIncreaseAmount, circusTentSatisfactionIncreaseAmount, 
@@ -781,6 +845,8 @@ public class WorldManager : MonoBehaviour {
             BuildNewStructure(circusTent, origoPosition, circusTentAreaWidth, circusTentAreaLength);
 
             attractions.Add(circusTent);
+
+            gameManager.IncreaseOrDecreasePlayersBalance(-circusTentCost);
         }
     }
 
@@ -788,7 +854,8 @@ public class WorldManager : MonoBehaviour {
     /// Build new BasicPark.
     /// </summary>
     public void BuildNewBasicPark(Vector3Int origoPosition) {
-        if (CanAreaBePopulatedWithStructure(origoPosition, basicParkAreaWidth, basicParkAreaLength)) {
+        if (basicParkCost <= gameManager.GetPlayersBalance()
+            && CanAreaBePopulatedWithStructure(origoPosition, basicParkAreaWidth, basicParkAreaLength)) {
             Park basicPark = new Park(basicParkPrefab, origoPosition, basicParkPositionOffset,
                 basicParkYRotation, basicParkAreaWidth, basicParkAreaLength,
                 basicParkSatisfactionIncreaseAmount, basicParkSecondsBetweenActions);
@@ -796,6 +863,8 @@ public class WorldManager : MonoBehaviour {
             BuildNewStructure(basicPark, origoPosition, basicParkAreaWidth, basicParkAreaLength);
 
             parks.Add(basicPark);
+
+            gameManager.IncreaseOrDecreasePlayersBalance(-basicParkCost);
         }
     }
 
@@ -803,7 +872,8 @@ public class WorldManager : MonoBehaviour {
     /// Build new FountainPark.
     /// </summary>
     public void BuildNewFountainPark(Vector3Int origoPosition) {
-        if (CanAreaBePopulatedWithStructure(origoPosition, fountainParkAreaWidth, fountainParkAreaLength)) {
+        if (fountainParkCost <= gameManager.GetPlayersBalance()
+            && CanAreaBePopulatedWithStructure(origoPosition, fountainParkAreaWidth, fountainParkAreaLength)) {
             Park fountainPark = new Park(fountainParkPrefab, origoPosition, fountainParkPositionOffset,
                 fountainParkYRotation, fountainParkAreaWidth, fountainParkAreaLength,
                 fountainParkSatisfactionIncreaseAmount, fountainParkSecondsBetweenActions);
@@ -811,6 +881,8 @@ public class WorldManager : MonoBehaviour {
             BuildNewStructure(fountainPark, origoPosition, fountainParkAreaWidth, fountainParkAreaLength);
 
             parks.Add(fountainPark);
+
+            gameManager.IncreaseOrDecreasePlayersBalance(-fountainParkCost);
         }
     }
 
@@ -818,7 +890,8 @@ public class WorldManager : MonoBehaviour {
     /// Build new HelicopterPark.
     /// </summary>
     public void BuildNewHelicopterPark(Vector3Int origoPosition) {
-        if (CanAreaBePopulatedWithStructure(origoPosition, helicopterParkAreaWidth, helicopterParkAreaLength)) {
+        if (helicopterParkCost <= gameManager.GetPlayersBalance()
+            && CanAreaBePopulatedWithStructure(origoPosition, helicopterParkAreaWidth, helicopterParkAreaLength)) {
             Park helicopterPark = new Park(helicopterParkPrefab, origoPosition, helicopterParkPositionOffset,
                 helicopterParkYRotation, helicopterParkAreaWidth, helicopterParkAreaLength,
                 helicopterParkSatisfactionIncreaseAmount, helicopterParkSecondsBetweenActions);
@@ -826,6 +899,8 @@ public class WorldManager : MonoBehaviour {
             BuildNewStructure(helicopterPark, origoPosition, helicopterParkAreaWidth, helicopterParkAreaLength);
 
             parks.Add(helicopterPark);
+
+            gameManager.IncreaseOrDecreasePlayersBalance(-helicopterParkCost);
         }
     }
  
@@ -833,7 +908,8 @@ public class WorldManager : MonoBehaviour {
     /// Build new GarbageCan.
     /// </summary>
     public void BuildNewGarbageCan(Vector3Int origoPosition) {
-        if (garbageCans.Count < Mathf.Ceil(roads.Count / (float)maxNumberOfGarbageCansDivisor) 
+        if (garbageCanCost <= gameManager.GetPlayersBalance()
+            && garbageCans.Count < Mathf.Ceil(roads.Count / (float)maxNumberOfGarbageCansDivisor) 
             && CanAreaBePopulatedWithStructure(origoPosition, garbageCanAreaWidth, garbageCanAreaLength)) {
             GarbageCan garbageCan = new GarbageCan(garbageCanPrefab, origoPosition, garbageCanPositionOffset,
                 garbageCanYRotation, garbageCanAreaWidth, garbageCanAreaLength);
@@ -841,6 +917,8 @@ public class WorldManager : MonoBehaviour {
             BuildNewStructure(garbageCan, origoPosition, garbageCanAreaWidth, garbageCanAreaLength);
 
             garbageCans.Add(garbageCan);
+
+            gameManager.IncreaseOrDecreasePlayersBalance(-garbageCanCost);
         }
     }
 

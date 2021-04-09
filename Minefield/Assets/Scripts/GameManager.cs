@@ -16,6 +16,9 @@ public class GameManager : MonoBehaviour {
     [SerializeField]
     private WorldManager worldManager;
 
+    [SerializeField]
+    private int playersBalance;
+
     private Entrance entrance;
 
     private List<NPC> npcs;
@@ -272,9 +275,11 @@ public class GameManager : MonoBehaviour {
         UpdateAverageNPCSatisfaction();
         UpdateAverageNPCThirst();
         UpdateAverageNPCHunnger();
+        UpdatePlayersBalanceFromNPCSMoneyOwed();
 
         Debug.Log("NPC Number:" + npcs.Count 
-            + "; Average Satisfaction: " + averageNPCSatisfaction 
+            + "; Average Satisfaction: " + averageNPCSatisfaction
+            + "; Player's Balance: " + playersBalance
             + "; Average Thirst: " + averageNPCThirst 
             + "; Average Hunger: " + averageNPCHunger);
     }
@@ -325,6 +330,16 @@ public class GameManager : MonoBehaviour {
     }
 
     /// <summary>
+    /// Update player's balance from npcs money owed.
+    /// </summary>
+    private void UpdatePlayersBalanceFromNPCSMoneyOwed() {
+        foreach (NPC npc in npcs) {
+            IncreaseOrDecreasePlayersBalance(npc.GetMoneyOwed());
+            npc.IncreaseOrDecreaseMoneyOwed(-npc.GetMoneyOwed());
+        }
+    }
+
+    /// <summary>
     /// Spawn npc.
     /// </summary>
     private void SpawnNPC() {
@@ -350,7 +365,7 @@ public class GameManager : MonoBehaviour {
     }
 
     /// <summary>
-    /// Update npcs
+    /// Update npcs.
     /// </summary>
     private void UpdateNPCS() {
         for (int i = 0; i < npcs.Count; i++) {
@@ -362,5 +377,19 @@ public class GameManager : MonoBehaviour {
                 i--;
             }
         }
+    }
+
+    /// <summary>
+    /// Inncrease or decrease player's balance.
+    /// </summary>
+    public void IncreaseOrDecreasePlayersBalance(int increaseOrDecreaseAmount) {
+        playersBalance += increaseOrDecreaseAmount;
+    }
+
+    /// <summary>
+    /// Get player's balance.
+    /// </summary>
+    public int GetPlayersBalance() {
+        return playersBalance;
     }
 }
