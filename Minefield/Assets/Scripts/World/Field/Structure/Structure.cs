@@ -14,8 +14,8 @@ public class Structure : PopulatedField {
     protected DateTime lastActionTime;
 
     public Structure(GameObject prefab, Vector3Int origoPosition, Vector3 prefabOffset, float yAngle, int areaWidth, int areaLength,
-        int moneyOwedIncreaseAmount, int satisfactionIncreaseAmount, int secondsBetweenActions, int maxQueueLength)
-        : base(prefab, origoPosition, prefabOffset, yAngle, areaWidth, areaLength) {
+        int moneyOwedIncreaseAmount, int satisfactionIncreaseAmount, int secondsBetweenActions, int maxQueueLength, WorldManager worldManager)
+        : base(prefab, origoPosition, prefabOffset, yAngle, areaWidth, areaLength, worldManager) {
 
         this.moneyOwedIncreaseAmount = moneyOwedIncreaseAmount;
         this.satisfactionIncreaseAmount = satisfactionIncreaseAmount;

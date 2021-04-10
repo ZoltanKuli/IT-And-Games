@@ -287,7 +287,6 @@ public class NPC {
         gameObject.transform.rotation = Quaternion.LookRotation(newDirection);
     }
 
-
     /// <summary>
     /// Get movement speed.
     /// </summary>
@@ -358,7 +357,7 @@ public class NPC {
     }
 
     /// <summary>
-    /// Teleport back to spawn if not standing on a road ar the entrance.
+    /// Teleport back to spawn if not standing on a road or the entrance.
     /// </summary>
     private void TeleportBackToSpawnIfNotStandingOnARoadOrTheEntrance() {
         if (!(worldManager.GetFieldAtPosition(Vector3Int.RoundToInt(gameObject.transform.position)) is Road)

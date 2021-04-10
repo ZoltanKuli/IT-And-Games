@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour {
 
@@ -18,11 +19,21 @@ public class GameManager : MonoBehaviour {
 
     [SerializeField]
     private int playersBalance;
+    [SerializeField]
+    private int minimumPlayersBalance;
 
     private Entrance entrance;
 
     [SerializeField]
     private int entranceCost;
+
+    [SerializeField]
+    private int cleanerStationCostPerGameCycle;
+    [SerializeField]
+    private int mechanicStationCostPerGameCycle;
+    [SerializeField]
+    private int secondsBetweenCycles;
+    private DateTime nextCycleTime;
 
     private List<NPC> npcs;
     private float averageNPCSatisfaction;
@@ -141,6 +152,8 @@ public class GameManager : MonoBehaviour {
 
         maximumNPCNumber = worldManager.GetMaximumNPCNumberBasedOnWorldMatrixSize();
 
+        nextCycleTime = DateTime.UtcNow.AddSeconds(secondsBetweenCycles);
+
         random = new System.Random();
     }
 
@@ -148,14 +161,14 @@ public class GameManager : MonoBehaviour {
     /// Reset the Mouse click to the BuildNewCafe Action.
     /// </summary>
     private void BuildNewCafe() {
-        ResetMouseActionsAndAssignMethodToOnMouseClickAction(worldManager.BuildNewCafe);
+        ResetMouseActionsAndAssignMethodToOnMouseClickAction(worldManager.BuildNewCleanerStation);
     }
 
     /// <summary>
     /// Reset the Mouse click to the BuildNewCafeRestaurant Action.
     /// </summary>
     private void BuildNewCafeRestaurant() {
-        ResetMouseActionsAndAssignMethodToOnMouseClickAction(worldManager.BuildNewCafeRestaurant);
+        ResetMouseActionsAndAssignMethodToOnMouseClickAction(worldManager.BuildNewMechanicStation);
     }
 
     /// <summary>
@@ -280,11 +293,16 @@ public class GameManager : MonoBehaviour {
         UpdateAverageNPCHunnger();
         UpdatePlayersBalanceFromNPCSMoneyOwed();
 
+        worldManager.UpdateCleanersAndMechanics();
+        WithdrawCrewPayementsFromPlayersBalance();
+
         Debug.Log("NPC Number:" + npcs.Count
             + "; Player's Balance: " + playersBalance
             + "; Average Satisfaction: " + averageNPCSatisfaction
             + "; Average Thirst: " + averageNPCThirst 
             + "; Average Hunger: " + averageNPCHunger);
+
+        RestartGameIfPlayersBalanceGoesInTheRedUnderTheMinimumBalanceAmount();
     }
 
     /// <summary>
@@ -396,5 +414,26 @@ public class GameManager : MonoBehaviour {
     /// </summary>
     public int GetPlayersBalance() {
         return playersBalance;
+    }
+
+    /// <summary>
+    /// Withdraw crew payements from players balance.
+    /// </summary>
+    private void WithdrawCrewPayementsFromPlayersBalance() {
+        if (nextCycleTime <= DateTime.UtcNow) {
+            playersBalance -= worldManager.GetNumberOfCleanerStations() * cleanerStationCostPerGameCycle;
+            playersBalance -= worldManager.GetNumberOfMechanicStations() * mechanicStationCostPerGameCycle;
+
+            nextCycleTime = DateTime.UtcNow.AddSeconds(secondsBetweenCycles);
+        }
+    }
+
+    /// <summary>
+    /// Restart game if players balance goes in the red under the minimum balance amount.
+    /// </summary>
+    private void RestartGameIfPlayersBalanceGoesInTheRedUnderTheMinimumBalanceAmount() { 
+        if (playersBalance < minimumPlayersBalance) {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
     }
 }

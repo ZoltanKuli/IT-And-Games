@@ -8,7 +8,10 @@ public abstract class PopulatedField : Field {
     protected int areaWidth;
     protected int areaLength;
 
-    public PopulatedField(GameObject prefab, Vector3Int origoPosition, Vector3 prefabOffset, float yAngle, int areaWidth, int areaLength) : base(origoPosition) {
+    protected WorldManager worldManager;
+
+    public PopulatedField(GameObject prefab, Vector3Int origoPosition, Vector3 prefabOffset, 
+        float yAngle, int areaWidth, int areaLength, WorldManager worldManager) : base(origoPosition) {
         gameObject = GameObject.Instantiate(prefab, origoPosition + prefabOffset, Quaternion.identity);
         SetRotation(yAngle);
 
@@ -16,6 +19,8 @@ public abstract class PopulatedField : Field {
 
         this.areaWidth = areaWidth;
         this.areaLength = areaLength;
+
+        this.worldManager = worldManager;
     }
 
     /// <summary>
@@ -32,6 +37,13 @@ public abstract class PopulatedField : Field {
         GameObject.Destroy(gameObject);
         gameObject = null;
         isDestroyed = true;
+    }
+
+    /// <summary>
+    /// Is destroyed.
+    /// </summary>
+    public bool IsDestroyed() {
+        return isDestroyed;
     }
 
     /// <summary>

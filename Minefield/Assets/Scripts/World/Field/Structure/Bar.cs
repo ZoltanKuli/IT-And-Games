@@ -6,10 +6,11 @@ public class Bar : Structure {
     private int decreaseThirstAmount;
 
     public Bar(GameObject prefab, Vector3Int origoPosition, Vector3 prefabOffset, float yAngle, int areaWidth, int areaLength,
-        int moneyOwedIncreaseAmount, int satisfactionIncreaseAmount, int secondsBetweenActions, int decreaseThirstAmount, int maxQueueLength)
+        int moneyOwedIncreaseAmount, int satisfactionIncreaseAmount, int secondsBetweenActions, int decreaseThirstAmount, 
+        int maxQueueLength, WorldManager worldManager)
         : base(prefab, origoPosition, prefabOffset, yAngle, areaWidth, areaLength,
             moneyOwedIncreaseAmount, satisfactionIncreaseAmount, secondsBetweenActions,
-            maxQueueLength) {
+            maxQueueLength, worldManager) {
         this.decreaseThirstAmount = decreaseThirstAmount;
     }
 

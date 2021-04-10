@@ -4,9 +4,10 @@ using UnityEngine;
 public class Park : Structure {
 
     public Park(GameObject prefab, Vector3Int origoPosition, Vector3 prefabOffset, float yAngle, 
-        int areaWidth, int areaLength, int satisfactionIncreaseAmount, int secondsBetweenActions)
+        int areaWidth, int areaLength, int satisfactionIncreaseAmount, 
+        int secondsBetweenActions, WorldManager worldManager)
         : base(prefab, origoPosition, prefabOffset, yAngle, areaWidth, areaLength,
-            0, satisfactionIncreaseAmount, secondsBetweenActions, 0) {
+            0, satisfactionIncreaseAmount, secondsBetweenActions, 0, worldManager) {
 
         lastActionTime = DateTime.UtcNow.AddSeconds(secondsBetweenActions);
     }
