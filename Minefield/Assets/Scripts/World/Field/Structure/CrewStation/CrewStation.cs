@@ -7,7 +7,7 @@ public class CrewStation : Structure {
     public CrewStation(GameObject prefab, Vector3Int origoPosition, 
         Vector3 prefabOffset, float yAngle, WorldManager worldManager, Crew crew)
         : base(prefab, origoPosition, prefabOffset, 
-            yAngle, 1, 1, 0, 0, 0, 0, worldManager) {
+            yAngle, 1, 1, 0, 0, 0, 0, worldManager, 0, 0, 0) {
         this.crew = crew;
     }
 

@@ -40,7 +40,6 @@ public class Cleaner : Crew {
 
         if (path.Count == 0 || (maximumTravelDistance < path.Count && fieldToDoActionOn != crewStation)) {
             ReaddFieldToDoActionOnToWorldManagerIfFieldIsNotDestroyedAndResetFieldToDoActionOn();
-            Debug.Log(path.Count);
         }
     }
 

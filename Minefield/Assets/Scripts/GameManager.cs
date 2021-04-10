@@ -161,14 +161,14 @@ public class GameManager : MonoBehaviour {
     /// Reset the Mouse click to the BuildNewCafe Action.
     /// </summary>
     private void BuildNewCafe() {
-        ResetMouseActionsAndAssignMethodToOnMouseClickAction(worldManager.BuildNewCleanerStation);
+        ResetMouseActionsAndAssignMethodToOnMouseClickAction(worldManager.BuildNewCafe);
     }
 
     /// <summary>
     /// Reset the Mouse click to the BuildNewCafeRestaurant Action.
     /// </summary>
     private void BuildNewCafeRestaurant() {
-        ResetMouseActionsAndAssignMethodToOnMouseClickAction(worldManager.BuildNewMechanicStation);
+        ResetMouseActionsAndAssignMethodToOnMouseClickAction(worldManager.BuildNewCafeRestaurant);
     }
 
     /// <summary>

@@ -140,19 +140,24 @@ public class Crew {
     /// Set path.
     /// </summary>
     protected virtual void SetPath() {
-        List<Road> orthogonallyAdjacentRoadsAroundDestinationStructure = worldManager.GetOrthogonallyAdjecentRoadsAroundStructure((Structure)fieldToDoActionOn);
+        if (fieldToDoActionOn is CrewStation) {
+            path = new List<Field>();
+            path = PathFinder.FindPath(worldManager, worldManager.GetFieldAtPosition(GetPositionRoundedToVector3Int()), fieldToDoActionOn, false);
+        } else {
+            List<Road> orthogonallyAdjacentRoadsAroundDestinationStructure = worldManager.GetOrthogonallyAdjecentRoadsAroundStructure((Structure)fieldToDoActionOn);
 
-        path = new List<Field>();
-        while (orthogonallyAdjacentRoadsAroundDestinationStructure.Count != 0) {
-            Road orthogonallyAdjacentRoadAroundDestinationStructure = orthogonallyAdjacentRoadsAroundDestinationStructure[random.Next(orthogonallyAdjacentRoadsAroundDestinationStructure.Count)];
-            orthogonallyAdjacentRoadsAroundDestinationStructure.Remove(orthogonallyAdjacentRoadAroundDestinationStructure);
+            path = new List<Field>();
+            while (orthogonallyAdjacentRoadsAroundDestinationStructure.Count != 0) {
+                Road orthogonallyAdjacentRoadAroundDestinationStructure = orthogonallyAdjacentRoadsAroundDestinationStructure[random.Next(orthogonallyAdjacentRoadsAroundDestinationStructure.Count)];
+                orthogonallyAdjacentRoadsAroundDestinationStructure.Remove(orthogonallyAdjacentRoadAroundDestinationStructure);
 
-            path = PathFinder.FindPath(worldManager, worldManager.GetFieldAtPosition(GetPositionRoundedToVector3Int()), orthogonallyAdjacentRoadAroundDestinationStructure, false);
+                path = PathFinder.FindPath(worldManager, worldManager.GetFieldAtPosition(GetPositionRoundedToVector3Int()), orthogonallyAdjacentRoadAroundDestinationStructure, false);
 
-            if (0 < path.Count && (path.Count <= maximumTravelDistance || fieldToDoActionOn == crewStation)) {
-                break;
-            } else {
-                path = new List<Field>();
+                if (0 < path.Count && (path.Count <= maximumTravelDistance || fieldToDoActionOn == crewStation)) {
+                    break;
+                } else {
+                    path = new List<Field>();
+                }
             }
         }
 

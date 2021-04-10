@@ -3,11 +3,13 @@ using UnityEngine;
 
 public class Park : Structure {
 
-    public Park(GameObject prefab, Vector3Int origoPosition, Vector3 prefabOffset, float yAngle, 
-        int areaWidth, int areaLength, int satisfactionIncreaseAmount, 
-        int secondsBetweenActions, WorldManager worldManager)
+    public Park(GameObject prefab, Vector3Int origoPosition, Vector3 prefabOffset, float yAngle,
+        int areaWidth, int areaLength, int satisfactionIncreaseAmount,
+        int secondsBetweenActions, WorldManager worldManager,
+        int minimumNotBreakingSeconds, int maximumNotBreakingSeconds)
         : base(prefab, origoPosition, prefabOffset, yAngle, areaWidth, areaLength,
-            0, satisfactionIncreaseAmount, secondsBetweenActions, 0, worldManager) {
+            0, satisfactionIncreaseAmount, secondsBetweenActions, 0, worldManager, 
+            minimumNotBreakingSeconds, maximumNotBreakingSeconds, 0) {
 
         lastActionTime = DateTime.UtcNow.AddSeconds(secondsBetweenActions);
     }

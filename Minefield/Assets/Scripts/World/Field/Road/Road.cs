@@ -33,6 +33,10 @@ public abstract class Road : PopulatedField {
     /// </summary>
     public void PlaceAGarbageGameObjectOnTheRoadAtARandomLocation() {
         if (garbageGameObjects.Count < maximumNumberOfGarbages) {
+            if (garbageGameObjects.Count == 0) {
+                worldManager.AddRoadLitteredWithGarbage(this);
+            }
+
             GameObject randomGarbagePrefab = garbagePrefabs[random.Next(garbagePrefabs.Count)];
 
             float test = (float)(random.NextDouble() * (garbageRange * 2) - garbageRange);
@@ -41,8 +45,6 @@ public abstract class Road : PopulatedField {
                 origoPosition.z + (float)(random.NextDouble() * (garbageRange * 2) - garbageRange));
 
             garbageGameObjects.Add(GameObject.Instantiate(randomGarbagePrefab, garbageGameObjectPosition, Quaternion.Euler(0, random.Next(360), 0)));
-
-            worldManager.AddRoadLitteredWithGarbage(this);
         }
     }
 

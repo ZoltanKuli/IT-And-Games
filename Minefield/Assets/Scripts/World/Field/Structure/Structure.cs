@@ -9,21 +9,39 @@ public class Structure : PopulatedField {
 
     protected int moneyOwedIncreaseAmount;
     protected int satisfactionIncreaseAmount;
+    protected int satisfactionDecreaseAmount;
     protected int secondsBetweenActions;
     protected int maxQueueLength;
     protected DateTime lastActionTime;
 
+    protected int minimumNotBreakingSeconds;
+    protected int maximumNotBreakingSeconds;
+    protected bool isOutOfOrder;
+    protected DateTime breakingTime;
+
+    protected System.Random random;
+
     public Structure(GameObject prefab, Vector3Int origoPosition, Vector3 prefabOffset, float yAngle, int areaWidth, int areaLength,
-        int moneyOwedIncreaseAmount, int satisfactionIncreaseAmount, int secondsBetweenActions, int maxQueueLength, WorldManager worldManager)
+        int moneyOwedIncreaseAmount, int satisfactionIncreaseAmount, int secondsBetweenActions, int maxQueueLength, WorldManager worldManager,
+        int minimumNotBreakingSeconds, int maximumNotBreakingSeconds, int satisfactionDecreaseAmount)
         : base(prefab, origoPosition, prefabOffset, yAngle, areaWidth, areaLength, worldManager) {
 
         this.moneyOwedIncreaseAmount = moneyOwedIncreaseAmount;
         this.satisfactionIncreaseAmount = satisfactionIncreaseAmount;
+        this.satisfactionDecreaseAmount = satisfactionDecreaseAmount;
         this.secondsBetweenActions = secondsBetweenActions;
         this.maxQueueLength = maxQueueLength;
 
         queu = new Queue<NPC>();
         lastActionTime = DateTime.Now;
+
+        this.minimumNotBreakingSeconds = minimumNotBreakingSeconds;
+        this.maximumNotBreakingSeconds = maximumNotBreakingSeconds;
+        isOutOfOrder = false;
+
+        random = new System.Random(GetHashCode());
+
+        SetBreakingTime();
     }
 
     /// <summary>
@@ -34,8 +52,8 @@ public class Structure : PopulatedField {
 
         ActionWhenLastActionWithSecondsBetweenActionsIsSoonerThanNow();
 
-        RemoveNPCInsideIfIsDestroyed();
-        RemoveNPCsFromQueueIfIsDestroyed();
+        RemoveNPCInsideIfIsDestroyedOrIfOutOfOrder();
+        RemoveNPCsFromQueueIfIsDestroyedOrIfOutOfOrder();
     }
 
     /// <summary>
@@ -43,9 +61,9 @@ public class Structure : PopulatedField {
     /// </summary>
     protected virtual void AddNPCToQueueIfNotAlreadyInIt(NPC npc) {
         if (!queu.Contains(npc) && npc != npcInside) {
-            if (maxQueueLength <= queu.Count) {
+            if (maxQueueLength <= queu.Count || isOutOfOrder) {
                 npc.SetIsBusy(false);
-                npc.IncreaseOrDecreaseSatisfaction(-satisfactionIncreaseAmount);
+                npc.IncreaseOrDecreaseSatisfaction(-satisfactionDecreaseAmount);
                 return;
             }
 
@@ -80,12 +98,12 @@ public class Structure : PopulatedField {
     /// <summary>
     /// Remove npc inside if is destroyed.
     /// </summary>
-    protected virtual void RemoveNPCInsideIfIsDestroyed() {
-        if (isDestroyed && npcInside != null) {
+    protected virtual void RemoveNPCInsideIfIsDestroyedOrIfOutOfOrder() {
+        if ((isDestroyed || isOutOfOrder) && npcInside != null) {
             npcInside.SetIsBusy(false);
             npcInside.SetIsVisible(true);
 
-            npcInside.IncreaseOrDecreaseSatisfaction(-satisfactionIncreaseAmount);
+            npcInside.IncreaseOrDecreaseSatisfaction(-satisfactionDecreaseAmount);
 
             npcInside = null;
         }
@@ -109,16 +127,41 @@ public class Structure : PopulatedField {
     /// <summary>
     /// Remove npcs from queue if is destroyed.
     /// </summary>
-    protected virtual void RemoveNPCsFromQueueIfIsDestroyed() {
-        if (isDestroyed) {
+    protected virtual void RemoveNPCsFromQueueIfIsDestroyedOrIfOutOfOrder() {
+        if (isDestroyed || isOutOfOrder) {
             while (queu.Count != 0) {
                 NPC npcInQueue = queu.Dequeue();
 
                 npcInQueue.SetIsBusy(false);
                 npcInQueue.SetIsVisible(true);
 
-                npcInQueue.IncreaseOrDecreaseSatisfaction(-satisfactionIncreaseAmount);
+                npcInQueue.IncreaseOrDecreaseSatisfaction(-satisfactionDecreaseAmount);
             }
         }
+    }
+
+    /// <summary>
+    /// Set breaking time.
+    /// </summary>
+    protected void SetBreakingTime() {
+        breakingTime = DateTime.UtcNow.AddSeconds(random.Next(minimumNotBreakingSeconds, maximumNotBreakingSeconds));
+    }
+
+    /// <summary>
+    /// Set if out of order.
+    /// </summary>
+    public void UpdateState() { 
+        if (!isOutOfOrder && breakingTime <= DateTime.UtcNow) {
+            isOutOfOrder = true;
+            worldManager.AddOutOfOrderStructure(this);
+        }
+    }
+
+    /// <summary>
+    /// SFix.
+    /// </summary>
+    public void Fix() {
+        SetBreakingTime();
+        isOutOfOrder = false;
     }
 }
