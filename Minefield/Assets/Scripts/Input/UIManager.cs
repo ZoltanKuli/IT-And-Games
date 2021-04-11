@@ -9,6 +9,9 @@ public class UIManager : MonoBehaviour {
     private Button buildRoadButton;
 
     [SerializeField]
+    private Button buildMenuButton;
+
+    [SerializeField]
     private Button buildStructureButton;
 
     [SerializeField]
@@ -18,6 +21,18 @@ public class UIManager : MonoBehaviour {
     private GameObject structurePanel;
 
     [SerializeField]
+    private GameObject roadandgarbagecanPanel;
+
+    [SerializeField]
+    private GameObject buildMenuPanel;
+
+    [SerializeField]
+    private Button roadandgarbagecanSelectionButton;
+
+    [SerializeField]
+    private Button crewstationSelectionButton;
+
+    [SerializeField]
     private Button barSelectorButton;
 
     [SerializeField]
@@ -25,9 +40,6 @@ public class UIManager : MonoBehaviour {
 
     [SerializeField]
     private Button attractionSelectionButton;
-
-    [SerializeField]
-    private Button garbagecanSelectionButton;
 
     [SerializeField]
     private Button parkSelectionButton;
@@ -87,9 +99,6 @@ public class UIManager : MonoBehaviour {
     private Color buttonOutlineColor;
 
     [SerializeField]
-    private GameObject garbagecanSelectorPanel;
-
-    [SerializeField]
     private Button garbagecanButton;
 
     List<Button> buttons;
@@ -121,14 +130,8 @@ public class UIManager : MonoBehaviour {
     /// Connect the menu buttons with the pairing building method.
     /// </summary>
     private void Start() {
-        buttons = new List<Button> { buildStructureButton, buildRoadButton, destroyButton };
-        panels = new List<GameObject> { structurePanel, barSelectorPanel, restaurantSelectorPanel, attractionSelectorPanel, parkSelectorPanel, garbagecanSelectorPanel };
-
-        buildRoadButton.onClick.AddListener(() => {
-            ResetButtonColor();
-            ModifyButtonOutline(buildRoadButton);
-            onBuildRoadAction?.Invoke();
-        });
+        buttons = new List<Button> { buildMenuButton, destroyButton };
+        panels = new List<GameObject> { roadandgarbagecanPanel, buildMenuPanel, structurePanel, barSelectorPanel, restaurantSelectorPanel, attractionSelectorPanel, parkSelectorPanel};
 
         destroyButton.onClick.AddListener(() => {
             ResetButtonColor();
@@ -136,11 +139,40 @@ public class UIManager : MonoBehaviour {
             onDestroyAction?.Invoke();
         });
 
+        buildMenuButton.onClick.AddListener(() => {
+            if (buildMenuPanel.gameObject.activeSelf) {
+                ToggleDisplayPanel(buildMenuPanel, false);
+            } else {
+                ToggleDisplayPanel(buildMenuPanel, true);
+            }
+        });
+
+        buildRoadButton.onClick.AddListener(() => {
+            ResetButtonColor();
+            ModifyButtonOutline(buildMenuButton);
+            onBuildRoadAction?.Invoke();
+            ToggleDisplayPanel(null, false);
+        });
+
+        garbagecanButton.onClick.AddListener(() => {
+            ResetButtonColor();
+            ModifyButtonOutline(buildMenuButton);
+            onGarbageCanBuildAction?.Invoke();
+            ToggleDisplayPanel(null, false);
+        });
         buildStructureButton.onClick.AddListener(() => {
             if (structurePanel.gameObject.activeSelf) {
                 ToggleDisplayPanel(structurePanel, false);
             } else {
                 ToggleDisplayPanel(structurePanel, true);
+            }
+        });
+
+        roadandgarbagecanSelectionButton.onClick.AddListener(() => {
+            if (roadandgarbagecanPanel.gameObject.activeSelf) {
+                ToggleDisplayPanel(roadandgarbagecanPanel, false);
+            } else {
+                ToggleDisplayPanel(roadandgarbagecanPanel, true);
             }
         });
 
@@ -170,42 +202,42 @@ public class UIManager : MonoBehaviour {
 
         cafeButton.onClick.AddListener(() => {
             ResetButtonColor();
-            ModifyButtonOutline(buildStructureButton);
+            ModifyButtonOutline(buildMenuButton);
             onCafeBuildAction?.Invoke();
             ToggleDisplayPanel(null, false);
         });
 
         cafeRestaurantButton.onClick.AddListener(() => {
             ResetButtonColor();
-            ModifyButtonOutline(buildStructureButton);
+            ModifyButtonOutline(buildMenuButton);
             onCafeRestaurantBuildAction?.Invoke();
             ToggleDisplayPanel(null, false);
         });
 
         hotdogCarButton.onClick.AddListener(() => {
             ResetButtonColor();
-            ModifyButtonOutline(buildStructureButton);
+            ModifyButtonOutline(buildMenuButton);
             onHotdogCarBuildAction?.Invoke();
             ToggleDisplayPanel(null, false);
         });
 
         kfcRestaurantButton.onClick.AddListener(() => {
             ResetButtonColor();
-            ModifyButtonOutline(buildStructureButton);
+            ModifyButtonOutline(buildMenuButton);
             onKfcRestaurantBuildAction?.Invoke();
             ToggleDisplayPanel(null, false);
         });
 
         olivegardensRestaurantButton.onClick.AddListener(() => {
             ResetButtonColor();
-            ModifyButtonOutline(buildStructureButton);
+            ModifyButtonOutline(buildMenuButton);
             onOlivegardensRestaurantBuildAction?.Invoke();
             ToggleDisplayPanel(null, false);
         });
 
         taverneRestaurantButton.onClick.AddListener(() => {
             ResetButtonColor();
-            ModifyButtonOutline(buildStructureButton);
+            ModifyButtonOutline(buildMenuButton);
             onTaverneRestaurantBuildAction?.Invoke();
             ToggleDisplayPanel(null, false);
         });
@@ -220,68 +252,53 @@ public class UIManager : MonoBehaviour {
 
         circustentButton.onClick.AddListener(() => {
             ResetButtonColor();
-            ModifyButtonOutline(buildStructureButton);
+            ModifyButtonOutline(buildMenuButton);
             onCircusTentBuildAction?.Invoke();
             ToggleDisplayPanel(null, false);
         });
 
         londoneyeButton.onClick.AddListener(() => {
             ResetButtonColor();
-            ModifyButtonOutline(buildStructureButton);
+            ModifyButtonOutline(buildMenuButton);
             onLondonEyeBuildAction?.Invoke();
             ToggleDisplayPanel(null, false);
         });
 
         merrygoroundButton.onClick.AddListener(() => {
             ResetButtonColor();
-            ModifyButtonOutline(buildStructureButton);
+            ModifyButtonOutline(buildMenuButton);
             onMerryGoRoundBuildAction?.Invoke();
             ToggleDisplayPanel(null, false);
         });
 
         rollercoasterButton.onClick.AddListener(() => {
             ResetButtonColor();
-            ModifyButtonOutline(buildStructureButton);
+            ModifyButtonOutline(buildMenuButton);
             onRollerCoasterBuildAction?.Invoke();
             ToggleDisplayPanel(null, false);
         });
 
         parkbasicButton.onClick.AddListener(() => {
             ResetButtonColor();
-            ModifyButtonOutline(buildStructureButton);
+            ModifyButtonOutline(buildMenuButton);
             onParkBasicBuildAction?.Invoke();
             ToggleDisplayPanel(null, false);
         });
 
         parkfountainButton.onClick.AddListener(() => {
             ResetButtonColor();
-            ModifyButtonOutline(buildStructureButton);
+            ModifyButtonOutline(buildMenuButton);
             onParkFountainBuildAction?.Invoke();
             ToggleDisplayPanel(null, false);
         });
 
         parkhelicopterButton.onClick.AddListener(() => {
             ResetButtonColor();
-            ModifyButtonOutline(buildStructureButton);
+            ModifyButtonOutline(buildMenuButton);
             onParkHelicopterBuildAction?.Invoke();
             ToggleDisplayPanel(null, false);
         });
         
-        garbagecanSelectionButton.onClick.AddListener(() => {
-            if (garbagecanSelectorPanel.gameObject.activeSelf) {
-                ToggleDisplayPanel(garbagecanSelectorPanel, false);
-            } else {
-                ToggleDisplayPanel(garbagecanSelectorPanel, true);
-            }
-        });
-
-        garbagecanButton.onClick.AddListener(() => {
-            ResetButtonColor();
-            ModifyButtonOutline(buildStructureButton);
-            onGarbageCanBuildAction?.Invoke();
-            ToggleDisplayPanel(null, false);
-        });
-
     }
       
     /// <summary>
