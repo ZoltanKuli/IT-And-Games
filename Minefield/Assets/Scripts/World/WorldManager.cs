@@ -770,20 +770,20 @@ public class WorldManager : MonoBehaviour {
     /// <summary>
     /// Get walkable adjacent fields.
     /// </summary>
-    public List<Field> GetWalkableAdjacentFields(Field field, bool isNPC) {
+    public List<Field> GetWalkableAdjacentFields(Field field, bool isCrew, CrewStation crewStation) {
         return GetOrthogonallyAdjecentFields(field.GetOrigoPosition())
-             .FindAll(orthogonallyAdjacentField => IsFieldWalkable(orthogonallyAdjacentField, isNPC));
+             .FindAll(orthogonallyAdjacentField => IsFieldWalkable(orthogonallyAdjacentField, isCrew, crewStation));
     }
 
     /// <summary>
     /// Is field walkable.
     /// </summary>
-    public static bool IsFieldWalkable(Field field, bool isNPC) {
-        if (isNPC) {
+    public static bool IsFieldWalkable(Field field, bool isCrew, CrewStation crewStation) {
+        if (!isCrew) {
             return field is Road || field is Entrance;
         }
 
-        return field is CrewStation || field is Road;
+        return field == crewStation || field is Road;
     }
 
     /// <summary>

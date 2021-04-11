@@ -218,7 +218,7 @@ public class NPC {
             Road orthogonallyAdjacentRoadAroundDestinationStructure = orthogonallyAdjacentRoadsAroundDestinationStructure[random.Next(orthogonallyAdjacentRoadsAroundDestinationStructure.Count)];
             orthogonallyAdjacentRoadsAroundDestinationStructure.Remove(orthogonallyAdjacentRoadAroundDestinationStructure);
 
-            path = PathFinder.FindPath(worldManager, worldManager.GetFieldAtPosition(GetPositionRoundedToVector3Int()), orthogonallyAdjacentRoadAroundDestinationStructure, true);
+            path = PathFinder.FindPath(worldManager, worldManager.GetFieldAtPosition(GetPositionRoundedToVector3Int()), orthogonallyAdjacentRoadAroundDestinationStructure, false, null);
 
             if (0 < path.Capacity) {
                 isBusy = true;

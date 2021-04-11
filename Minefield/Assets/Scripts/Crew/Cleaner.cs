@@ -36,7 +36,7 @@ public class Cleaner : Crew {
     /// </summary>
     protected override void SetPath() {
         path = new List<Field>();
-        path = PathFinder.FindPath(worldManager, worldManager.GetFieldAtPosition(GetPositionRoundedToVector3Int()), fieldToDoActionOn, false);
+        path = PathFinder.FindPath(worldManager, worldManager.GetFieldAtPosition(GetPositionRoundedToVector3Int()), fieldToDoActionOn, true, crewStation);
 
         if (path.Count == 0 || (maximumTravelDistance < path.Count && fieldToDoActionOn != crewStation)) {
             ReaddFieldToDoActionOnToWorldManagerIfFieldIsNotDestroyedAndResetFieldToDoActionOn();

@@ -56,7 +56,7 @@ public class Crew {
     /// Has field to do action on.
     /// </summary>
     public bool HasFieldToDoActionOn() {
-        return isBusy || fieldToDoActionOn != null || (fieldToDoActionOn == crewStation && worldManager.GetFieldAtPosition(Vector3Int.RoundToInt(gameObject.transform.position)) != crewStation);
+        return isBusy || (fieldToDoActionOn == crewStation && worldManager.GetFieldAtPosition(Vector3Int.RoundToInt(gameObject.transform.position)) != crewStation) || fieldToDoActionOn != null;
     }
 
     /// <summary>
@@ -142,7 +142,7 @@ public class Crew {
     protected virtual void SetPath() {
         if (fieldToDoActionOn is CrewStation) {
             path = new List<Field>();
-            path = PathFinder.FindPath(worldManager, worldManager.GetFieldAtPosition(GetPositionRoundedToVector3Int()), fieldToDoActionOn, false);
+            path = PathFinder.FindPath(worldManager, worldManager.GetFieldAtPosition(GetPositionRoundedToVector3Int()), fieldToDoActionOn, true, crewStation);
         } else {
             List<Road> orthogonallyAdjacentRoadsAroundDestinationStructure = worldManager.GetOrthogonallyAdjecentRoadsAroundStructure((Structure)fieldToDoActionOn);
 
@@ -151,7 +151,7 @@ public class Crew {
                 Road orthogonallyAdjacentRoadAroundDestinationStructure = orthogonallyAdjacentRoadsAroundDestinationStructure[random.Next(orthogonallyAdjacentRoadsAroundDestinationStructure.Count)];
                 orthogonallyAdjacentRoadsAroundDestinationStructure.Remove(orthogonallyAdjacentRoadAroundDestinationStructure);
 
-                path = PathFinder.FindPath(worldManager, worldManager.GetFieldAtPosition(GetPositionRoundedToVector3Int()), orthogonallyAdjacentRoadAroundDestinationStructure, false);
+                path = PathFinder.FindPath(worldManager, worldManager.GetFieldAtPosition(GetPositionRoundedToVector3Int()), orthogonallyAdjacentRoadAroundDestinationStructure, true, crewStation);
 
                 if (0 < path.Count && (path.Count <= maximumTravelDistance || fieldToDoActionOn == crewStation)) {
                     break;

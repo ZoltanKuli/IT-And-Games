@@ -6,7 +6,7 @@ public class PathFinder {
     /// <summary>
     /// Find path.
     /// </summary>
-    public static List<Field> FindPath(WorldManager worldManager, Field startField, Field destinationField, bool isNPC) {
+    public static List<Field> FindPath(WorldManager worldManager, Field startField, Field destinationField, bool isCrew, CrewStation ownCrewStation) {
         List<Field> path = new List<Field>();
 
         List<Field> FieldsTocheck = new List<Field>();
@@ -27,7 +27,7 @@ public class PathFinder {
                 return path;
             }
 
-            foreach (Field walkabledjacentField in worldManager.GetWalkableAdjacentFields(currentField, isNPC)) {
+            foreach (Field walkabledjacentField in worldManager.GetWalkableAdjacentFields(currentField, isCrew, ownCrewStation)) {
                 float newCost = costDictionary[currentField] + worldManager.GetCostOfEnteringField(walkabledjacentField);
                 
                 if (!costDictionary.ContainsKey(walkabledjacentField) || newCost < costDictionary[walkabledjacentField]) {
