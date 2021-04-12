@@ -42,9 +42,9 @@ public class GameManager : MonoBehaviour {
     private int npcSpawnChance;
 
     [SerializeField]
-    private int cleanerStationCostPerGameCycle;
+    public int cleanerStationCostPerGameCycle;
     [SerializeField]
-    private int mechanicStationCostPerGameCycle;
+    public int mechanicStationCostPerGameCycle;
     [SerializeField]
     private int secondsBetweenCycles;
     private DateTime nextCycleTime;
@@ -152,6 +152,9 @@ public class GameManager : MonoBehaviour {
         uIManager.AssingMethodToOnParkHelicopterBuildAction(BuildNewParkHelicopter);
 
         uIManager.AssingMethodToOnGarbageCanBuildAction(BuildNewGarbageCan);
+
+        uIManager.AssingMethodToCleanerStationBuildAction(BuildNewCleanerStation);
+        uIManager.AssingMethodToMechanicStationBuildAction(BuildNewMechanicStation);
 
         entrance = worldManager.GetEntrance();
 
@@ -278,6 +281,22 @@ public class GameManager : MonoBehaviour {
     /// </summary>
     private void BuildNewGarbageCan() {
         ResetMouseActionsAndAssignMethodToOnMouseClickAction(worldManager.BuildNewGarbageCan);
+    }
+
+    /// <summary>
+    /// Reset the Mouse click to the BuildNewCleanerStation Action.
+    /// </summary>
+    private void BuildNewCleanerStation()
+    {
+        ResetMouseActionsAndAssignMethodToOnMouseClickAction(worldManager.BuildNewCleanerStation);
+    }
+
+    /// <summary>
+    /// Reset the Mouse click to the BuildNewMechanicStation Action.
+    /// </summary>
+    private void BuildNewMechanicStation()
+    {
+        ResetMouseActionsAndAssignMethodToOnMouseClickAction(worldManager.BuildNewMechanicStation);
     }
 
     /// <summary>

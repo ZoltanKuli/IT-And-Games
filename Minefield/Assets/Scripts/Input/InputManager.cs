@@ -55,10 +55,7 @@ public class InputManager : MonoBehaviour {
     {
         if(Input.GetKeyDown(KeyCode.Escape))
         {
-            foreach(GameObject panel in uIManager.panels)
-            {
-                uIManager.ToggleDisplayPanel(panel, false);
-            }
+            uIManager.ToggleDisplayPanel(null, false);
         }
     }
 

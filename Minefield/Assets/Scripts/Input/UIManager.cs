@@ -101,6 +101,15 @@ public class UIManager : MonoBehaviour {
     [SerializeField]
     private Button garbagecanButton;
 
+    [SerializeField]
+    private GameObject crewStationsPanel;
+
+    [SerializeField]
+    private Button cleanerStationButton;
+
+    [SerializeField]
+    private Button mechanicStationButton;
+
     public List<Button> buttons;
     public List<GameObject> panels;
 
@@ -126,12 +135,15 @@ public class UIManager : MonoBehaviour {
 
     private Action onGarbageCanBuildAction;
 
+    private Action onCleanerStationBuildAction;
+    private Action onMechanicStationBuildAction;
+
     /// <summary>
     /// Connect the menu buttons with the pairing building method.
     /// </summary>
     private void Start() {
         buttons = new List<Button> { buildMenuButton, destroyButton };
-        panels = new List<GameObject> { roadandgarbagecanPanel, buildMenuPanel, structurePanel, barSelectorPanel, restaurantSelectorPanel, attractionSelectorPanel, parkSelectorPanel};
+        panels = new List<GameObject> { roadandgarbagecanPanel, buildMenuPanel, structurePanel, barSelectorPanel, restaurantSelectorPanel, attractionSelectorPanel, parkSelectorPanel, crewStationsPanel };
 
         destroyButton.onClick.AddListener(() => {
             ResetButtonColor();
@@ -197,6 +209,17 @@ public class UIManager : MonoBehaviour {
                 ToggleDisplayPanel(parkSelectorPanel, false);
             } else {
                 ToggleDisplayPanel(parkSelectorPanel, true);
+            }
+        });
+
+        crewstationSelectionButton.onClick.AddListener(() =>
+        {
+            if(crewStationsPanel.gameObject.activeSelf)
+            {
+                ToggleDisplayPanel(crewStationsPanel, false);
+            } else
+            {
+                ToggleDisplayPanel(crewStationsPanel, true);
             }
         });
 
@@ -298,7 +321,20 @@ public class UIManager : MonoBehaviour {
             onParkHelicopterBuildAction?.Invoke();
             ToggleDisplayPanel(null, false);
         });
-        
+
+        cleanerStationButton.onClick.AddListener(() => {
+            ResetButtonColor();
+            ModifyButtonOutline(buildMenuButton);
+            onCleanerStationBuildAction?.Invoke();
+            ToggleDisplayPanel(null, false);
+        });
+
+        mechanicStationButton.onClick.AddListener(() => {
+            ResetButtonColor();
+            ModifyButtonOutline(buildMenuButton);
+            onMechanicStationBuildAction?.Invoke();
+            ToggleDisplayPanel(null, false);
+        });
     }
       
     /// <summary>
@@ -444,4 +480,19 @@ public class UIManager : MonoBehaviour {
         onGarbageCanBuildAction += action;
     }
 
+    /// <summary>
+    /// Assing method to on Cleaner Station build action.
+    /// </summary>
+    public void AssingMethodToCleanerStationBuildAction(Action action)
+    {
+        onCleanerStationBuildAction += action;
+    }
+
+    /// <summary>
+    /// Assing method to on Mechanic Station build action.
+    /// </summary>
+    public void AssingMethodToMechanicStationBuildAction(Action action)
+    {
+        onMechanicStationBuildAction += action;
+    }
 }
