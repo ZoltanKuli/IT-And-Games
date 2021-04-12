@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour {
 
@@ -124,6 +125,9 @@ public class GameManager : MonoBehaviour {
     private int garbageDecreaseDissatisfactionAmountMinimum;
     [SerializeField]
     private int garbageDecreaseDissatisfactionAmountMaximum;
+
+    [SerializeField]
+    private Text playerMoneyText;
 
     private System.Random random;
 
@@ -333,6 +337,7 @@ public class GameManager : MonoBehaviour {
         worldManager.UpdateCleanersAndMechanics();
         WithdrawCrewPayementsFromPlayersBalance();
 
+        UpdateStatisticsPanels();
         Debug.Log("NPC Number:" + npcs.Count
             + "; Player's Balance: " + playersBalance
             + "; Average Satisfaction: " + averageNPCSatisfaction
@@ -340,6 +345,11 @@ public class GameManager : MonoBehaviour {
             + "; Average Hunger: " + averageNPCHunger);
 
         RestartGameIfPlayersBalanceGoesInTheRedUnderTheMinimumBalanceAmount();
+    }
+
+    private void UpdateStatisticsPanels()
+    {
+        playerMoneyText.text = "$" + GetPlayersBalance();
     }
 
     /// <summary>
