@@ -18,6 +18,18 @@ public class UIManager : MonoBehaviour {
     private Button destroyButton;
 
     [SerializeField]
+    private Button mainMenuButton;
+
+    [SerializeField]
+    private GameObject mainMenuPanel;
+
+    [SerializeField]
+    private Button returnToGameButton;
+
+    [SerializeField]
+    private Button exitGameButton;
+
+    [SerializeField]
     private GameObject structurePanel;
 
     [SerializeField]
@@ -143,7 +155,29 @@ public class UIManager : MonoBehaviour {
     /// </summary>
     private void Start() {
         buttons = new List<Button> { buildMenuButton, destroyButton };
-        panels = new List<GameObject> { roadandgarbagecanPanel, buildMenuPanel, structurePanel, barSelectorPanel, restaurantSelectorPanel, attractionSelectorPanel, parkSelectorPanel, crewStationsPanel };
+        panels = new List<GameObject> { roadandgarbagecanPanel, buildMenuPanel, structurePanel, barSelectorPanel, restaurantSelectorPanel, attractionSelectorPanel, parkSelectorPanel, crewStationsPanel, mainMenuPanel };
+
+        mainMenuButton.onClick.AddListener(() =>
+        {
+            if (mainMenuPanel.gameObject.activeSelf)
+            {
+                ToggleDisplayPanel(mainMenuPanel, false);
+            }
+            else
+            {
+                ToggleDisplayPanel(mainMenuPanel, true);
+            }
+        });
+
+        returnToGameButton.onClick.AddListener(() =>
+        {
+            ToggleDisplayPanel(null, false);
+        });
+
+        exitGameButton.onClick.AddListener(() =>
+        {
+            Application.Quit();
+        });
 
         destroyButton.onClick.AddListener(() => {
             ResetButtonColor();
@@ -172,6 +206,7 @@ public class UIManager : MonoBehaviour {
             onGarbageCanBuildAction?.Invoke();
             ToggleDisplayPanel(null, false);
         });
+
         buildStructureButton.onClick.AddListener(() => {
             if (structurePanel.gameObject.activeSelf) {
                 ToggleDisplayPanel(structurePanel, false);
