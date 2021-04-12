@@ -25,6 +25,7 @@ public class InputManager : MonoBehaviour {
     /// Update.
     /// </summary>
     private void Update() {
+        InvokeButtonDownIfApplicable();
         InvokeMouseClickActionIfApplicable();
         InvokeMouseUpActionIfApplicable();
         InvokeMouseHoldActionIfApplicable();
@@ -45,6 +46,20 @@ public class InputManager : MonoBehaviour {
         }
 
         return null;
+    }
+
+    /// <summary>
+    /// Invoke keyboard key down action if applicable.
+    /// </summary>
+    private void InvokeButtonDownIfApplicable()
+    {
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            foreach(GameObject panel in uIManager.panels)
+            {
+                uIManager.ToggleDisplayPanel(panel, false);
+            }
+        }
     }
 
     /// <summary>
