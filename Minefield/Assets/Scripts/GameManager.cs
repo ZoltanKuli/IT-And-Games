@@ -382,7 +382,7 @@ public class GameManager : MonoBehaviour {
     /// Spawn npc.
     /// </summary>
     private void SpawnNPC() {
-        if ((newNPCsNotBeingAbleToEnterUntilTime <= DateTime.UtcNow 
+        if (npcs.Count == 0 || (newNPCsNotBeingAbleToEnterUntilTime <= DateTime.UtcNow 
             && minimumAverageNPCSatisfactionOfNPCsSpawn <= averageNPCSatisfaction 
             && npcs.Count < maximumNPCNumber
             && random.Next(npcSpawnChance) == 0)) {
