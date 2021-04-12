@@ -151,7 +151,8 @@ public class Structure : PopulatedField {
     /// Set if out of order.
     /// </summary>
     public void UpdateState() { 
-        if (!isOutOfOrder && breakingTime <= DateTime.UtcNow) {
+        if (!isOutOfOrder && breakingTime <= DateTime.UtcNow
+            && random.Next((int)((maximumNotBreakingSeconds - minimumNotBreakingSeconds) / 100f)) == 0) {
             isOutOfOrder = true;
             worldManager.AddOutOfOrderStructure(this);
         }
