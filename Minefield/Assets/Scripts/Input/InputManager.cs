@@ -1,6 +1,7 @@
 ﻿using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class InputManager : MonoBehaviour {
 
@@ -16,6 +17,9 @@ public class InputManager : MonoBehaviour {
     private Action<Vector3Int> onMouseClickAction;
     private Action<Vector3Int> onMouseHoldAction;
     private Action onMouseUpAction;
+
+    [SerializeField]
+    private UIManager uIManager;
 
     /// <summary>
     /// Update.
@@ -47,6 +51,12 @@ public class InputManager : MonoBehaviour {
     /// Invoke mouse click action if applicable.
     /// </summary>
     private void InvokeMouseClickActionIfApplicable() {
+        if (Input.GetMouseButtonDown(1))
+        {
+            uIManager.ResetButtonColor();
+            ResetMouseActions();
+        }
+
         if (Input.GetMouseButtonDown(0) && EventSystem.current.IsPointerOverGameObject() == false) {
             var position = RaycastGround();
             if (position != null)

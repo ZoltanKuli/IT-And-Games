@@ -101,8 +101,8 @@ public class UIManager : MonoBehaviour {
     [SerializeField]
     private Button garbagecanButton;
 
-    List<Button> buttons;
-    List<GameObject> panels;
+    public List<Button> buttons;
+    public List<GameObject> panels;
 
     private Action onBuildRoadAction;
     private Action onDestroyAction;
@@ -313,7 +313,7 @@ public class UIManager : MonoBehaviour {
     /// <summary>
     /// Reset button color.
     /// </summary>
-    private void ResetButtonColor() {
+    public void ResetButtonColor() {
         foreach (Button button in buttons) {
             button.GetComponent<Outline>().enabled = false;
         }
@@ -322,7 +322,7 @@ public class UIManager : MonoBehaviour {
     /// <summary>
     /// Show the correct panel when clicking one in the menu.
     /// </summary>
-    private void ToggleDisplayPanel(GameObject currentPanel, bool value) {
+    public void ToggleDisplayPanel(GameObject currentPanel, bool value) {
         foreach (GameObject panel in panels) {
             if (panel == currentPanel) {
                 currentPanel.gameObject.SetActive(value);
