@@ -28,6 +28,20 @@ public class GameManager : MonoBehaviour {
     private int entranceCost;
 
     [SerializeField]
+    private int maxNumberOfNPCSEnteringAtATimeMinimum;
+    [SerializeField]
+    private int maxNumberOfNPCSEnteringAtATimeMaximum;
+    private int maxNumberOfNPCSEnteringAtATime;
+    [SerializeField]
+    private int minimumSecondsBetweenNPCSNotEntering;
+    [SerializeField]
+    private int maximumSecondsBetweenNPCSNotEntering;
+    private DateTime newNPCsNotBeingAbleToEnterUntilTime;
+    private int npcsEnteredSinceLastNewNPCsNotBeingAbleToEnterUntilTime;
+    [SerializeField]
+    private int npcSpawnChance;
+
+    [SerializeField]
     private int cleanerStationCostPerGameCycle;
     [SerializeField]
     private int mechanicStationCostPerGameCycle;
@@ -155,6 +169,10 @@ public class GameManager : MonoBehaviour {
         nextCycleTime = DateTime.UtcNow.AddSeconds(secondsBetweenCycles);
 
         random = new System.Random();
+
+        maxNumberOfNPCSEnteringAtATime = random.Next(maxNumberOfNPCSEnteringAtATimeMinimum, maxNumberOfNPCSEnteringAtATimeMaximum);
+        newNPCsNotBeingAbleToEnterUntilTime = DateTime.UtcNow;
+        npcsEnteredSinceLastNewNPCsNotBeingAbleToEnterUntilTime = 0;
     }
 
     /// <summary>
@@ -364,7 +382,10 @@ public class GameManager : MonoBehaviour {
     /// Spawn npc.
     /// </summary>
     private void SpawnNPC() {
-        if (minimumAverageNPCSatisfactionOfNPCsSpawn <= averageNPCSatisfaction && npcs.Count < maximumNPCNumber) {
+        if ((newNPCsNotBeingAbleToEnterUntilTime <= DateTime.UtcNow 
+            && minimumAverageNPCSatisfactionOfNPCsSpawn <= averageNPCSatisfaction 
+            && npcs.Count < maximumNPCNumber
+            && random.Next(npcSpawnChance) == 0)) {
             npcs.Add(new NPC(stevePrefab, entrance.GetOrigoPosition(), worldManager, npcDistancePrecision,
             random.Next(npcDefaultSatisfactionMinimum, npcDefaultSatisfactionMaximum),
             random.Next(npcMinimumSatisfactionOfStayingMinimum, npcMinimumSatisfactionOfStayingMaximum),
@@ -384,6 +405,15 @@ public class GameManager : MonoBehaviour {
             random.Next(garbageDecreaseDissatisfactionAmountMinimum, garbageDecreaseDissatisfactionAmountMaximum)));
 
             IncreaseOrDecreasePlayersBalance(entranceCost);
+
+            npcsEnteredSinceLastNewNPCsNotBeingAbleToEnterUntilTime++;
+
+            if (maxNumberOfNPCSEnteringAtATime <= npcsEnteredSinceLastNewNPCsNotBeingAbleToEnterUntilTime) {
+                maxNumberOfNPCSEnteringAtATime = random.Next(maxNumberOfNPCSEnteringAtATimeMinimum, maxNumberOfNPCSEnteringAtATimeMaximum);
+                newNPCsNotBeingAbleToEnterUntilTime = DateTime.UtcNow.AddSeconds(random.Next(minimumSecondsBetweenNPCSNotEntering, 
+                    maximumSecondsBetweenNPCSNotEntering));
+                npcsEnteredSinceLastNewNPCsNotBeingAbleToEnterUntilTime = 0;
+            }
         }
     }
 
