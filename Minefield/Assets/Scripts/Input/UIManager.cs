@@ -408,7 +408,7 @@ public class UIManager : MonoBehaviour {
     /// </summary>
     /// <param name="value"></param>
     public void UpdateFoodSlider(float value) {
-        foodSlider.value = value;
+        foodSlider.value = 100f - value;
     }
 
     /// <summary>
@@ -416,7 +416,7 @@ public class UIManager : MonoBehaviour {
     /// </summary>
     /// <param name="value"></param>
     public void UpdateThirstSlider(float value) {
-        thirstSlider.value = value;
+        thirstSlider.value = 100f - value;
     }
 
     /// <summary>
