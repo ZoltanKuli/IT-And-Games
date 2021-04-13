@@ -51,10 +51,8 @@ public class InputManager : MonoBehaviour {
     /// <summary>
     /// Invoke keyboard key down action if applicable.
     /// </summary>
-    private void InvokeButtonDownIfApplicable()
-    {
-        if(Input.GetKeyDown(KeyCode.Escape))
-        {
+    private void InvokeButtonDownIfApplicable() {
+        if (Input.GetKeyDown(KeyCode.Escape)) {
             uIManager.ToggleDisplayPanel(null, false);
         }
     }
@@ -63,8 +61,7 @@ public class InputManager : MonoBehaviour {
     /// Invoke mouse click action if applicable.
     /// </summary>
     private void InvokeMouseClickActionIfApplicable() {
-        if (Input.GetMouseButtonDown(1))
-        {
+        if (Input.GetMouseButtonDown(1)) {
             uIManager.ResetButtonColor();
             ResetMouseActions();
         }
@@ -162,7 +159,7 @@ public class InputManager : MonoBehaviour {
     public Vector3 GetCameraZoomDirection() {
         return cameraZoomDirection;
     }
-      
+
     /// <summary>
     /// Get camera rotation direction.
     /// </summary>

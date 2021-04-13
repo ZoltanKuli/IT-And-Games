@@ -122,6 +122,21 @@ public class UIManager : MonoBehaviour {
     [SerializeField]
     private Button mechanicStationButton;
 
+    [SerializeField]
+    private Text playerMoneyText;
+
+    [SerializeField]
+    private Text visitorCountText;
+
+    [SerializeField]
+    private Slider thirstSlider;
+
+    [SerializeField]
+    private Slider foodSlider;
+
+    [SerializeField]
+    private Slider statisfactionSlider;
+
     public List<Button> buttons;
     public List<GameObject> panels;
 
@@ -157,31 +172,26 @@ public class UIManager : MonoBehaviour {
         buttons = new List<Button> { buildMenuButton, destroyButton };
         panels = new List<GameObject> { roadandgarbagecanPanel, buildMenuPanel, structurePanel, barSelectorPanel, restaurantSelectorPanel, attractionSelectorPanel, parkSelectorPanel, crewStationsPanel, mainMenuPanel };
 
-        mainMenuButton.onClick.AddListener(() =>
-        {
-            if (mainMenuPanel.gameObject.activeSelf)
-            {
+        mainMenuButton.onClick.AddListener(() => {
+            if (mainMenuPanel.gameObject.activeSelf) {
                 ToggleDisplayPanel(mainMenuPanel, false);
-            }
-            else
-            {
+            } else {
                 ToggleDisplayPanel(mainMenuPanel, true);
             }
         });
 
-        returnToGameButton.onClick.AddListener(() =>
-        {
+        returnToGameButton.onClick.AddListener(() => {
             ToggleDisplayPanel(null, false);
         });
 
-        exitGameButton.onClick.AddListener(() =>
-        {
+        exitGameButton.onClick.AddListener(() => {
             Application.Quit();
         });
 
         destroyButton.onClick.AddListener(() => {
             ResetButtonColor();
             ModifyButtonOutline(destroyButton);
+            ToggleDisplayPanel(null, false);
             onDestroyAction?.Invoke();
         });
 
@@ -247,13 +257,10 @@ public class UIManager : MonoBehaviour {
             }
         });
 
-        crewstationSelectionButton.onClick.AddListener(() =>
-        {
-            if(crewStationsPanel.gameObject.activeSelf)
-            {
+        crewstationSelectionButton.onClick.AddListener(() => {
+            if (crewStationsPanel.gameObject.activeSelf) {
                 ToggleDisplayPanel(crewStationsPanel, false);
-            } else
-            {
+            } else {
                 ToggleDisplayPanel(crewStationsPanel, true);
             }
         });
@@ -371,7 +378,47 @@ public class UIManager : MonoBehaviour {
             ToggleDisplayPanel(null, false);
         });
     }
-      
+
+    /// <summary>
+    /// Updates the Player Money Text to the given value
+    /// </summary>
+    /// <param name="value"></param>
+    public void UpdatePlayerMoneyText(int value) {
+        playerMoneyText.text = "$" + value;
+    }
+
+    /// <summary>
+    /// Updates the Visitor Count Text to the given value
+    /// </summary>
+    /// <param name="value"></param>
+    public void UpdateVisitorCountText(int value) {
+        visitorCountText.text = value.ToString();
+    }
+
+    /// <summary>
+    /// Updating the Statisfaction Slided to the given value
+    /// </summary>
+    /// <param name="value"></param>
+    public void UpdateStatisfactionSlider(float value) {
+        statisfactionSlider.value = value;
+    }
+
+    /// <summary>
+    /// Updates the Food Slided to the given value
+    /// </summary>
+    /// <param name="value"></param>
+    public void UpdateFoodSlider(float value) {
+        foodSlider.value = value;
+    }
+
+    /// <summary>
+    /// Updates the Thirst Slider to the given value
+    /// </summary>
+    /// <param name="value"></param>
+    public void UpdateThirstSlider(float value) {
+        thirstSlider.value = value;
+    }
+
     /// <summary>
     /// Modify button outline.
     /// </summary>
@@ -380,7 +427,7 @@ public class UIManager : MonoBehaviour {
         outline.effectColor = buttonOutlineColor;
         outline.enabled = true;
     }
-        
+
     /// <summary>
     /// Reset button color.
     /// </summary>
@@ -402,105 +449,105 @@ public class UIManager : MonoBehaviour {
             }
         }
     }
-    
+
     /// <summary>
     /// Assign method to on build road action.
     /// </summary>
     public void AssignMethodToOnBuildRoadAction(Action action) {
         onBuildRoadAction += action;
     }
-       
+
     /// <summary>
     /// Assign method to on destroy action.
     /// </summary>
     public void AssignMethodToOnDestroyAction(Action action) {
         onDestroyAction += action;
     }
-          
+
     /// <summary>
     /// Assing method to on cafe build action.
     /// </summary>
     public void AssingMethodToOnCafeBuildAction(Action action) {
         onCafeBuildAction += action;
     }
-             
+
     /// <summary>
     /// Assing method to on CafeRestaurant build action.
     /// </summary>
     public void AssingMethodToOnCafeRestaurantBuildAction(Action action) {
         onCafeRestaurantBuildAction += action;
     }
-                
+
     /// <summary>
     /// Assing method to on HotdogCar build action.
     /// </summary>
     public void AssingMethodToOnHotdogCarBuildAction(Action action) {
         onHotdogCarBuildAction += action;
     }
-                   
+
     /// <summary>
     /// Assing method to on KfcRestaurant build action.
     /// </summary>
     public void AssingMethodToOnKfcRestaurantBuildAction(Action action) {
         onKfcRestaurantBuildAction += action;
     }
-                      
+
     /// <summary>
     /// Assing method to on OlivegardenRestaurant build action.
     /// </summary>
     public void AssingMethodToOnOlivegardenRestaurantBuildAction(Action action) {
         onOlivegardensRestaurantBuildAction += action;
     }
-                         
+
     /// <summary>
     /// Assing method to on TaverneRestaurant build action.
     /// </summary>
     public void AssingMethodToOnTaverneRestaurantBuildAction(Action action) {
         onTaverneRestaurantBuildAction += action;
     }
-                            
+
     /// <summary>
     /// Assing method to on CircusTent build action.
     /// </summary>
     public void AssingMethodToOnCircusTentBuildAction(Action action) {
         onCircusTentBuildAction += action;
     }
-                               
+
     /// <summary>
     /// Assing method to on LondonEye build action.
     /// </summary>
     public void AssingMethodToOnLondonEyeBuildAction(Action action) {
         onLondonEyeBuildAction += action;
     }
-                                  
+
     /// <summary>
     /// Assing method to on MerryGoRound build action.
     /// </summary>
     public void AssingMethodToOnMerryGoRoundBuildAction(Action action) {
         onMerryGoRoundBuildAction += action;
     }
-                                     
+
     /// <summary>
     /// Assing method to on RollerCoaster build action.
     /// </summary>
     public void AssingMethodToOnRollerCoasterBuildAction(Action action) {
         onRollerCoasterBuildAction += action;
     }
-                                        
+
     /// <summary>
     /// Assing method to on ParkBasic build action.
     /// </summary>
     public void AssingMethodToOnParkBasicBuildAction(Action action) {
         onParkBasicBuildAction += action;
     }
-                                            
+
     /// <summary>
     /// Assing method to on ParkFountain build action.
     /// </summary>
     public void AssingMethodToOnParkFountainBuildAction(Action action) {
         onParkFountainBuildAction += action;
     }
-                                               
+
     /// <summary>
     /// Assing method to on ParkHelicopter build action.
     /// </summary>
@@ -518,16 +565,14 @@ public class UIManager : MonoBehaviour {
     /// <summary>
     /// Assing method to on Cleaner Station build action.
     /// </summary>
-    public void AssingMethodToCleanerStationBuildAction(Action action)
-    {
+    public void AssingMethodToCleanerStationBuildAction(Action action) {
         onCleanerStationBuildAction += action;
     }
 
     /// <summary>
     /// Assing method to on Mechanic Station build action.
     /// </summary>
-    public void AssingMethodToMechanicStationBuildAction(Action action)
-    {
+    public void AssingMethodToMechanicStationBuildAction(Action action) {
         onMechanicStationBuildAction += action;
     }
 }

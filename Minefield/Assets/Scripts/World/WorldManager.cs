@@ -561,7 +561,7 @@ public class WorldManager : MonoBehaviour {
     public void BuildNewCleanerStation(Vector3Int origoPosition) {
         if (CanAreaBePopulatedWithStructure(origoPosition, 1, 1)) {
             CleanerStation cleanerStation = new CleanerStation(cleanerStationPrefab,
-                origoPosition, cleanerStationPositionOffset, cleanerStationYRotation, 
+                origoPosition, cleanerStationPositionOffset, cleanerStationYRotation,
                 this, cleanerPrefab, cleanerSpeed, cleanerSecondsUntilActionIsFinished,
                 distancePrecision, cleanerRotationSpeedMultiplier,
                 cleanerMaximumTravelDistance);
@@ -578,7 +578,7 @@ public class WorldManager : MonoBehaviour {
     public void BuildNewMechanicStation(Vector3Int origoPosition) {
         if (CanAreaBePopulatedWithStructure(origoPosition, 1, 1)) {
             MechanicStation mechanicStation = new MechanicStation(mechanicStationPrefab,
-                origoPosition, mechanicStationPositionOffset, mechanicStationYRotation, 
+                origoPosition, mechanicStationPositionOffset, mechanicStationYRotation,
                 this, mechanicPrefab, mechanicSpeed, mechanicSecondsUntilActionIsFinished,
                 distancePrecision, mechanicRotationSpeedMultiplier,
                 mechanicMaximumTravelDistance);
@@ -835,8 +835,8 @@ public class WorldManager : MonoBehaviour {
             Restaurant hotdogCar = new Restaurant(hotdogCarPrefab, origoPosition, hotdogCarPrefabPositionOffset,
                 hotdogCarPrefabYRotation, hotdogCarPrefabAreaWidth, hotdogCarPrefabAreaLength,
                 hotdogCarMoneyOwedIncreaseAmount, hotdogCarSatisfactionIncreaseAmount,
-                hotdogCarSecondsBetweenActions, hotdogCarDecreaseHungerAmount, 
-                hotdogCarMaxQueueLength, this, hotdogCarMinimumNotBreakingSeconds, 
+                hotdogCarSecondsBetweenActions, hotdogCarDecreaseHungerAmount,
+                hotdogCarMaxQueueLength, this, hotdogCarMinimumNotBreakingSeconds,
                 hotdogCarMaximumNotBreakingSeconds, hotdogCarSatisfactionDecreaseAmount);
 
             BuildNewStructure(hotdogCar, origoPosition, hotdogCarPrefabAreaWidth, hotdogCarPrefabAreaLength);
@@ -856,8 +856,8 @@ public class WorldManager : MonoBehaviour {
             Restaurant kfc = new Restaurant(kfcPrefab, origoPosition, kfcPositionOffset,
                 kfcYRotation, kfcAreaWidth, kfcAreaLength,
                 kfcMoneyOwedIncreaseAmount, kfcSatisfactionIncreaseAmount,
-                kfcSecondsBetweenActions, kfcDecreaseHungerAmount, 
-                kfcMaxQueueLength, this, kfcMinimumNotBreakingSeconds, 
+                kfcSecondsBetweenActions, kfcDecreaseHungerAmount,
+                kfcMaxQueueLength, this, kfcMinimumNotBreakingSeconds,
                 kfcMaximumNotBreakingSeconds, kfcSatisfactionDecreaseAmount);
 
             BuildNewStructure(kfc, origoPosition, kfcAreaWidth, kfcAreaLength);
@@ -877,8 +877,8 @@ public class WorldManager : MonoBehaviour {
             Restaurant olivegardensRestaurant = new Restaurant(olivegardensRestaurantPrefab, origoPosition, olivegardensRestaurantPositionOffset,
                 olivegardensRestaurantYRotation, olivegardensRestaurantAreaWidth, olivegardensRestaurantAreaLength,
                 olivegardensRestaurantMoneyOwedIncreaseAmount, olivegardensRestaurantSatisfactionIncreaseAmount,
-                olivegardensRestaurantSecondsBetweenActions, olivegardensRestaurantDecreaseHungerAmount, 
-                olivegardensRestaurantMaxQueueLength, this, olivegardensRestaurantMinimumNotBreakingSeconds, 
+                olivegardensRestaurantSecondsBetweenActions, olivegardensRestaurantDecreaseHungerAmount,
+                olivegardensRestaurantMaxQueueLength, this, olivegardensRestaurantMinimumNotBreakingSeconds,
                 olivegardensRestaurantMaximumNotBreakingSeconds, olivegardensRestaurantSatisfactionDecreaseAmount);
 
             BuildNewStructure(olivegardensRestaurant, origoPosition, olivegardensRestaurantAreaWidth, olivegardensRestaurantAreaLength);
@@ -898,8 +898,8 @@ public class WorldManager : MonoBehaviour {
             Restaurant taverneRestaurant = new Restaurant(taverneRestaurantPrefab, origoPosition, taverneRestaurantPositionOffset,
                 taverneRestaurantYRotation, taverneRestaurantAreaWidth, taverneRestaurantAreaLength,
                 taverneRestaurantMoneyOwedIncreaseAmount, taverneRestaurantSatisfactionIncreaseAmount,
-                taverneRestaurantSecondsBetweenActions, taverneRestaurantDecreaseHungerAmount, 
-                taverneRestaurantMaxQueueLength, this, taverneRestaurantMinimumNotBreakingSeconds, 
+                taverneRestaurantSecondsBetweenActions, taverneRestaurantDecreaseHungerAmount,
+                taverneRestaurantMaxQueueLength, this, taverneRestaurantMinimumNotBreakingSeconds,
                 taverneRestaurantMaximumNotBreakingSeconds, taverneRestaurantSatisfactionDecreaseAmount);
 
             BuildNewStructure(taverneRestaurant, origoPosition, taverneRestaurantAreaWidth, taverneRestaurantAreaLength);
@@ -919,8 +919,8 @@ public class WorldManager : MonoBehaviour {
             Bar cafeRestaurant = new Bar(cafeRestaurantPrefab, origoPosition, cafeRestaurantPositionOffset,
                 cafeRestaurantYRotation, cafeRestaurantAreaWidth, cafeRestaurantAreaLength,
                 cafeRestaurantMoneyOwedIncreaseAmount, cafeRestaurantSatisfactionIncreaseAmount,
-                cafeRestaurantSecondsBetweenActions, cafeRestaurantDecreaseThirstAmount, 
-                cafeRestaurantMaxQueueLength, this, cafeRestaurantMinimumNotBreakingSeconds, 
+                cafeRestaurantSecondsBetweenActions, cafeRestaurantDecreaseThirstAmount,
+                cafeRestaurantMaxQueueLength, this, cafeRestaurantMinimumNotBreakingSeconds,
                 cafeRestaurantMaximumNotBreakingSeconds, cafeRestaurantSatisfactionDecreaseAmount);
 
             BuildNewStructure(cafeRestaurant, origoPosition, cafeRestaurantAreaWidth, cafeRestaurantAreaLength);
@@ -939,8 +939,8 @@ public class WorldManager : MonoBehaviour {
             && CanAreaBePopulatedWithStructure(origoPosition, cafeAreaWidth, cafeAreaLength)) {
             Bar cafe = new Bar(cafePrefab, origoPosition, cafePositionOffset,
                 cafeYRotation, cafeAreaWidth, cafeAreaLength,
-                cafeMoneyOwedIncreaseAmount, cafeSatisfactionIncreaseAmount, 
-                cafeSecondsBetweenActions, cafeDecreaseThirstAmount, 
+                cafeMoneyOwedIncreaseAmount, cafeSatisfactionIncreaseAmount,
+                cafeSecondsBetweenActions, cafeDecreaseThirstAmount,
                 cafeMaxQueueLength, this, cafeMinimumNotBreakingSeconds, cafeMaximumNotBreakingSeconds,
                 cafeSatisfactionDecreaseAmount);
 
@@ -961,7 +961,7 @@ public class WorldManager : MonoBehaviour {
             Attraction londonEye = new Attraction(londonEyePrefab, origoPosition, londonEyePositionOffset,
                 londonEyeYRotation, londonEyeAreaWidth, londonEyeAreaLength,
                 londonEyeMoneyOwedIncreaseAmount, londonEyeSatisfactionIncreaseAmount,
-                londonEyeSecondsBetweenActions, londonEyeMaxQueueLength, this, 
+                londonEyeSecondsBetweenActions, londonEyeMaxQueueLength, this,
                 londonEyeMinimumNotBreakingSeconds, londonEyeMaximumNotBreakingSeconds,
                 londonEyeSatisfactionDecreaseAmount);
 
@@ -982,7 +982,7 @@ public class WorldManager : MonoBehaviour {
             Attraction merryGoRound = new Attraction(merryGoRoundPrefab, origoPosition, merryGoRoundPositionOffset,
                 merryGoRoundYRotation, merryGoRoundAreaWidth, merryGoRoundAreaLength,
                 merryGoRoundMoneyOwedIncreaseAmount, merryGoRoundSatisfactionIncreaseAmount,
-                merryGoRoundSecondsBetweenActions, merryGoRoundMaxQueueLength, this, 
+                merryGoRoundSecondsBetweenActions, merryGoRoundMaxQueueLength, this,
                 merryGoRoundMinimumNotBreakingSeconds, merryGoRoundMaximumNotBreakingSeconds,
                 merryGoRoundSatisfactionDecreaseAmount);
 
@@ -1003,7 +1003,7 @@ public class WorldManager : MonoBehaviour {
             Attraction rollerCoaster = new Attraction(rollerCoasterPrefab, origoPosition, rollerCoasterPositionOffset,
                 rollerCoasterYRotation, rollerCoasterAreaWidth, rollerCoasterAreaLength,
                 rollerCoasterMoneyOwedIncreaseAmount, rollerCoasterSatisfactionIncreaseAmount,
-                rollerCoasterSecondsBetweenActions, rollerCoasterMaxQueueLength, this, 
+                rollerCoasterSecondsBetweenActions, rollerCoasterMaxQueueLength, this,
                 rollerCoasterMinimumNotBreakingSeconds, rollerCoasterMaximumNotBreakingSeconds,
                 rollerCoasterSatisfactionDecreaseAmount);
 
@@ -1024,8 +1024,8 @@ public class WorldManager : MonoBehaviour {
             Attraction circusTent = new Attraction(circusTentPrefab, origoPosition, circusTentPositionOffset,
                 circusTentYRotation, circusTentAreaWidth, circusTentAreaLength,
                 circusTentMoneyOwedIncreaseAmount, circusTentSatisfactionIncreaseAmount,
-                circusTentSecondsBetweenActions, circusTentMaxQueueLength, this, 
-                circusTentMinimumNotBreakingSeconds, circusTentMaximumNotBreakingSeconds, 
+                circusTentSecondsBetweenActions, circusTentMaxQueueLength, this,
+                circusTentMinimumNotBreakingSeconds, circusTentMaximumNotBreakingSeconds,
                 circusTentSatisfactionDecreaseAmount);
 
             BuildNewStructure(circusTent, origoPosition, circusTentAreaWidth, circusTentAreaLength);
@@ -1044,7 +1044,7 @@ public class WorldManager : MonoBehaviour {
             && CanAreaBePopulatedWithStructure(origoPosition, basicParkAreaWidth, basicParkAreaLength)) {
             Park basicPark = new Park(basicParkPrefab, origoPosition, basicParkPositionOffset,
                 basicParkYRotation, basicParkAreaWidth, basicParkAreaLength,
-                basicParkSatisfactionIncreaseAmount, basicParkSecondsBetweenActions, this, 
+                basicParkSatisfactionIncreaseAmount, basicParkSecondsBetweenActions, this,
                 basicParkMinimumNotBreakingSeconds, basicParkMaximumNotBreakingSeconds);
 
             BuildNewStructure(basicPark, origoPosition, basicParkAreaWidth, basicParkAreaLength);
@@ -1063,7 +1063,7 @@ public class WorldManager : MonoBehaviour {
             && CanAreaBePopulatedWithStructure(origoPosition, fountainParkAreaWidth, fountainParkAreaLength)) {
             Park fountainPark = new Park(fountainParkPrefab, origoPosition, fountainParkPositionOffset,
                 fountainParkYRotation, fountainParkAreaWidth, fountainParkAreaLength,
-                fountainParkSatisfactionIncreaseAmount, fountainParkSecondsBetweenActions, this, 
+                fountainParkSatisfactionIncreaseAmount, fountainParkSecondsBetweenActions, this,
                 fountainParkMinimumNotBreakingSeconds, fountainParkMaximumNotBreakingSeconds);
 
             BuildNewStructure(fountainPark, origoPosition, fountainParkAreaWidth, fountainParkAreaLength);
@@ -1082,7 +1082,7 @@ public class WorldManager : MonoBehaviour {
             && CanAreaBePopulatedWithStructure(origoPosition, helicopterParkAreaWidth, helicopterParkAreaLength)) {
             Park helicopterPark = new Park(helicopterParkPrefab, origoPosition, helicopterParkPositionOffset,
                 helicopterParkYRotation, helicopterParkAreaWidth, helicopterParkAreaLength,
-                helicopterParkSatisfactionIncreaseAmount, helicopterParkSecondsBetweenActions, this, 
+                helicopterParkSatisfactionIncreaseAmount, helicopterParkSecondsBetweenActions, this,
                 helicopterParkMinimumNotBreakingSeconds, helicopterParkMaximumNotBreakingSeconds);
 
             BuildNewStructure(helicopterPark, origoPosition, helicopterParkAreaWidth, helicopterParkAreaLength);

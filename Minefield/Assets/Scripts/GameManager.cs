@@ -126,9 +126,6 @@ public class GameManager : MonoBehaviour {
     [SerializeField]
     private int garbageDecreaseDissatisfactionAmountMaximum;
 
-    [SerializeField]
-    private Text playerMoneyText;
-
     private System.Random random;
 
     /// <summary>
@@ -290,16 +287,14 @@ public class GameManager : MonoBehaviour {
     /// <summary>
     /// Reset the Mouse click to the BuildNewCleanerStation Action.
     /// </summary>
-    private void BuildNewCleanerStation()
-    {
+    private void BuildNewCleanerStation() {
         ResetMouseActionsAndAssignMethodToOnMouseClickAction(worldManager.BuildNewCleanerStation);
     }
 
     /// <summary>
     /// Reset the Mouse click to the BuildNewMechanicStation Action.
     /// </summary>
-    private void BuildNewMechanicStation()
-    {
+    private void BuildNewMechanicStation() {
         ResetMouseActionsAndAssignMethodToOnMouseClickAction(worldManager.BuildNewMechanicStation);
     }
 
@@ -337,19 +332,19 @@ public class GameManager : MonoBehaviour {
         worldManager.UpdateCleanersAndMechanics();
         WithdrawCrewPayementsFromPlayersBalance();
 
-        UpdateStatisticsPanels();
+        uIManager.UpdatePlayerMoneyText(GetPlayersBalance());
+        uIManager.UpdateVisitorCountText(npcs.Count);
+        uIManager.UpdateStatisfactionSlider(averageNPCSatisfaction);
+        uIManager.UpdateFoodSlider(averageNPCHunger);
+        uIManager.UpdateThirstSlider(averageNPCThirst);
+
         Debug.Log("NPC Number:" + npcs.Count
             + "; Player's Balance: " + playersBalance
             + "; Average Satisfaction: " + averageNPCSatisfaction
-            + "; Average Thirst: " + averageNPCThirst 
+            + "; Average Thirst: " + averageNPCThirst
             + "; Average Hunger: " + averageNPCHunger);
 
         RestartGameIfPlayersBalanceGoesInTheRedUnderTheMinimumBalanceAmount();
-    }
-
-    private void UpdateStatisticsPanels()
-    {
-        playerMoneyText.text = "$" + GetPlayersBalance();
     }
 
     /// <summary>
@@ -411,8 +406,8 @@ public class GameManager : MonoBehaviour {
     /// Spawn npc.
     /// </summary>
     private void SpawnNPC() {
-        if (npcs.Count == 0 || (newNPCsNotBeingAbleToEnterUntilTime <= DateTime.UtcNow 
-            && minimumAverageNPCSatisfactionOfNPCsSpawn <= averageNPCSatisfaction 
+        if (npcs.Count == 0 || (newNPCsNotBeingAbleToEnterUntilTime <= DateTime.UtcNow
+            && minimumAverageNPCSatisfactionOfNPCsSpawn <= averageNPCSatisfaction
             && npcs.Count < maximumNPCNumber
             && random.Next(npcSpawnChance) == 0)) {
             npcs.Add(new NPC(stevePrefab, entrance.GetOrigoPosition(), worldManager, npcDistancePrecision,
@@ -421,7 +416,7 @@ public class GameManager : MonoBehaviour {
             random.Next(npcDefaultThirstMinimum, npcDefaultThirstMaximum),
             random.Next(npcMaximumThirstOfNotNeedingToDrinkMinimum, npcMaximumThirstOfNotNeedingToDrinkMaximum),
             random.Next(npcDefaultHungerMinimum, npcDefaultHungerMaximum),
-            random.Next(npcMaximumHungerOfNotNeedingToEatMinimum, npcMaximumHungerOfNotNeedingToEatMaximum), 
+            random.Next(npcMaximumHungerOfNotNeedingToEatMinimum, npcMaximumHungerOfNotNeedingToEatMaximum),
             npcMinimumSpeed, npcMaximumSpeed, npcRotationSpeedMultiplier,
             random.Next(secondsUntilThirstGrowthMinimum, secondsUntilThirstGrowthMaximum),
             random.Next(thirstGrowthAmountMinimum, thirstGrowthAmountMaximum),
@@ -439,7 +434,7 @@ public class GameManager : MonoBehaviour {
 
             if (maxNumberOfNPCSEnteringAtATime <= npcsEnteredSinceLastNewNPCsNotBeingAbleToEnterUntilTime) {
                 maxNumberOfNPCSEnteringAtATime = random.Next(maxNumberOfNPCSEnteringAtATimeMinimum, maxNumberOfNPCSEnteringAtATimeMaximum);
-                newNPCsNotBeingAbleToEnterUntilTime = DateTime.UtcNow.AddSeconds(random.Next(minimumSecondsBetweenNPCSNotEntering, 
+                newNPCsNotBeingAbleToEnterUntilTime = DateTime.UtcNow.AddSeconds(random.Next(minimumSecondsBetweenNPCSNotEntering,
                     maximumSecondsBetweenNPCSNotEntering));
                 npcsEnteredSinceLastNewNPCsNotBeingAbleToEnterUntilTime = 0;
             }
@@ -490,7 +485,7 @@ public class GameManager : MonoBehaviour {
     /// <summary>
     /// Restart game if players balance goes in the red under the minimum balance amount.
     /// </summary>
-    private void RestartGameIfPlayersBalanceGoesInTheRedUnderTheMinimumBalanceAmount() { 
+    private void RestartGameIfPlayersBalanceGoesInTheRedUnderTheMinimumBalanceAmount() {
         if (playersBalance < minimumPlayersBalance) {
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
