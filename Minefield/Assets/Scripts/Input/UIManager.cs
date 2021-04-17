@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour {
@@ -24,10 +25,19 @@ public class UIManager : MonoBehaviour {
     private GameObject mainMenuPanel;
 
     [SerializeField]
+    private GameObject extrasPanel;
+
+    [SerializeField]
     private Button returnToGameButton;
 
     [SerializeField]
     private Button exitGameButton;
+    
+    [SerializeField]
+    private Button newGameButton;
+
+    [SerializeField]
+    private Button extrasButton;
 
     [SerializeField]
     private GameObject structurePanel;
@@ -164,20 +174,28 @@ public class UIManager : MonoBehaviour {
 
     private Action onCleanerStationBuildAction;
     private Action onMechanicStationBuildAction;
-
+    
     /// <summary>
     /// Connect the menu buttons with the pairing building method.
     /// </summary>
     private void Start() {
+       
         buttons = new List<Button> { buildMenuButton, destroyButton };
-        panels = new List<GameObject> { roadandgarbagecanPanel, buildMenuPanel, structurePanel, barSelectorPanel, restaurantSelectorPanel, attractionSelectorPanel, parkSelectorPanel, crewStationsPanel, mainMenuPanel };
-
+        panels = new List<GameObject> { extrasPanel, roadandgarbagecanPanel, buildMenuPanel, structurePanel, barSelectorPanel, restaurantSelectorPanel, attractionSelectorPanel, parkSelectorPanel, crewStationsPanel, mainMenuPanel };
+        
         mainMenuButton.onClick.AddListener(() => {
             if (mainMenuPanel.gameObject.activeSelf) {
                 ToggleDisplayPanel(mainMenuPanel, false);
             } else {
                 ToggleDisplayPanel(mainMenuPanel, true);
             }
+        });
+
+        newGameButton.onClick.AddListener(() => {
+            
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            ToggleDisplayPanel(null, false);
+           
         });
 
         returnToGameButton.onClick.AddListener(() => {
@@ -193,6 +211,14 @@ public class UIManager : MonoBehaviour {
             ModifyButtonOutline(destroyButton);
             ToggleDisplayPanel(null, false);
             onDestroyAction?.Invoke();
+        });
+        
+         extrasButton.onClick.AddListener(() => {
+            if (extrasPanel.gameObject.activeSelf) {
+                ToggleDisplayPanel(extrasPanel, false);
+            } else {
+                ToggleDisplayPanel(extrasPanel, true);
+            }
         });
 
         buildMenuButton.onClick.AddListener(() => {
@@ -575,4 +601,5 @@ public class UIManager : MonoBehaviour {
     public void AssingMethodToMechanicStationBuildAction(Action action) {
         onMechanicStationBuildAction += action;
     }
+    
 }
