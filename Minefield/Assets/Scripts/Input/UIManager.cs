@@ -23,9 +23,21 @@ public class UIManager : MonoBehaviour {
 
     [SerializeField]
     private GameObject mainMenuPanel;
+    
+    [SerializeField]
+    private GameObject gameOverPanel;
 
     [SerializeField]
     private GameObject extrasPanel;
+
+    [SerializeField]
+    private Button gameOverReturnToGameButton;
+
+    [SerializeField]
+    private Button gameOverExitGameButton;
+
+    [SerializeField]
+    private Button gameOverNewGameButton;
 
     [SerializeField]
     private Button returnToGameButton;
@@ -187,7 +199,7 @@ public class UIManager : MonoBehaviour {
     private void Start() {
        
         buttons = new List<Button> { buildMenuButton, destroyButton };
-        panels = new List<GameObject> { extrasPanel, roadandgarbagecanPanel, buildMenuPanel, structurePanel, barSelectorPanel, restaurantSelectorPanel, attractionSelectorPanel, parkSelectorPanel, crewStationsPanel, mainMenuPanel };
+        panels = new List<GameObject> { gameOverPanel, extrasPanel, roadandgarbagecanPanel, buildMenuPanel, structurePanel, barSelectorPanel, restaurantSelectorPanel, attractionSelectorPanel, parkSelectorPanel, crewStationsPanel, mainMenuPanel };
         
         mainMenuButton.onClick.AddListener(() => {
             if (mainMenuPanel.gameObject.activeSelf) {
@@ -197,18 +209,29 @@ public class UIManager : MonoBehaviour {
             }
         });
 
-        newGameButton.onClick.AddListener(() => {
-            
+        newGameButton.onClick.AddListener(() => {           
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            ToggleDisplayPanel(null, false);    
+        });
+
+        gameOverNewGameButton.onClick.AddListener(() => {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
             ToggleDisplayPanel(null, false);
-           
         });
 
         returnToGameButton.onClick.AddListener(() => {
             ToggleDisplayPanel(null, false);
         });
 
+        gameOverReturnToGameButton.onClick.AddListener(() => {
+            ToggleDisplayPanel(null, false);
+        });
+
         exitGameButton.onClick.AddListener(() => {
+            Application.Quit();
+        });
+
+        gameOverExitGameButton.onClick.AddListener(() => {
             Application.Quit();
         });
 
@@ -640,4 +663,12 @@ public class UIManager : MonoBehaviour {
     public void ChangeCursorToBuild() {
         Cursor.SetCursor(cursorBuildTexture, Vector2.zero, CursorMode.Auto);
     }
+
+    /// <summary>
+    /// Open Game Over Panel When Losing.
+    /// </summary>
+    public void OpenGameOverPanelWhenLosing() {
+        ToggleDisplayPanel(gameOverPanel, true);
+    }
+
 }

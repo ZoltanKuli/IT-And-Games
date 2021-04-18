@@ -132,6 +132,7 @@ public class GameManager : MonoBehaviour {
     /// Fill up the menus with their actions.
     /// </summary>
     private void Start() {
+        Time.timeScale = 1;
         uIManager.AssignMethodToOnBuildRoadAction(BuildNewRoad);
         uIManager.AssignMethodToOnDestroyAction(Destroy);
 
@@ -487,7 +488,10 @@ public class GameManager : MonoBehaviour {
     /// </summary>
     private void RestartGameIfPlayersBalanceGoesInTheRedUnderTheMinimumBalanceAmount() {
         if (playersBalance < minimumPlayersBalance) {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            Time.timeScale = 0;
+            Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
+            inputManager.ResetMouseActions();
+            uIManager.OpenGameOverPanelWhenLosing();                   
         }
     }
 }
