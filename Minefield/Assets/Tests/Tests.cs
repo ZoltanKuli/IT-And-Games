@@ -13,6 +13,18 @@ namespace Tests {
         }
 
         [UnityTest]
+        public IEnumerator PlayersBalanceShouldChangeAfterBuildingRoad() {
+            WorldManager worldManager = GetWorldManager();
+            GameManager gameManager = GetGameManager();
+            int currentPlayersBalance = gameManager.GetPlayersBalance();
+            worldManager.BuildNewRoad(Vector3Int.zero);
+
+            Assert.AreEqual(currentPlayersBalance - 1, gameManager.GetPlayersBalance());
+
+            yield return null;
+        }
+
+        [UnityTest]
         public IEnumerator ShouldBuildRoadOnEmptyField() {
             WorldManager worldManager = GetWorldManager();
 
@@ -378,12 +390,18 @@ namespace Tests {
             Assert.IsTrue(worldManager.GetFieldAtPosition(new Vector3Int(1, 0, 0)) is EmptyField);
 
             yield return null;
-        }
+        }        
 
         private WorldManager GetWorldManager() { 
             return (WorldManager)SceneManager.GetSceneAt(0)
                 .GetRootGameObjects()[5].gameObject
                 .GetComponent(typeof(WorldManager));
+        }
+
+        private GameManager GetGameManager() {
+            return (GameManager)SceneManager.GetSceneAt(0)
+                .GetRootGameObjects()[4].gameObject
+                .GetComponent(typeof(GameManager));
         }
     }
 }
