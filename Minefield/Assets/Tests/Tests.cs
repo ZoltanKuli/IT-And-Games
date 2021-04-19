@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.TestTools;
 
 namespace Tests {
-    public class WorldManagerTest {
+    public class Tests {
 
         [SetUp]
         public void SetUp() {
@@ -39,7 +39,8 @@ namespace Tests {
         public IEnumerator ShouldPlaceHotDogCar() {
             WorldManager worldManager = GetWorldManager();
             worldManager.BuildNewRoad(Vector3Int.zero);            
-            worldManager.BuildNewHotdogCar(new Vector3Int(1, 0, 0));           
+            worldManager.BuildNewHotdogCar(new Vector3Int(1, 0, 0));    
+            
             Assert.IsTrue(worldManager.GetFieldAtPosition(new Vector3Int(1, 0, 0)) is Structure);
 
             yield return null;
@@ -51,6 +52,7 @@ namespace Tests {
             worldManager.BuildNewRoad(Vector3Int.zero);
             worldManager.BuildNewHotdogCar(new Vector3Int(1, 0, 0));
             worldManager.Destroy(new Vector3Int(1, 0, 0));
+
             Assert.IsTrue(worldManager.GetFieldAtPosition(new Vector3Int(1, 0, 0)) is EmptyField);
 
             yield return null;
@@ -61,6 +63,7 @@ namespace Tests {
             WorldManager worldManager = GetWorldManager();
             worldManager.BuildNewRoad(Vector3Int.zero);
             worldManager.BuildNewOlivegardensRestaurant(new Vector3Int(1, 0, 0));
+
             Assert.IsTrue(worldManager.GetFieldAtPosition(new Vector3Int(1, 0, 0)) is Structure);
 
             yield return null;
@@ -72,6 +75,7 @@ namespace Tests {
             worldManager.BuildNewRoad(Vector3Int.zero);
             worldManager.BuildNewOlivegardensRestaurant(new Vector3Int(1, 0, 0));
             worldManager.Destroy(new Vector3Int(1, 0, 0));
+
             Assert.IsTrue(worldManager.GetFieldAtPosition(new Vector3Int(1, 0, 0)) is EmptyField);
 
             yield return null;
@@ -82,6 +86,7 @@ namespace Tests {
             WorldManager worldManager = GetWorldManager();
             worldManager.BuildNewRoad(Vector3Int.zero);
             worldManager.BuildNewKFC(new Vector3Int(1, 0, 0));
+
             Assert.IsTrue(worldManager.GetFieldAtPosition(new Vector3Int(1, 0, 0)) is Structure);
 
             yield return null;
@@ -93,6 +98,7 @@ namespace Tests {
             worldManager.BuildNewRoad(Vector3Int.zero);
             worldManager.BuildNewKFC(new Vector3Int(1, 0, 0));
             worldManager.Destroy(new Vector3Int(1, 0, 0));
+
             Assert.IsTrue(worldManager.GetFieldAtPosition(new Vector3Int(1, 0, 0)) is EmptyField);
 
             yield return null;
@@ -103,6 +109,7 @@ namespace Tests {
             WorldManager worldManager = GetWorldManager();
             worldManager.BuildNewRoad(Vector3Int.zero);
             worldManager.BuildNewTaverneRestaurant(new Vector3Int(1, 0, 0));
+
             Assert.IsTrue(worldManager.GetFieldAtPosition(new Vector3Int(1, 0, 0)) is Structure);
 
             yield return null;
@@ -114,6 +121,7 @@ namespace Tests {
             worldManager.BuildNewRoad(Vector3Int.zero);
             worldManager.BuildNewTaverneRestaurant(new Vector3Int(1, 0, 0));
             worldManager.Destroy(new Vector3Int(1, 0, 0));
+
             Assert.IsTrue(worldManager.GetFieldAtPosition(new Vector3Int(1, 0, 0)) is EmptyField);
 
             yield return null;
@@ -124,6 +132,7 @@ namespace Tests {
             WorldManager worldManager = GetWorldManager();
             worldManager.BuildNewRoad(Vector3Int.zero);
             worldManager.BuildNewCafe(new Vector3Int(1, 0, 0));
+
             Assert.IsTrue(worldManager.GetFieldAtPosition(new Vector3Int(1, 0, 0)) is Structure);
 
             yield return null;
@@ -135,6 +144,7 @@ namespace Tests {
             worldManager.BuildNewRoad(Vector3Int.zero);
             worldManager.BuildNewCafe(new Vector3Int(1, 0, 0));
             worldManager.Destroy(new Vector3Int(1, 0, 0));
+
             Assert.IsTrue(worldManager.GetFieldAtPosition(new Vector3Int(1, 0, 0)) is EmptyField);
 
             yield return null;
@@ -145,6 +155,7 @@ namespace Tests {
             WorldManager worldManager = GetWorldManager();
             worldManager.BuildNewRoad(Vector3Int.zero);
             worldManager.BuildNewCafeRestaurant(new Vector3Int(1, 0, 0));
+
             Assert.IsTrue(worldManager.GetFieldAtPosition(new Vector3Int(1, 0, 0)) is Structure);
 
             yield return null;
@@ -156,6 +167,7 @@ namespace Tests {
             worldManager.BuildNewRoad(Vector3Int.zero);
             worldManager.BuildNewCafeRestaurant(new Vector3Int(1, 0, 0));
             worldManager.Destroy(new Vector3Int(1, 0, 0));
+
             Assert.IsTrue(worldManager.GetFieldAtPosition(new Vector3Int(1, 0, 0)) is EmptyField);
 
             yield return null;
@@ -166,6 +178,7 @@ namespace Tests {
             WorldManager worldManager = GetWorldManager();
             worldManager.BuildNewRoad(Vector3Int.zero);
             worldManager.BuildNewMerryGoRound(new Vector3Int(1, 0, 0));
+
             Assert.IsTrue(worldManager.GetFieldAtPosition(new Vector3Int(1, 0, 0)) is Structure);
 
             yield return null;
@@ -177,6 +190,7 @@ namespace Tests {
             worldManager.BuildNewRoad(Vector3Int.zero);
             worldManager.BuildNewMerryGoRound(new Vector3Int(1, 0, 0));
             worldManager.Destroy(new Vector3Int(1, 0, 0));
+
             Assert.IsTrue(worldManager.GetFieldAtPosition(new Vector3Int(1, 0, 0)) is EmptyField);
 
             yield return null;
@@ -187,6 +201,7 @@ namespace Tests {
             WorldManager worldManager = GetWorldManager();
             worldManager.BuildNewRoad(Vector3Int.zero);
             worldManager.BuildNewCircusTent(new Vector3Int(1, 0, 0));
+
             Assert.IsTrue(worldManager.GetFieldAtPosition(new Vector3Int(1, 0, 0)) is Structure);
 
             yield return null;
@@ -198,6 +213,7 @@ namespace Tests {
             worldManager.BuildNewRoad(Vector3Int.zero);
             worldManager.BuildNewCircusTent(new Vector3Int(1, 0, 0));
             worldManager.Destroy(new Vector3Int(1, 0, 0));
+
             Assert.IsTrue(worldManager.GetFieldAtPosition(new Vector3Int(1, 0, 0)) is EmptyField);
 
             yield return null;
@@ -208,6 +224,7 @@ namespace Tests {
             WorldManager worldManager = GetWorldManager();
             worldManager.BuildNewRoad(Vector3Int.zero);
             worldManager.BuildNewLondonEye(new Vector3Int(1, 0, 0));
+
             Assert.IsTrue(worldManager.GetFieldAtPosition(new Vector3Int(1, 0, 0)) is Structure);
 
             yield return null;
@@ -219,6 +236,7 @@ namespace Tests {
             worldManager.BuildNewRoad(Vector3Int.zero);
             worldManager.BuildNewLondonEye(new Vector3Int(1, 0, 0));
             worldManager.Destroy(new Vector3Int(1, 0, 0));
+
             Assert.IsTrue(worldManager.GetFieldAtPosition(new Vector3Int(1, 0, 0)) is EmptyField);
 
             yield return null;
@@ -229,6 +247,7 @@ namespace Tests {
             WorldManager worldManager = GetWorldManager();
             worldManager.BuildNewRoad(Vector3Int.zero);
             worldManager.BuildNewRollerCoaster(new Vector3Int(1, 0, 0));
+
             Assert.IsTrue(worldManager.GetFieldAtPosition(new Vector3Int(1, 0, 0)) is Structure);
 
             yield return null;
@@ -240,6 +259,7 @@ namespace Tests {
             worldManager.BuildNewRoad(Vector3Int.zero);
             worldManager.BuildNewRollerCoaster(new Vector3Int(1, 0, 0));
             worldManager.Destroy(new Vector3Int(1, 0, 0));
+
             Assert.IsTrue(worldManager.GetFieldAtPosition(new Vector3Int(1, 0, 0)) is EmptyField);
 
             yield return null;
@@ -250,6 +270,7 @@ namespace Tests {
             WorldManager worldManager = GetWorldManager();
             worldManager.BuildNewRoad(Vector3Int.zero);
             worldManager.BuildNewBasicPark(new Vector3Int(1, 0, 0));
+
             Assert.IsTrue(worldManager.GetFieldAtPosition(new Vector3Int(1, 0, 0)) is Structure);
 
             yield return null;
@@ -261,6 +282,7 @@ namespace Tests {
             worldManager.BuildNewRoad(Vector3Int.zero);
             worldManager.BuildNewBasicPark(new Vector3Int(1, 0, 0));
             worldManager.Destroy(new Vector3Int(1, 0, 0));
+
             Assert.IsTrue(worldManager.GetFieldAtPosition(new Vector3Int(1, 0, 0)) is EmptyField);
 
             yield return null;
@@ -271,6 +293,7 @@ namespace Tests {
             WorldManager worldManager = GetWorldManager();
             worldManager.BuildNewRoad(Vector3Int.zero);
             worldManager.BuildNewFountainPark(new Vector3Int(1, 0, 0));
+
             Assert.IsTrue(worldManager.GetFieldAtPosition(new Vector3Int(1, 0, 0)) is Structure);
 
             yield return null;
@@ -282,6 +305,7 @@ namespace Tests {
             worldManager.BuildNewRoad(Vector3Int.zero);
             worldManager.BuildNewFountainPark(new Vector3Int(1, 0, 0));
             worldManager.Destroy(new Vector3Int(1, 0, 0));
+
             Assert.IsTrue(worldManager.GetFieldAtPosition(new Vector3Int(1, 0, 0)) is EmptyField);
 
             yield return null;
@@ -292,6 +316,7 @@ namespace Tests {
             WorldManager worldManager = GetWorldManager();
             worldManager.BuildNewRoad(Vector3Int.zero);
             worldManager.BuildNewHelicopterPark(new Vector3Int(1, 0, 0));
+
             Assert.IsTrue(worldManager.GetFieldAtPosition(new Vector3Int(1, 0, 0)) is Structure);
 
             yield return null;
@@ -303,6 +328,7 @@ namespace Tests {
             worldManager.BuildNewRoad(Vector3Int.zero);
             worldManager.BuildNewHelicopterPark(new Vector3Int(1, 0, 0));
             worldManager.Destroy(new Vector3Int(1, 0, 0));
+
             Assert.IsTrue(worldManager.GetFieldAtPosition(new Vector3Int(1, 0, 0)) is EmptyField);
 
             yield return null;
@@ -313,6 +339,7 @@ namespace Tests {
             WorldManager worldManager = GetWorldManager();
             worldManager.BuildNewRoad(Vector3Int.zero);
             worldManager.BuildNewCleanerStation(new Vector3Int(1, 0, 0));
+
             Assert.IsTrue(worldManager.GetFieldAtPosition(new Vector3Int(1, 0, 0)) is Structure);
 
             yield return null;
@@ -324,6 +351,7 @@ namespace Tests {
             worldManager.BuildNewRoad(Vector3Int.zero);
             worldManager.BuildNewCleanerStation(new Vector3Int(1, 0, 0));
             worldManager.Destroy(new Vector3Int(1, 0, 0));
+
             Assert.IsTrue(worldManager.GetFieldAtPosition(new Vector3Int(1, 0, 0)) is EmptyField);
 
             yield return null;
@@ -334,6 +362,7 @@ namespace Tests {
             WorldManager worldManager = GetWorldManager();
             worldManager.BuildNewRoad(Vector3Int.zero);
             worldManager.BuildNewMechanicStation(new Vector3Int(1, 0, 0));
+
             Assert.IsTrue(worldManager.GetFieldAtPosition(new Vector3Int(1, 0, 0)) is Structure);
 
             yield return null;
@@ -345,6 +374,7 @@ namespace Tests {
             worldManager.BuildNewRoad(Vector3Int.zero);
             worldManager.BuildNewMechanicStation(new Vector3Int(1, 0, 0));
             worldManager.Destroy(new Vector3Int(1, 0, 0));
+
             Assert.IsTrue(worldManager.GetFieldAtPosition(new Vector3Int(1, 0, 0)) is EmptyField);
 
             yield return null;

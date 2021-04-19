@@ -31,16 +31,10 @@ public class UIManager : MonoBehaviour {
     private GameObject extrasPanel;
 
     [SerializeField]
-    private Button gameOverReturnToGameButton;
-
-    [SerializeField]
     private Button gameOverExitGameButton;
 
     [SerializeField]
     private Button gameOverNewGameButton;
-
-    [SerializeField]
-    private Button returnToGameButton;
 
     [SerializeField]
     private Button exitGameButton;
@@ -217,15 +211,7 @@ public class UIManager : MonoBehaviour {
         gameOverNewGameButton.onClick.AddListener(() => {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
             ToggleDisplayPanel(null, false);
-        });
-
-        returnToGameButton.onClick.AddListener(() => {
-            ToggleDisplayPanel(null, false);
-        });
-
-        gameOverReturnToGameButton.onClick.AddListener(() => {
-            ToggleDisplayPanel(null, false);
-        });
+        });     
 
         exitGameButton.onClick.AddListener(() => {
             Application.Quit();
@@ -670,5 +656,4 @@ public class UIManager : MonoBehaviour {
     public void OpenGameOverPanelWhenLosing() {
         ToggleDisplayPanel(gameOverPanel, true);
     }
-
 }

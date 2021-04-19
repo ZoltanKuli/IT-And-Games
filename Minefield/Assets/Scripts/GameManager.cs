@@ -18,6 +18,8 @@ public class GameManager : MonoBehaviour {
     [SerializeField]
     private WorldManager worldManager;
 
+    private bool isRunning;
+
     [SerializeField]
     private int playersBalance;
     [SerializeField]
@@ -132,7 +134,6 @@ public class GameManager : MonoBehaviour {
     /// Fill up the menus with their actions.
     /// </summary>
     private void Start() {
-        Time.timeScale = 1;
         uIManager.AssignMethodToOnBuildRoadAction(BuildNewRoad);
         uIManager.AssignMethodToOnDestroyAction(Destroy);
 
@@ -178,6 +179,8 @@ public class GameManager : MonoBehaviour {
         maxNumberOfNPCSEnteringAtATime = random.Next(maxNumberOfNPCSEnteringAtATimeMinimum, maxNumberOfNPCSEnteringAtATimeMaximum);
         newNPCsNotBeingAbleToEnterUntilTime = DateTime.UtcNow;
         npcsEnteredSinceLastNewNPCsNotBeingAbleToEnterUntilTime = 0;
+
+        isRunning = true;
     }
 
     /// <summary>
@@ -321,31 +324,33 @@ public class GameManager : MonoBehaviour {
         mainCamera.UpdateCameraPosition(inputManager.GetCameraMovementDirection());
         mainCamera.UpdateCameraZoomAndRotation(inputManager.GetCameraZoomDirection(), inputManager.GetCameraRotationDirection());
 
-        SpawnNPC();
+        if (isRunning) {
+            SpawnNPC();
 
-        UpdateNPCS();
+            UpdateNPCS();
 
-        UpdateAverageNPCSatisfaction();
-        UpdateAverageNPCThirst();
-        UpdateAverageNPCHunnger();
-        UpdatePlayersBalanceFromNPCSMoneyOwed();
+            UpdateAverageNPCSatisfaction();
+            UpdateAverageNPCThirst();
+            UpdateAverageNPCHunnger();
+            UpdatePlayersBalanceFromNPCSMoneyOwed();
 
-        worldManager.UpdateCleanersAndMechanics();
-        WithdrawCrewPayementsFromPlayersBalance();
+            worldManager.UpdateCleanersAndMechanics();
+            WithdrawCrewPayementsFromPlayersBalance();
 
-        uIManager.UpdatePlayerMoneyText(GetPlayersBalance());
-        uIManager.UpdateVisitorCountText(npcs.Count);
-        uIManager.UpdateStatisfactionSlider(averageNPCSatisfaction);
-        uIManager.UpdateFoodSlider(averageNPCHunger);
-        uIManager.UpdateThirstSlider(averageNPCThirst);
+            uIManager.UpdatePlayerMoneyText(GetPlayersBalance());
+            uIManager.UpdateVisitorCountText(npcs.Count);
+            uIManager.UpdateStatisfactionSlider(averageNPCSatisfaction);
+            uIManager.UpdateFoodSlider(averageNPCHunger);
+            uIManager.UpdateThirstSlider(averageNPCThirst);
 
-        Debug.Log("NPC Number:" + npcs.Count
-            + "; Player's Balance: " + playersBalance
-            + "; Average Satisfaction: " + averageNPCSatisfaction
-            + "; Average Thirst: " + averageNPCThirst
-            + "; Average Hunger: " + averageNPCHunger);
+            Debug.Log("NPC Number:" + npcs.Count
+                + "; Player's Balance: " + playersBalance
+                + "; Average Satisfaction: " + averageNPCSatisfaction
+                + "; Average Thirst: " + averageNPCThirst
+                + "; Average Hunger: " + averageNPCHunger);
 
-        RestartGameIfPlayersBalanceGoesInTheRedUnderTheMinimumBalanceAmount();
+            StopGameIfPlayersBalanceGoesInTheRedUnderTheMinimumBalanceAmount();
+        }
     }
 
     /// <summary>
@@ -484,14 +489,14 @@ public class GameManager : MonoBehaviour {
     }
 
     /// <summary>
-    /// Restart game if players balance goes in the red under the minimum balance amount.
+    /// Stop game if players balance goes in the red under the minimum balance amount.
     /// </summary>
-    private void RestartGameIfPlayersBalanceGoesInTheRedUnderTheMinimumBalanceAmount() {
+    private void StopGameIfPlayersBalanceGoesInTheRedUnderTheMinimumBalanceAmount() {
         if (playersBalance < minimumPlayersBalance) {
-            Time.timeScale = 0;
+            isRunning = false;
             Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
             inputManager.ResetMouseActions();
-            uIManager.OpenGameOverPanelWhenLosing();                   
+            uIManager.OpenGameOverPanelWhenLosing();
         }
     }
 }
