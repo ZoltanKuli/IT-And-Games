@@ -157,6 +157,9 @@ public class UIManager : MonoBehaviour {
     private Slider statisfactionSlider;
 
     [SerializeField]
+    private Texture2D defaultCursor;
+
+    [SerializeField]
     private Texture2D cursorHammerTexture;
 
     [SerializeField]
@@ -194,7 +197,9 @@ public class UIManager : MonoBehaviour {
     /// Connect the menu buttons with the pairing building method.
     /// </summary>
     private void Start() {
-       
+
+        ChangeCursorToDefault();
+
         buttons = new List<Button> { buildMenuButton, destroyButton };
         panels = new List<GameObject> { gameOverPanel, creditsPanel, roadandgarbagecanPanel, buildMenuPanel, structurePanel, barSelectorPanel, restaurantSelectorPanel, attractionSelectorPanel, parkSelectorPanel, crewStationsPanel, mainMenuPanel };
         
@@ -655,6 +660,13 @@ public class UIManager : MonoBehaviour {
     /// </summary>
     public void ChangeCursorToBuild() {
         Cursor.SetCursor(cursorBuildTexture, new Vector2(cursorBuildTexture.width / 4, cursorBuildTexture.height / 4), CursorMode.Auto);
+    }
+
+    /// <summary>
+    /// Change the cursor to default.
+    /// </summary>
+    public void ChangeCursorToDefault() {
+        Cursor.SetCursor(defaultCursor, new Vector2(cursorBuildTexture.width / 4, cursorBuildTexture.height / 4), CursorMode.Auto);
     }
 
     /// <summary>
