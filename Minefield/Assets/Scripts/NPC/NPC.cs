@@ -45,6 +45,8 @@ public class NPC {
     private int maximumSecondsUntilGarbageDisposal;
     private int garbageDecreaseDissatisfactionAmount;
 
+    private float npcSatisfactionDivisorWhenInStructure;
+
     private System.Random random;
 
     public NPC(GameObject prefab, Vector3Int entrancePosition, WorldManager worldManager, float distancePrecision,
@@ -52,7 +54,8 @@ public class NPC {
         int defaultHunger, int maximumHungerOfNotNeedingToEat, float minimumSpeed, float maximumSpeed, float rotationSpeedMultiplier,
         int secondsUntilThirstGrowth, int thirstGrowthAmount, int secondsUntilHungerGrowth, int hungerGrowthAmount,
         float loweringDistanceOnInvisibility, int thirstDecreaseDissatisfactionAmount, int hungerDecreaseDissatisfactionAmount, 
-        int minimumSecondsUntilGarbageDisposal, int maximumSecondsUntilGarbageDisposal, int garbageDecreaseDissatisfactionAmount) {
+        int minimumSecondsUntilGarbageDisposal, int maximumSecondsUntilGarbageDisposal, int garbageDecreaseDissatisfactionAmount, 
+        float npcSatisfactionDivisorWhenInStructure) {
         gameObject = GameObject.Instantiate(prefab, entrancePosition, Quaternion.identity);
         this.entrancePosition = entrancePosition;
         isVisible = true;
@@ -89,6 +92,8 @@ public class NPC {
         this.minimumSecondsUntilGarbageDisposal = minimumSecondsUntilGarbageDisposal;
         this.maximumSecondsUntilGarbageDisposal = maximumSecondsUntilGarbageDisposal;
         this.garbageDecreaseDissatisfactionAmount = garbageDecreaseDissatisfactionAmount;
+
+        this.npcSatisfactionDivisorWhenInStructure = npcSatisfactionDivisorWhenInStructure;
 
         random = new System.Random(GetHashCode());
     }
@@ -127,8 +132,13 @@ public class NPC {
         if (timeOfNextThirstGrowth <= DateTime.UtcNow) {
             timeOfNextThirstGrowth = DateTime.UtcNow.AddSeconds(secondsUntilThirstGrowth);
 
-            if ((thirst + thirstGrowthAmount) <= 100) {
-                thirst += thirstGrowthAmount;
+            int currentThirstGrowthAmount = thirstGrowthAmount;
+            if (!isVisible) {
+                currentThirstGrowthAmount = (int)Mathf.Ceil(currentThirstGrowthAmount / npcSatisfactionDivisorWhenInStructure);
+            }
+
+            if ((thirst + currentThirstGrowthAmount) <= 100) {
+                thirst += currentThirstGrowthAmount;
             } else {
                 thirst = 100;
             }
@@ -144,8 +154,13 @@ public class NPC {
         if (timeOfNextHungertGrowth <= DateTime.UtcNow) {
             timeOfNextHungertGrowth = DateTime.UtcNow.AddSeconds(secondsUntilHungerGrowth);
 
-            if ((hunger + hungerGrowthAmount) <= 100) {
-                hunger += hungerGrowthAmount;
+            int currentHungerGrowthAmount = hungerGrowthAmount;
+            if (!isVisible) {
+                currentHungerGrowthAmount = (int)Mathf.Ceil(currentHungerGrowthAmount / npcSatisfactionDivisorWhenInStructure);
+            }
+
+            if ((hunger + currentHungerGrowthAmount) <= 100) {
+                hunger += currentHungerGrowthAmount;
             } else {
                 hunger = 100;
             }

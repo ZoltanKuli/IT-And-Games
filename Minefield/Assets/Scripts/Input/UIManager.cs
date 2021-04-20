@@ -7,6 +7,9 @@ using UnityEngine.UI;
 public class UIManager : MonoBehaviour {
 
     [SerializeField]
+    private GameManager gameManager;
+
+    [SerializeField]
     private Button buildRoadButton;
 
     [SerializeField]
@@ -28,7 +31,7 @@ public class UIManager : MonoBehaviour {
     private GameObject gameOverPanel;
 
     [SerializeField]
-    private GameObject extrasPanel;
+    private GameObject creditsPanel;
 
     [SerializeField]
     private Button gameOverExitGameButton;
@@ -43,7 +46,7 @@ public class UIManager : MonoBehaviour {
     private Button newGameButton;
 
     [SerializeField]
-    private Button extrasButton;
+    private Button creditsButton;
 
     [SerializeField]
     private GameObject structurePanel;
@@ -193,13 +196,15 @@ public class UIManager : MonoBehaviour {
     private void Start() {
        
         buttons = new List<Button> { buildMenuButton, destroyButton };
-        panels = new List<GameObject> { gameOverPanel, extrasPanel, roadandgarbagecanPanel, buildMenuPanel, structurePanel, barSelectorPanel, restaurantSelectorPanel, attractionSelectorPanel, parkSelectorPanel, crewStationsPanel, mainMenuPanel };
+        panels = new List<GameObject> { gameOverPanel, creditsPanel, roadandgarbagecanPanel, buildMenuPanel, structurePanel, barSelectorPanel, restaurantSelectorPanel, attractionSelectorPanel, parkSelectorPanel, crewStationsPanel, mainMenuPanel };
         
         mainMenuButton.onClick.AddListener(() => {
             if (mainMenuPanel.gameObject.activeSelf) {
                 ToggleDisplayPanel(mainMenuPanel, false);
+                gameManager.ContinueGame();
             } else {
                 ToggleDisplayPanel(mainMenuPanel, true);
+                gameManager.PauseGame();
             }
         });
 
@@ -225,15 +230,16 @@ public class UIManager : MonoBehaviour {
             ResetButtonColor();
             ModifyButtonOutline(destroyButton);
             ToggleDisplayPanel(null, false);
+            gameManager.ContinueGame();
             onDestroyAction?.Invoke();
             ChangeCursorToHammer();
         });
         
-         extrasButton.onClick.AddListener(() => {
-            if (extrasPanel.gameObject.activeSelf) {
-                ToggleDisplayPanel(extrasPanel, false);
+         creditsButton.onClick.AddListener(() => {
+            if (creditsPanel.gameObject.activeSelf) {
+                ToggleDisplayPanel(creditsPanel, false);
             } else {
-                ToggleDisplayPanel(extrasPanel, true);
+                ToggleDisplayPanel(creditsPanel, true);
             }
         });
 
@@ -241,6 +247,7 @@ public class UIManager : MonoBehaviour {
             if (buildMenuPanel.gameObject.activeSelf) {
                 ToggleDisplayPanel(buildMenuPanel, false);
             } else {
+                gameManager.ContinueGame();
                 ToggleDisplayPanel(buildMenuPanel, true);
             }
         });
@@ -640,14 +647,14 @@ public class UIManager : MonoBehaviour {
     /// Change the cursor to a hammer.
     /// </summary>
     public void ChangeCursorToHammer() {
-        Cursor.SetCursor(cursorHammerTexture, Vector2.zero, CursorMode.Auto);
+        Cursor.SetCursor(cursorHammerTexture, new Vector2(cursorBuildTexture.width / 3, cursorBuildTexture.height / 3), CursorMode.Auto);
     }
 
     /// <summary>
     /// Change the cursor to selector.
     /// </summary>
     public void ChangeCursorToBuild() {
-        Cursor.SetCursor(cursorBuildTexture, Vector2.zero, CursorMode.Auto);
+        Cursor.SetCursor(cursorBuildTexture, new Vector2(cursorBuildTexture.width / 4, cursorBuildTexture.height / 4), CursorMode.Auto);
     }
 
     /// <summary>

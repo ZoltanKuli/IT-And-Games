@@ -473,6 +473,7 @@ public class WorldManager : MonoBehaviour {
         outOfOrderStructures = new List<Structure>();
         garbageCans = new List<GarbageCan>();
 
+        /*
         // For Testing Purposes Only
         for (int i = 1; i < 21; i++) {
             BuildNewRoad(new Vector3Int(i, 0, 50));
@@ -518,6 +519,7 @@ public class WorldManager : MonoBehaviour {
         BuildNewGarbageCan(new Vector3Int(22, 0, 50));
         BuildNewGarbageCan(new Vector3Int(22, 0, 49));
         // For Testing Purposes Only
+        */
     }
 
     /// <summary>
@@ -543,7 +545,7 @@ public class WorldManager : MonoBehaviour {
     private void BuildNewEntrance() {
         while (true) {
             Vector3Int entranceOrigoPosition = new Vector3Int(random.Next(worldMatrixWidth), 0, random.Next(worldMatrixLength));
-            entranceOrigoPosition = new Vector3Int(0, 0, 50);
+            // entranceOrigoPosition = new Vector3Int(0, 0, 50);
             if (worldMatrix[entranceOrigoPosition.x, entranceOrigoPosition.z] is EmptyField) {
                 entrance = new Entrance(entrancePrefab, entranceOrigoPosition, entrancePositionOffset, entranceYRotation, this);
                 worldMatrix[entranceOrigoPosition.x, entranceOrigoPosition.z] = entrance;

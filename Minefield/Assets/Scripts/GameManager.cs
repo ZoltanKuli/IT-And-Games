@@ -19,6 +19,7 @@ public class GameManager : MonoBehaviour {
     private WorldManager worldManager;
 
     private bool isRunning;
+    private bool isPaused;
 
     [SerializeField]
     private int playersBalance;
@@ -127,6 +128,8 @@ public class GameManager : MonoBehaviour {
     private int garbageDecreaseDissatisfactionAmountMinimum;
     [SerializeField]
     private int garbageDecreaseDissatisfactionAmountMaximum;
+    [SerializeField]
+    private float npcSatisfactionDivisorWhenInStructure;
 
     private System.Random random;
 
@@ -181,6 +184,7 @@ public class GameManager : MonoBehaviour {
         npcsEnteredSinceLastNewNPCsNotBeingAbleToEnterUntilTime = 0;
 
         isRunning = true;
+        isPaused = false;
     }
 
     /// <summary>
@@ -321,6 +325,10 @@ public class GameManager : MonoBehaviour {
     /// Update.
     /// </summary>
     private void Update() {
+        if (isPaused) {
+            return;
+        }
+        
         mainCamera.UpdateCameraPosition(inputManager.GetCameraMovementDirection());
         mainCamera.UpdateCameraZoomAndRotation(inputManager.GetCameraZoomDirection(), inputManager.GetCameraRotationDirection());
 
@@ -432,7 +440,8 @@ public class GameManager : MonoBehaviour {
             random.Next(thirstDecreaseDissatisfactionAmountMinimum, thirstDecreaseDissatisfactionAmountMaximum),
             random.Next(hungerDecreaseDissatisfactionAmountMinimum, hungerDecreaseDissatisfactionAmountMaximum),
             minimumSecondsUntilGarbageDisposal, maximumSecondsUntilGarbageDisposal,
-            random.Next(garbageDecreaseDissatisfactionAmountMinimum, garbageDecreaseDissatisfactionAmountMaximum)));
+            random.Next(garbageDecreaseDissatisfactionAmountMinimum, garbageDecreaseDissatisfactionAmountMaximum),
+            npcSatisfactionDivisorWhenInStructure));
 
             IncreaseOrDecreasePlayersBalance(entranceCost);
 
@@ -492,11 +501,26 @@ public class GameManager : MonoBehaviour {
     /// Stop game if players balance goes in the red under the minimum balance amount.
     /// </summary>
     private void StopGameIfPlayersBalanceGoesInTheRedUnderTheMinimumBalanceAmount() {
-        if (playersBalance < minimumPlayersBalance) {
+        if (playersBalance < minimumPlayersBalance && npcs.Count == 0) {
             isRunning = false;
             Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
             inputManager.ResetMouseActions();
             uIManager.OpenGameOverPanelWhenLosing();
         }
+    }
+
+
+    /// <summary>
+    /// Pause game.
+    /// </summary>
+    public void PauseGame() {
+        isPaused = true;
+    }
+
+    /// <summary>
+    /// Continue game.
+    /// </summary>
+    public void ContinueGame() {
+        isPaused = false;
     }
 }
