@@ -208,13 +208,13 @@ public class UIManager : MonoBehaviour {
             }
         });
 
-        newGameButton.onClick.AddListener(() => {           
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        newGameButton.onClick.AddListener(() => {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
             ToggleDisplayPanel(null, false);    
         });
 
         gameOverNewGameButton.onClick.AddListener(() => {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
             ToggleDisplayPanel(null, false);
         });     
 
