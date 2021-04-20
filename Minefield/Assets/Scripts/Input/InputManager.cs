@@ -68,7 +68,6 @@ public class InputManager : MonoBehaviour {
         if (Input.GetMouseButtonDown(1)) {
             uIManager.ResetButtonColor();
             ResetMouseActions();
-            uIManager.ChangeCursorToDefault();
         }
 
         if (Input.GetMouseButtonDown(0) && EventSystem.current.IsPointerOverGameObject() == false) {

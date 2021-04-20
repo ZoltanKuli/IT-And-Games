@@ -156,15 +156,6 @@ public class UIManager : MonoBehaviour {
     [SerializeField]
     private Slider statisfactionSlider;
 
-    [SerializeField]
-    private Texture2D defaultCursor;
-
-    [SerializeField]
-    private Texture2D cursorHammerTexture;
-
-    [SerializeField]
-    private Texture2D cursorBuildTexture;
-
     public List<Button> buttons;
     public List<GameObject> panels;
 
@@ -197,8 +188,6 @@ public class UIManager : MonoBehaviour {
     /// Connect the menu buttons with the pairing building method.
     /// </summary>
     private void Start() {
-
-        ChangeCursorToDefault();
 
         buttons = new List<Button> { buildMenuButton, destroyButton };
         panels = new List<GameObject> { gameOverPanel, creditsPanel, roadandgarbagecanPanel, buildMenuPanel, structurePanel, barSelectorPanel, restaurantSelectorPanel, attractionSelectorPanel, parkSelectorPanel, crewStationsPanel, mainMenuPanel };
@@ -237,7 +226,6 @@ public class UIManager : MonoBehaviour {
             ToggleDisplayPanel(null, false);
             gameManager.ContinueGame();
             onDestroyAction?.Invoke();
-            ChangeCursorToHammer();
         });
         
          creditsButton.onClick.AddListener(() => {
@@ -258,7 +246,6 @@ public class UIManager : MonoBehaviour {
         });
 
         buildRoadButton.onClick.AddListener(() => {
-            ChangeCursorToBuild();
             ResetButtonColor();
             ModifyButtonOutline(buildMenuButton);
             onBuildRoadAction?.Invoke();
@@ -266,7 +253,6 @@ public class UIManager : MonoBehaviour {
         });
 
         garbagecanButton.onClick.AddListener(() => {
-            ChangeCursorToBuild();
             ResetButtonColor();
             ModifyButtonOutline(buildMenuButton);
             onGarbageCanBuildAction?.Invoke();
@@ -322,7 +308,6 @@ public class UIManager : MonoBehaviour {
         });
 
         cafeButton.onClick.AddListener(() => {
-            ChangeCursorToBuild();
             ResetButtonColor();
             ModifyButtonOutline(buildMenuButton);
             onCafeBuildAction?.Invoke();
@@ -330,7 +315,6 @@ public class UIManager : MonoBehaviour {
         });
 
         cafeRestaurantButton.onClick.AddListener(() => {
-            ChangeCursorToBuild();
             ResetButtonColor();
             ModifyButtonOutline(buildMenuButton);
             onCafeRestaurantBuildAction?.Invoke();
@@ -338,7 +322,6 @@ public class UIManager : MonoBehaviour {
         });
 
         hotdogCarButton.onClick.AddListener(() => {
-            ChangeCursorToBuild();
             ResetButtonColor();
             ModifyButtonOutline(buildMenuButton);
             onHotdogCarBuildAction?.Invoke();
@@ -346,7 +329,6 @@ public class UIManager : MonoBehaviour {
         });
 
         kfcRestaurantButton.onClick.AddListener(() => {
-            ChangeCursorToBuild();
             ResetButtonColor();
             ModifyButtonOutline(buildMenuButton);
             onKfcRestaurantBuildAction?.Invoke();
@@ -354,7 +336,6 @@ public class UIManager : MonoBehaviour {
         });
 
         olivegardensRestaurantButton.onClick.AddListener(() => {
-            ChangeCursorToBuild();
             ResetButtonColor();
             ModifyButtonOutline(buildMenuButton);
             onOlivegardensRestaurantBuildAction?.Invoke();
@@ -362,7 +343,6 @@ public class UIManager : MonoBehaviour {
         });
 
         taverneRestaurantButton.onClick.AddListener(() => {
-            ChangeCursorToBuild();
             ResetButtonColor();
             ModifyButtonOutline(buildMenuButton);
             onTaverneRestaurantBuildAction?.Invoke();
@@ -378,7 +358,6 @@ public class UIManager : MonoBehaviour {
         });
 
         circustentButton.onClick.AddListener(() => {
-            ChangeCursorToBuild();
             ResetButtonColor();
             ModifyButtonOutline(buildMenuButton);
             onCircusTentBuildAction?.Invoke();
@@ -386,7 +365,6 @@ public class UIManager : MonoBehaviour {
         });
 
         londoneyeButton.onClick.AddListener(() => {
-            ChangeCursorToBuild();
             ResetButtonColor();
             ModifyButtonOutline(buildMenuButton);
             onLondonEyeBuildAction?.Invoke();
@@ -394,7 +372,6 @@ public class UIManager : MonoBehaviour {
         });
 
         merrygoroundButton.onClick.AddListener(() => {
-            ChangeCursorToBuild();
             ResetButtonColor();
             ModifyButtonOutline(buildMenuButton);
             onMerryGoRoundBuildAction?.Invoke();
@@ -402,7 +379,6 @@ public class UIManager : MonoBehaviour {
         });
 
         rollercoasterButton.onClick.AddListener(() => {
-            ChangeCursorToBuild();
             ResetButtonColor();
             ModifyButtonOutline(buildMenuButton);
             onRollerCoasterBuildAction?.Invoke();
@@ -410,7 +386,6 @@ public class UIManager : MonoBehaviour {
         });
 
         parkbasicButton.onClick.AddListener(() => {
-            ChangeCursorToBuild();
             ResetButtonColor();
             ModifyButtonOutline(buildMenuButton);
             onParkBasicBuildAction?.Invoke();
@@ -418,7 +393,6 @@ public class UIManager : MonoBehaviour {
         });
 
         parkfountainButton.onClick.AddListener(() => {
-            ChangeCursorToBuild();
             ResetButtonColor();
             ModifyButtonOutline(buildMenuButton);
             onParkFountainBuildAction?.Invoke();
@@ -426,7 +400,7 @@ public class UIManager : MonoBehaviour {
         });
 
         parkhelicopterButton.onClick.AddListener(() => {
-            ChangeCursorToBuild();
+   
             ResetButtonColor();
             ModifyButtonOutline(buildMenuButton);
             onParkHelicopterBuildAction?.Invoke();
@@ -434,7 +408,6 @@ public class UIManager : MonoBehaviour {
         });
 
         cleanerStationButton.onClick.AddListener(() => {
-            ChangeCursorToBuild();
             ResetButtonColor();
             ModifyButtonOutline(buildMenuButton);
             onCleanerStationBuildAction?.Invoke();
@@ -442,7 +415,6 @@ public class UIManager : MonoBehaviour {
         });
 
         mechanicStationButton.onClick.AddListener(() => {
-            ChangeCursorToBuild();
             ResetButtonColor();
             ModifyButtonOutline(buildMenuButton);
             onMechanicStationBuildAction?.Invoke();
@@ -646,27 +618,6 @@ public class UIManager : MonoBehaviour {
     /// </summary>
     public void AssingMethodToMechanicStationBuildAction(Action action) {
         onMechanicStationBuildAction += action;
-    }
-
-    /// <summary>
-    /// Change the cursor to a hammer.
-    /// </summary>
-    public void ChangeCursorToHammer() {
-        Cursor.SetCursor(cursorHammerTexture, new Vector2(cursorBuildTexture.width / 3, cursorBuildTexture.height / 3), CursorMode.Auto);
-    }
-
-    /// <summary>
-    /// Change the cursor to selector.
-    /// </summary>
-    public void ChangeCursorToBuild() {
-        Cursor.SetCursor(cursorBuildTexture, new Vector2(cursorBuildTexture.width / 4, cursorBuildTexture.height / 4), CursorMode.Auto);
-    }
-
-    /// <summary>
-    /// Change the cursor to default.
-    /// </summary>
-    public void ChangeCursorToDefault() {
-        Cursor.SetCursor(defaultCursor, new Vector2(cursorBuildTexture.width / 4, cursorBuildTexture.height / 4), CursorMode.Auto);
     }
 
     /// <summary>
