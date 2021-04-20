@@ -25,6 +25,175 @@ namespace Tests {
         }
 
         [UnityTest]
+        public IEnumerator PlayersBalanceShouldChangeAfterBuildingHotDogCar() {
+            WorldManager worldManager = GetWorldManager();
+            GameManager gameManager = GetGameManager();
+            int currentPlayersBalance = gameManager.GetPlayersBalance();
+            worldManager.BuildNewRoad(Vector3Int.zero);
+            worldManager.BuildNewHotdogCar(new Vector3Int(1, 0, 0));
+
+            Assert.AreEqual(currentPlayersBalance - 51, gameManager.GetPlayersBalance());
+
+            yield return null;
+        }
+
+        [UnityTest]
+        public IEnumerator PlayersBalanceShouldChangeAfterBuildingOlivegardensRestaurant() {
+            WorldManager worldManager = GetWorldManager();
+            GameManager gameManager = GetGameManager();
+            int currentPlayersBalance = gameManager.GetPlayersBalance();
+            worldManager.BuildNewRoad(Vector3Int.zero);
+            worldManager.BuildNewOlivegardensRestaurant(new Vector3Int(1, 0, 0));
+
+            Assert.AreEqual(currentPlayersBalance - 101, gameManager.GetPlayersBalance());
+
+            yield return null;
+        }
+
+        [UnityTest]
+        public IEnumerator PlayersBalanceShouldChangeAfterBuildingKFCRestaurant() {
+            WorldManager worldManager = GetWorldManager();
+            GameManager gameManager = GetGameManager();
+            int currentPlayersBalance = gameManager.GetPlayersBalance();
+            worldManager.BuildNewRoad(Vector3Int.zero);
+            worldManager.BuildNewKFC(new Vector3Int(1, 0, 0));
+
+            Assert.AreEqual(currentPlayersBalance - 151, gameManager.GetPlayersBalance());
+
+            yield return null;
+        }
+
+        [UnityTest]
+        public IEnumerator PlayersBalanceShouldChangeAfterBuildingTaverneRestaurant() {
+            WorldManager worldManager = GetWorldManager();
+            GameManager gameManager = GetGameManager();
+            int currentPlayersBalance = gameManager.GetPlayersBalance();
+            worldManager.BuildNewRoad(Vector3Int.zero);
+            worldManager.BuildNewTaverneRestaurant(new Vector3Int(1, 0, 0));
+
+            Assert.AreEqual(currentPlayersBalance - 201, gameManager.GetPlayersBalance());
+
+            yield return null;
+        }
+
+        [UnityTest]
+        public IEnumerator PlayersBalanceShouldChangeAfterBuildingCafeRestaurant() {
+            WorldManager worldManager = GetWorldManager();
+            GameManager gameManager = GetGameManager();
+            int currentPlayersBalance = gameManager.GetPlayersBalance();
+            worldManager.BuildNewRoad(Vector3Int.zero);
+            worldManager.BuildNewCafeRestaurant(new Vector3Int(1, 0, 0));
+
+            Assert.AreEqual(currentPlayersBalance - 101, gameManager.GetPlayersBalance());
+
+            yield return null;
+        }
+
+        [UnityTest]
+        public IEnumerator PlayersBalanceShouldChangeAfterBuildingCafe() {
+            WorldManager worldManager = GetWorldManager();
+            GameManager gameManager = GetGameManager();
+            int currentPlayersBalance = gameManager.GetPlayersBalance();
+            worldManager.BuildNewRoad(Vector3Int.zero);
+            worldManager.BuildNewCafe(new Vector3Int(1, 0, 0));
+
+            Assert.AreEqual(currentPlayersBalance - 51, gameManager.GetPlayersBalance());
+
+            yield return null;
+        }
+
+        [UnityTest]
+        public IEnumerator PlayersBalanceShouldChangeAfterBuildingMerryGoRound() {
+            WorldManager worldManager = GetWorldManager();
+            GameManager gameManager = GetGameManager();
+            int currentPlayersBalance = gameManager.GetPlayersBalance();
+            worldManager.BuildNewRoad(Vector3Int.zero);
+            worldManager.BuildNewMerryGoRound(new Vector3Int(1, 0, 0));
+
+            Assert.AreEqual(currentPlayersBalance - 51, gameManager.GetPlayersBalance());
+
+            yield return null;
+        }
+
+        [UnityTest]
+        public IEnumerator PlayersBalanceShouldChangeAfterBuildingCircusTent() {
+            WorldManager worldManager = GetWorldManager();
+            GameManager gameManager = GetGameManager();
+            int currentPlayersBalance = gameManager.GetPlayersBalance();
+            worldManager.BuildNewRoad(Vector3Int.zero);
+            worldManager.BuildNewCircusTent(new Vector3Int(1, 0, 0));
+
+            Assert.AreEqual(currentPlayersBalance - 101, gameManager.GetPlayersBalance());
+
+            yield return null;
+        }
+
+        [UnityTest]
+        public IEnumerator PlayersBalanceShouldChangeAfterBuildingLondonEye() {
+            WorldManager worldManager = GetWorldManager();
+            GameManager gameManager = GetGameManager();
+            int currentPlayersBalance = gameManager.GetPlayersBalance();
+            worldManager.BuildNewRoad(Vector3Int.zero);
+            worldManager.BuildNewLondonEye(new Vector3Int(1, 0, 0));
+
+            Assert.AreEqual(currentPlayersBalance - 201, gameManager.GetPlayersBalance());
+
+            yield return null;
+        }
+
+        [UnityTest]
+        public IEnumerator PlayersBalanceShouldChangeAfterBuildingRollerCoaster() {
+            WorldManager worldManager = GetWorldManager();
+            GameManager gameManager = GetGameManager();
+            int currentPlayersBalance = gameManager.GetPlayersBalance();
+            worldManager.BuildNewRoad(Vector3Int.zero);
+            worldManager.BuildNewRollerCoaster(new Vector3Int(1, 0, 0));
+
+            Assert.AreEqual(currentPlayersBalance - 301, gameManager.GetPlayersBalance());
+
+            yield return null;
+        }
+
+        [UnityTest]
+        public IEnumerator PlayersBalanceShouldChangeAfterBuildingBasicPark() {
+            WorldManager worldManager = GetWorldManager();
+            GameManager gameManager = GetGameManager();
+            int currentPlayersBalance = gameManager.GetPlayersBalance();
+            worldManager.BuildNewRoad(Vector3Int.zero);
+            worldManager.BuildNewBasicPark(new Vector3Int(1, 0, 0));
+
+            Assert.AreEqual(currentPlayersBalance - 151, gameManager.GetPlayersBalance());
+
+            yield return null;
+        }
+
+        [UnityTest]
+        public IEnumerator PlayersBalanceShouldChangeAfterBuildingFountainPark() {
+            WorldManager worldManager = GetWorldManager();
+            GameManager gameManager = GetGameManager();
+            int currentPlayersBalance = gameManager.GetPlayersBalance();
+            worldManager.BuildNewRoad(Vector3Int.zero);
+            worldManager.BuildNewFountainPark(new Vector3Int(1, 0, 0));
+
+            Assert.AreEqual(currentPlayersBalance - 251, gameManager.GetPlayersBalance());
+
+            yield return null;
+        }
+
+        [UnityTest]
+        public IEnumerator PlayersBalanceShouldChangeAfterBuildingHelicopterPark() {
+            WorldManager worldManager = GetWorldManager();
+            GameManager gameManager = GetGameManager();
+            int currentPlayersBalance = gameManager.GetPlayersBalance();
+            worldManager.BuildNewRoad(Vector3Int.zero);
+            worldManager.BuildNewHelicopterPark(new Vector3Int(1, 0, 0));
+
+            Assert.AreEqual(currentPlayersBalance - 201, gameManager.GetPlayersBalance());
+
+            yield return null;
+        }
+
+        [UnityTest]
         public IEnumerator ShouldBuildRoadOnEmptyField() {
             WorldManager worldManager = GetWorldManager();
 
