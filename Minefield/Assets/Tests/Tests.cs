@@ -58,7 +58,7 @@ namespace Tests {
             worldManager.BuildNewRoad(Vector3Int.zero);
             worldManager.BuildNewKFC(new Vector3Int(1, 0, 0));
 
-            Assert.AreEqual(currentPlayersBalance - 151, gameManager.GetPlayersBalance());
+            Assert.AreEqual(currentPlayersBalance - 201, gameManager.GetPlayersBalance());
 
             yield return null;
         }
@@ -71,7 +71,7 @@ namespace Tests {
             worldManager.BuildNewRoad(Vector3Int.zero);
             worldManager.BuildNewTaverneRestaurant(new Vector3Int(1, 0, 0));
 
-            Assert.AreEqual(currentPlayersBalance - 201, gameManager.GetPlayersBalance());
+            Assert.AreEqual(currentPlayersBalance - 401, gameManager.GetPlayersBalance());
 
             yield return null;
         }
@@ -84,7 +84,7 @@ namespace Tests {
             worldManager.BuildNewRoad(Vector3Int.zero);
             worldManager.BuildNewCafeRestaurant(new Vector3Int(1, 0, 0));
 
-            Assert.AreEqual(currentPlayersBalance - 101, gameManager.GetPlayersBalance());
+            Assert.AreEqual(currentPlayersBalance - 201, gameManager.GetPlayersBalance());
 
             yield return null;
         }
@@ -149,7 +149,7 @@ namespace Tests {
             worldManager.BuildNewRoad(Vector3Int.zero);
             worldManager.BuildNewRollerCoaster(new Vector3Int(1, 0, 0));
 
-            Assert.AreEqual(currentPlayersBalance - 301, gameManager.GetPlayersBalance());
+            Assert.AreEqual(currentPlayersBalance - 401, gameManager.GetPlayersBalance());
 
             yield return null;
         }
@@ -162,7 +162,7 @@ namespace Tests {
             worldManager.BuildNewRoad(Vector3Int.zero);
             worldManager.BuildNewBasicPark(new Vector3Int(1, 0, 0));
 
-            Assert.AreEqual(currentPlayersBalance - 151, gameManager.GetPlayersBalance());
+            Assert.AreEqual(currentPlayersBalance - 201, gameManager.GetPlayersBalance());
 
             yield return null;
         }
@@ -175,7 +175,7 @@ namespace Tests {
             worldManager.BuildNewRoad(Vector3Int.zero);
             worldManager.BuildNewFountainPark(new Vector3Int(1, 0, 0));
 
-            Assert.AreEqual(currentPlayersBalance - 251, gameManager.GetPlayersBalance());
+            Assert.AreEqual(currentPlayersBalance - 401, gameManager.GetPlayersBalance());
 
             yield return null;
         }
@@ -188,7 +188,7 @@ namespace Tests {
             worldManager.BuildNewRoad(Vector3Int.zero);
             worldManager.BuildNewHelicopterPark(new Vector3Int(1, 0, 0));
 
-            Assert.AreEqual(currentPlayersBalance - 201, gameManager.GetPlayersBalance());
+            Assert.AreEqual(currentPlayersBalance - 801, gameManager.GetPlayersBalance());
 
             yield return null;
         }
