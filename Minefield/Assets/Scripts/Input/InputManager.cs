@@ -6,6 +6,9 @@ using UnityEngine.UI;
 public class InputManager : MonoBehaviour {
 
     [SerializeField]
+    private GameManager gameManager;
+
+    [SerializeField]
     private Camera mainCamera;
     private Vector3 cameraMovementDirection;
     private Vector3 cameraZoomDirection;
@@ -54,6 +57,7 @@ public class InputManager : MonoBehaviour {
     private void InvokeButtonDownIfApplicable() {
         if (Input.GetKeyDown(KeyCode.Escape)) {
             uIManager.ToggleDisplayPanel(null, false);
+            gameManager.ContinueGame();
         }
     }
 
@@ -64,7 +68,6 @@ public class InputManager : MonoBehaviour {
         if (Input.GetMouseButtonDown(1)) {
             uIManager.ResetButtonColor();
             ResetMouseActions();
-            Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
         }
 
         if (Input.GetMouseButtonDown(0) && EventSystem.current.IsPointerOverGameObject() == false) {
