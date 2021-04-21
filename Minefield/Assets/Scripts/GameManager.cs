@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour {
 
@@ -27,6 +25,9 @@ public class GameManager : MonoBehaviour {
     private int minimumPlayersBalance;
 
     private Entrance entrance;
+
+    [SerializeField]
+    private int initialNPCSpawnDelaySeconds;
 
     [SerializeField]
     private int entranceCost;
@@ -446,6 +447,10 @@ public class GameManager : MonoBehaviour {
             IncreaseOrDecreasePlayersBalance(entranceCost);
 
             npcsEnteredSinceLastNewNPCsNotBeingAbleToEnterUntilTime++;
+
+            if (npcs.Count == 1) {
+                newNPCsNotBeingAbleToEnterUntilTime = DateTime.UtcNow.AddSeconds(initialNPCSpawnDelaySeconds);
+            }
 
             if (maxNumberOfNPCSEnteringAtATime <= npcsEnteredSinceLastNewNPCsNotBeingAbleToEnterUntilTime) {
                 maxNumberOfNPCSEnteringAtATime = random.Next(maxNumberOfNPCSEnteringAtATimeMinimum, maxNumberOfNPCSEnteringAtATimeMaximum);
