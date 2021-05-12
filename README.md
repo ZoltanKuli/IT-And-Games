@@ -4,7 +4,7 @@ I worked on Minefield, a theme park management game, during the spring of 2021 f
 
 This was my most complex and challenging project yet. I put around 300 hours into it.
 
-That being said, it was all worth it because I learned a tremendous amount since this was essentially the first time I used Unity and C#, and considering everything, the game turned out great.
+That being said, it was all worth it because I learned a tremendous amount since this was the first time I used Unity and C#. What's more, considering everything, the game turned out great, and my friends enjoyed playing it.
 
 Before I continue, however, I must also mention that as for the menu is concerned, the credit goes to my two teammates, Dominik Matiny and Kristóf Takács. They were also the ones to export the models we ended up using from Minecraft.
 
