@@ -6,7 +6,7 @@ This was my most complex and challenging project yet. I put around 300 hours int
 
 That being said, it was all worth it because I learned a tremendous amount since this was the first time I used Unity and C#. What's more, considering everything, the game turned out great, and the people I showed it to enjoyed playing it.
 
-Before I continue, however, I must also mention that as for the menu is concerned, the credit goes to my two teammates, Dominik Matiny and Kristóf Takács. They were also the ones to export the models we ended up using from Minecraft.
+But before I continue, I must also mention that as for the menu is concerned, the credit goes to my two teammates, Dominik Matiny and Kristóf Takács. They were also the ones to export the models from Minecraft that we ended up using.
 
 As for my part in the project is concerned, I implemented the core game mechanics such as the building mechanics, the behavior of the different NPCs, the camera movement, etc. I also put together a simple CI solution.
 
