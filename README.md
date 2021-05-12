@@ -20,6 +20,6 @@ What's more, it was a blast to work on it since I got to think about and work on
 
 It was also crucial for me to implement algorithms that didn't use up more system resources than necessary. And based on my experience, the game runs smoothly even with thousands of NPCs interacting with the game world.
 
-All in all, Minefield was an interesting project to work on, and I am glad it turned out the way it did.
+All in all, Minefield was a great project to work on, and I am glad it turned out the way it did.
 
 And once the game was finished, my tutor asked me to make [a video](https://youtu.be/dvfuY1JlcvU) about it so that he could show it to others. But please note that the video is in Hungarian.
