@@ -14,7 +14,7 @@ Looking back, I should have been more careful about the structure of the project
 
 This would have made it easier to extend upon the basic game mechanics in the future, and it would have improved the readability of the code.
 
-At the same time, the game works as intended, and it has a nice aesthetic.
+At the same time, the game works properly and as intended, and it has nice graphics.
 
 What's more, it was a blast to work on it since I got to think about and work on features in a 3D space, and implementing the behavior of the NPCs and seeing the game come to life was inspiring.
 
