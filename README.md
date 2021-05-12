@@ -23,3 +23,5 @@ It was also crucial for me to implement algorithms that didn't use up more syste
 All in all, Minefield was a great project to work on, and I am glad it turned out the way it did.
 
 And once the game was finished, my tutor asked me to make [a video](https://youtu.be/dvfuY1JlcvU) about it so that he could show it to others. But please note that the video is in Hungarian.
+
+You can also find the finished game [here](https://github.com/ZoltanKuli/IT-And-Games/tree/dev/build/Minefield%201.0.0).
