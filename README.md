@@ -21,7 +21,6 @@ Dominik Manty and Kristof Takacs were responsible for the menu and exporting the
 * Unity
 * C#
 * GitLab
-* Bash
 
 # Impact
 Minefield turned out to be among the top three games in our class and brought some fun and happy moments to friends and family.
