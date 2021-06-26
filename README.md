@@ -25,4 +25,4 @@ Dominik Manty and Kristof Takacs were responsible for the menu and exporting the
 * Bash
 
 # Impact
-Minefield turned out to be among the top three games in our semester and brought fun and happy moments to friends and family.
+Minefield turned out to be one of the best games in our semester and brought fun and happy moments to friends and family.
