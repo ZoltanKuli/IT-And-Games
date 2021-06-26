@@ -8,6 +8,7 @@ You can watch a demo using [this link](https://youtu.be/dvfuY1JlcvU). Please not
 * Implemented a camera system for moving around in the game world.
 * Balanced the game so that it is fun and challenging to play.
 * Added background sounds and music to the game.
+* Set up a CI solution on GitLab.
 * Imported and dialed in the game models and prefabs that bring the game to life.
 * Implemented extensive NPC mechanics using a custom AI and the A* search algorithm.
 * Implemented the crew mechanics based on the NPC mechanics.
