@@ -3,7 +3,7 @@ Minefield is a Minecraft-inspired amusement park management game and my first-ev
 
 You can watch a demo using [this link](https://youtu.be/dvfuY1JlcvU). Please note that the video is in Hungarian, as requested by my tutor, but I made English subtitles.
 
-# Skills Demonstrated
+# Highlights
 * Implemented a robust world manager from scratch that is a core part of the building mechanics.
 * Implemented a camera system for moving around in the 3D game world.
 * Balanced the game so that it is fun and challenging to play.
@@ -25,4 +25,4 @@ Dominik Manty and Kristof Takacs were responsible for the menu and exporting the
 * Bash
 
 # Impact
-Minefield turned out to be one of the best games in our semester and brought fun and happy moments to friends and family.
+Minefield was one of the best games in our semester.
